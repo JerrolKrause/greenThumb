@@ -1,2 +1,2 @@
 # greenThumb
-Angular and object oriented JS based gardening application
+Garden planning and scheduling application built on angular.js and object oriented javascript
