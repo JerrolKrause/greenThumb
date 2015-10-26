@@ -6,6 +6,7 @@ window.greenThumb = (function () {
 
     //Master object
     var greenThumb = {
+        app : angular.module('gtApp', []),//Angular app
         produce: window.gtProduce, //Get produce from other JS file, produce.js
         garden: jQuery.extend(true, {}, window.gtGarden), //Get garden from model, clone to ensure we don't mess with the original data source
         tasks: {
@@ -180,6 +181,7 @@ window.greenThumb = (function () {
             
             var obj = {
                 label: str,
+                slug: 'filter-task-'+type,
                 produce: obj
             };
             
@@ -194,16 +196,18 @@ window.greenThumb = (function () {
     /**
      * 
      */
-    greenThumb.app = angular.module('gtApp', [])
-            .controller('gtSchedule', ['$scope', function ($scope) {
-                    $scope.name = 'Moms Backyard';
+    //greenThumb.app = angular.module('gtApp', []);
+    /**
+     * Controller for the task scheduler
+     */
+    greenThumb.app.controller('gtSchedule', ['$scope', function ($scope) {
+            $scope.name = 'Moms Backyard';
 
-                    $scope.tasksPrev = greenThumb.tasks.prev;
-                    $scope.tasksNext = greenThumb.tasks.next;
-                    $scope.tasksToday = greenThumb.tasks.today;
-
-
-                }]).directive('dateEntry', function () {
+            $scope.tasksPrev = greenThumb.tasks.prev;
+            $scope.tasksNext = greenThumb.tasks.next;
+            $scope.tasksToday = greenThumb.tasks.today;
+            console.log($scope.tasksPrev);
+        }]).directive('dateEntry', function () {
         return {
             restrict: 'E',
             scope: {
@@ -213,8 +217,15 @@ window.greenThumb = (function () {
             templateUrl: 'partials/date-entry.html'
         };
     });
-        
 
+    /**
+     * Controller for the calender
+     */
+    greenThumb.app.controller('gtCalendar', ['$scope', function ($scope) {
+            $scope.name = 'Moms Backyard';
+    }]);
+
+        
 
     //Helper Methods
     var helpers = {
