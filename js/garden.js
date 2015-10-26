@@ -24,12 +24,16 @@ greenThumb.addEdit.area({userID: 0, gardenID: 0, width: 36, length: 72, label: '
 //Spring Garden
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 1, produce: 'cucumber_diva', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 1, produce: 'squash_acorn_honeybear', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
+
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 2, produce: 'squash_butternut', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 2, produce: 'squash_butternut_butterscotch', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
+
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 3, produce: 'melon_earlichamp', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 3, produce: 'melon_diplomat', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
+
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 4, produce: 'melon_serenade', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 4, produce: 'melon_sapomiel', plantingDate: moment().set({month: 2, date: 1}), numPlants: 3});
+
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 5, produce: 'tomato_big_beef', plantingDate: moment().set({month: 2, date: 1}), numPlants: 1});
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 5, produce: 'tomato_sun_gold', plantingDate: moment().set({month: 2, date: 1}), numPlants: 1});
 greenThumb.addEdit.produce({gardenID: 0, userID: 0, areaID: 5, produce: 'tomato_black_cherry', plantingDate: moment().set({month: 2, date: 1}), numPlants: 1});

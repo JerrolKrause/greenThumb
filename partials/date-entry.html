@@ -1,0 +1,6 @@
+<div class="filter-tasks filter-season-fall" ng-repeat="tasks in data">
+    <p><strong>{{tasks.label}}</strong></p>
+    <ul>
+        <li class="filter-task filter-task-seedlings" ng-repeat="task2 in tasks.items">{{task2.label}}</li>
+    </ul>
+</div>

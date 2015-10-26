@@ -1,4 +1,4 @@
-/* global moment */ 
+/* global moment */   
 /* jshint unused: true */
 
 window.greenThumb = (function(){

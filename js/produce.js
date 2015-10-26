@@ -1,5 +1,5 @@
 
-var produce = {
+var gtProduce = {
     broccoli: {
         label: "Broccoli",
         maturity: 60,
