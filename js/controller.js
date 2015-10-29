@@ -51,8 +51,12 @@ window.greenThumb = (function () {
                 $.each(value1.produce, function (key2, value2) {
 
                     //Update the model with the seedling, harvest start and harvest complete dates
+                    //Object needs to be duplicate since we are reusing data from the input object
                     greenThumb.garden.areas[key1].produce[key2] = angular.copy(greenThumb.model.updateDates(value2));
 
+                    //greenThumb.model.addTasks();
+
+                    /**/
                     //Now loop through all the dates within this produce item
                     $.each(greenThumb.garden.areas[key1].produce[key2].dates, function (key3, value3) {
                         //If Today
@@ -152,6 +156,67 @@ window.greenThumb = (function () {
         
         
         /**
+         * 
+         * @param {type} obj
+         * @returns {undefined}
+         */
+        addTasks: function(obj){
+            //Now loop through all the dates within this produce item
+            $.each(greenThumb.garden.areas[key1].produce[key2].dates, function (key3, value3) {
+                //If Today
+                if (value3.isSame(params.today, 'day') === true) {
+                    //Check if an object has been created for this date, if not create one
+                    if (!$.isPlainObject(greenThumb.tasks.today[value3.format("YYYYMMDD")])) {
+                        greenThumb.tasks.today[value3.format("YYYYMMDD")] = {
+                            label: value3.format("dddd, MMMM Do")
+                        };
+                    }
+                    //Now check if the object has an array to hold the values, if not create one
+                    if (!$.isArray(greenThumb.tasks.today[value3.format("YYYYMMDD")].items)) {
+                        greenThumb.tasks.today[value3.format("YYYYMMDD")].items = [];
+                    }
+                    //Get a properly formatted task string
+                    var task = greenThumb.model.formatTasks(key3, greenThumb.garden.areas[key1].produce[key2]);
+                    //Then send it to the previous task container object
+                    greenThumb.tasks.today[value3.format("YYYYMMDD")].items.push(task);
+                    //If previous    
+                } else if (value3.isBetween(params.today.clone().subtract(params.tasksPrev, 'days'), params.today, 'day') === true) {
+                    //Check if an object has been created for this date, if not create one
+                    if (!$.isPlainObject(greenThumb.tasks.prev[value3.format("YYYYMMDD")])) {
+                        greenThumb.tasks.prev[value3.format("YYYYMMDD")] = {
+                            label: value3.format("dddd, MMMM Do")
+                        };
+                    }
+                    //Now check if the object has an array to hold the values, if not create one
+                    if (!$.isArray(greenThumb.tasks.prev[value3.format("YYYYMMDD")].items)) {
+                        greenThumb.tasks.prev[value3.format("YYYYMMDD")].items = [];
+                    }
+                    //Get a properly formatted task string
+                    var task = greenThumb.model.formatTasks(key3, greenThumb.garden.areas[key1].produce[key2]);
+                    //Then send it to the previous task container object
+                    greenThumb.tasks.prev[value3.format("YYYYMMDD")].items.push(task);
+                    //If upcoming  /  
+                } else if (value3.isBetween(params.today, params.today.clone().add(params.tasksNext, 'days'), 'day') === true) {
+                    //Check if an object has been created for this date, if not create one
+                    if (!$.isPlainObject(greenThumb.tasks.next[value3.format("YYYYMMDD")])) {
+                        greenThumb.tasks.next[value3.format("YYYYMMDD")] = {
+                            label: value3.format("dddd, MMMM Do")
+                        };
+                    }
+                    //Now check if the object has an array to hold the values, if not create one
+                    if (!$.isArray(greenThumb.tasks.next[value3.format("YYYYMMDD")].items)) {
+                        greenThumb.tasks.next[value3.format("YYYYMMDD")].items = [];
+                    }
+                    //Get a properly formatted task string
+                    var task = greenThumb.model.formatTasks(key3, greenThumb.garden.areas[key1].produce[key2]);
+                    //Then send it to the previous task container object
+                    greenThumb.tasks.next[value3.format("YYYYMMDD")].items.push(task);
+                }
+            });
+        },
+        
+        
+        /**
          * Create the string used in the task pane
          * @param {str} type - String of the task type, IE 'seedlings' or 'plant'
          * @param {obj} obj - The plant object
@@ -248,7 +313,16 @@ window.greenThumb = (function () {
      * Controller for the display & interactive options
      */    
     greenThumb.app.controller('gtDisplay', function ($scope) {
+        
         $scope.datetoday = params.today.format("YYYYMMDD");
+        
+        $scope.display = function(){
+            params.today = moment().set({year: 2015, month: 3, date: 1, hours: 0});
+            
+            greenThumb.model.build(greenThumb.garden);
+             
+            
+        };
     })   
         
         
