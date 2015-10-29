@@ -1,4 +1,4 @@
-/* global moment */
+/* global moment, angular */
 /* jshint unused: true */
 
 window.greenThumb = (function () {
@@ -6,9 +6,9 @@ window.greenThumb = (function () {
 
     //Master object
     var greenThumb = {
-        app : angular.module('gtApp', []),//Angular app
-        produce: window.gtProduce, //Get produce from other JS file, produce.js
-        garden: jQuery.extend(true, {}, window.gtGarden), //Get garden from model, clone to ensure we don't mess with the original data source
+        app : angular.module('gtApp', []),                                      //Angular app
+        produce: window.gtProduce,                                              //Get produce from other JS file, produce.js
+        garden : {},
         tasks: {
             today: {},
             prev: {},
@@ -18,49 +18,43 @@ window.greenThumb = (function () {
 
     //Application parameters
     var params = {
-        today: moment(), //Today's date
-        //daysToPixels : Math.round($('#gt-year').width()/365*100)/100,                       //Each day is represented by this many pixels
-        rowWidth: 18, //The width between multiple rows
-        tasksNext: 120, //Show upcoming tasks within this many days
-        tasksPrev: 120                                     //Show previous tasks within this many days
-        
-                //monthWidth : $('#gt-year').find('.gt-col')[0].getBoundingClientRect().width - 1     //Get the width of the month
+        today: moment(),                                                        //Today's date
+        //daysToPixels : Math.round($('#gt-year').width()/365*100)/100,         //Each day is represented by this many pixels
+        rowWidth: 18,                                                           //The width between multiple rows
+        tasksNext: 90,                                                          //Show upcoming tasks within this many days
+        tasksPrev: 90                                                           //Show previous tasks within this many days
+        //monthWidth : $('#gt-year').find('.gt-col')[0].getBoundingClientRect().width - 1     //Get the width of the month
     };
 
+    //Override todays date
     params.today = moment().set({year: 2015, month: 2, date: 1, hours: 0});
 
 
     /**
-     * Kick things off
-     * @returns {undefined}
+     * Class for data object
      */
-    greenThumb.init = function () {
-        //Add todays date line
-        //$('#gt-areas-bg').css('left', helpers.position(params.today) + 'px');
-
-        greenThumb.model.build(greenThumb.garden.areas);
-
-    };
-
-
     greenThumb.model = {
+
         /**
          * Build the data model for the schedule and pass to angular
+         * @param {type} data - An object containing the garden info
          * @returns {undefined}
          */
         build: function (data) {
+            //console.log('build');
+            greenThumb.garden = data;
 
             //Loop through each growing area in the model
-            $.each(data, function (key1, value1) {
+            $.each(data.areas, function (key1, value1) {
+                
                 //Loop through the produce within each area
                 $.each(value1.produce, function (key2, value2) {
 
                     //Update the model with the seedling, harvest start and harvest complete dates
-                    greenThumb.garden.areas[key1].produce[key2] = greenThumb.model.updateDates(value2);
+                    greenThumb.garden.areas[key1].produce[key2] = angular.copy(greenThumb.model.updateDates(value2));
 
                     //Now loop through all the dates within this produce item
                     $.each(greenThumb.garden.areas[key1].produce[key2].dates, function (key3, value3) {
-
                         //If Today
                         if (value3.isSame(params.today, 'day') === true) {
                             //Check if an object has been created for this date, if not create one
@@ -77,7 +71,7 @@ window.greenThumb = (function () {
                             var task = greenThumb.model.formatTasks(key3, greenThumb.garden.areas[key1].produce[key2]);
                             //Then send it to the previous task container object
                             greenThumb.tasks.today[value3.format("YYYYMMDD")].items.push(task);
-                        //If previous    
+                            //If previous    
                         } else if (value3.isBetween(params.today.clone().subtract(params.tasksPrev, 'days'), params.today, 'day') === true) {
                             //Check if an object has been created for this date, if not create one
                             if (!$.isPlainObject(greenThumb.tasks.prev[value3.format("YYYYMMDD")])) {
@@ -93,9 +87,9 @@ window.greenThumb = (function () {
                             var task = greenThumb.model.formatTasks(key3, greenThumb.garden.areas[key1].produce[key2]);
                             //Then send it to the previous task container object
                             greenThumb.tasks.prev[value3.format("YYYYMMDD")].items.push(task);
-                        //If upcoming  /  
+                            //If upcoming  /  
                         } else if (value3.isBetween(params.today, params.today.clone().add(params.tasksNext, 'days'), 'day') === true) {
-                          //Check if an object has been created for this date, if not create one
+                            //Check if an object has been created for this date, if not create one
                             if (!$.isPlainObject(greenThumb.tasks.next[value3.format("YYYYMMDD")])) {
                                 greenThumb.tasks.next[value3.format("YYYYMMDD")] = {
                                     label: value3.format("dddd, MMMM Do")
@@ -122,8 +116,8 @@ window.greenThumb = (function () {
          * @returns {undefined} - The same produce object with the new dates added
          */
         updateDates: function (obj) {
-            //console.log('WHY YOU NO WORK????');
-            var produce;
+            //console.log(obj);
+            var produce = {};
 
             //Check if this produce item has a parent item with preset values. 
             if (greenThumb.produce[obj.id].hasOwnProperty('parent')) {
@@ -135,35 +129,37 @@ window.greenThumb = (function () {
                 });
             //No parent item, just load default data    
             } else {
-                produce = greenThumb.produce[obj.id];
+                produce =  greenThumb.produce[obj.id];
             }
             
             //Add in number of plants
             produce.numPlants = obj.numPlants;
-
+            produce.slug = obj.id;
+            
+            //Turn plant date into moment object
+            var plant = moment().set({month: obj.dates.plant.month, date: obj.dates.plant.day});
+            
             //Now we need to add dates for the other planting chores, IE starting seedlings etc.
             //These are all based off the plant date and pull data from produce.js
             produce.dates = {
-                seedlings: obj.date_plant.clone().subtract(produce.seedling, 'weeks').day(6),
-                plant: obj.date_plant,
-                harvest_start: obj.date_plant.clone().add(produce.maturity, 'days'),
-                harvest_finish: obj.date_plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
+                plant : plant,
+                seedlings: plant.clone().subtract(produce.seedling, 'weeks').day(6),
+                harvest_start: plant.clone().add(produce.maturity, 'days'),
+                harvest_finish: plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
             };
-            
             return produce;
         },//end addDates
         
         
         /**
-         * 
-         * @param {type} type
-         * @param {type} obj
-         * @returns {controller_L4.greenThumb.model.formatTasks.obj}
+         * Create the string used in the task pane
+         * @param {str} type - String of the task type, IE 'seedlings' or 'plant'
+         * @param {obj} obj - The plant object
+         * @returns {controller_L4.greenThumb.model.formatTasks.obj} - Returns the plant object with the dates added
          */
         formatTasks: function (type,obj) {
-           
             var str;
-            //Figure out which activity type this is, set appropriate string
+            //Figure out which activity type this is, set appropriate string for output in task pane
             switch (type) {
                 case 'seedlings':
                     str = 'Start ' + obj.numPlants + ' Seedlings for ' + obj.label;
@@ -190,30 +186,40 @@ window.greenThumb = (function () {
     };//end model
     
    
-   
 
 
     /**
-     * 
+     * Ajaxes in the model content and makes available to angular
      */
-    //greenThumb.app = angular.module('gtApp', []);
+    greenThumb.app.factory("gtGetData", function ($http) {
+        var url = 'js/model.js';
+        var data = $http({
+            method: 'GET',
+            url: url
+        }).then(function ($response) {
+            greenThumb.model.build($response.data[0]);
+            return greenThumb;
+        });
+        return data;
+    });
+  
     /**
      * Controller for the task scheduler
      */
-    greenThumb.app.controller('gtSchedule', ['$scope', function ($scope) {
-            $scope.name = 'Moms Backyard';
+    greenThumb.app.controller('gtSchedule', function ($scope, gtGetData) {
 
-            $scope.tasksPrev = greenThumb.tasks.prev;
-            $scope.tasksNext = greenThumb.tasks.next;
-            $scope.tasksToday = greenThumb.tasks.today;
-            console.log($scope.tasksPrev);
-        }]).directive('dateEntry', function () {
+        gtGetData.then(function (data) {
+            $scope.tasksPrev = data.tasks.prev;
+            $scope.tasksNext = data.tasks.next;
+            $scope.tasksToday = data.tasks.today;
+        });
+
+    }).directive('dateEntry', function () {
         return {
             restrict: 'E',
             scope: {
                 data: '='
             },
-            //template: '<p><strong>{{customerinfo.label}}</strong></p><ul><li class="filter-task filter-task-seedlings" ng-repeat="taskItem in customerinfo.items">{{taskItem.label}}</li></ul>'
             templateUrl: 'partials/date-entry.html'
         };
     });
@@ -221,10 +227,30 @@ window.greenThumb = (function () {
     /**
      * Controller for the calender
      */
-    greenThumb.app.controller('gtCalendar', ['$scope', function ($scope) {
-            $scope.name = 'Moms Backyard';
-    }]);
+    greenThumb.app.controller('gtCalendar', function ($scope, gtGetData) {
 
+        $scope.name = 'Moms Backyard';
+        gtGetData.then(function (data) {
+            $scope.garden = data.garden.areas;
+        });
+
+    }).directive('areas', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                data: '='
+            },
+            templateUrl: 'partials/calendar-row.html'
+        };
+    });
+        
+    /**
+     * Controller for the display & interactive options
+     */    
+    greenThumb.app.controller('gtDisplay', function ($scope) {
+        $scope.datetoday = params.today.format("YYYYMMDD");
+    })   
+        
         
 
     //Helper Methods
@@ -280,7 +306,6 @@ window.greenThumb = (function () {
         }//end getSeason
     };//end helpers
 
-    greenThumb.init();
 
     return greenThumb;
 })();

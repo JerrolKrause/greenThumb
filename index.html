@@ -21,26 +21,27 @@
             .gt-seedlings{background-color:#00a651;position:absolute;z-index:3;left:0px; top:0px;}
             .gt-harvestStart{background-color:#c69c6d;z-index:3;right:0px;top:0px;}
         </style>
-        
+
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/angular.min.js"></script>
-         <script src="js/vendor/jquery.js"></script>
+        <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
         <script src="js/moment.min.js"></script>
-        
+
         <script src="js/produce.js"></script> 
         <script src="js/model.js"></script> 
         <script src="js/controller.js"></script>
-        
+
     </head>
     <body>
         <div id="gt-container">
             <!-- Display Options -->
 
             <h1>Schedule</h1>
-
-            <div id="gt-display">
+            <hr/>
+            <div id="gt-display" ng-controller="gtDisplay">
                 <h3>Display Options:</h3>
+                Date : <input style="width:150px;" ng-value="datetoday"/>
                 <div class="large-4 columns">
                     <h4>Season</h4>
                     <form action="#" id="gt-filter-season">
@@ -63,18 +64,19 @@
 
                 </div>
             </div>
+            
             <hr/>
 
 
             <!-- Schedule -->
             <div id="gt-schedule" ng-controller="gtSchedule">
+                <div class="large-4 columns" id="gt-schedule-today">
+                    <h3>Today</h3>
+                    <date-entry data="tasksToday"></date-entry>
+                </div>
                 <div class="large-4 columns" id="gt-schedule-prev">
                     <h3>Previous</h3>
                     <date-entry data="tasksPrev"></date-entry>
-                </div>
-                <div class="large-4 columns" id="gt-schedule-today">
-                    <h3>Today</h3>
-                   <date-entry data="tasksToday"></date-entry>
                 </div>
                 <div class="large-4 columns" id="gt-schedule-next">
                     <h3>Upcoming</h3>
@@ -83,8 +85,7 @@
                 <hr/>
             </div>
 
-            
-            
+
             <!-- Calendar -->
             <div id="gt-calendar" ng-controller="gtCalendar">
                 <h2>Growing Areas:</h2>
@@ -108,15 +109,13 @@
                 </div>
                 <h3>{{name}}</h3>
                 <div id="gt-areas" >
-                    <div id="gt-areas-bg"></div>
+                    <!-- <div id="gt-areas-bg"></div>-->
+                    <areas data="garden"></areas>
                 </div>
                 <hr/>
             </div>
         </div>
 
-       
-        <script>
-                    $(document).foundation();
-        </script>
+        <script>$(document).foundation();</script>
     </body>
 </html>
