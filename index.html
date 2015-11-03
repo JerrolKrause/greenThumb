@@ -41,7 +41,7 @@
             <hr/>
             <div id="gt-display" ng-controller="gtDisplay">
                 <h3>Display Options:</h3>
-                Date : <input style="width:150px;" ng-value="datetoday"/>
+                Date : <input style="width:150px;" ng-value="datetoday" ng-model="confirmed" ng-click="display()"/>
                 <div class="large-4 columns">
                     <h4>Season</h4>
                     <form action="#" id="gt-filter-season">

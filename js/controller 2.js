@@ -419,10 +419,15 @@ window.greenThumb = (function () {
       console.log(gtGetData);
         /**/
         gtGetData.data.then(function (data) {
-            $scope.tasksPrev = data.tasks.prev;
-            $scope.tasksNext = data.tasks.next;
+            //$scope.tasksPrev = data.tasks.prev;
+            //$scope.tasksNext = data.tasks.next;
             $scope.tasksToday = data.tasks.today;
-          
+            /*
+            $scope.$watch(function () {
+                //console.log('Me')
+                $scope.tasksToday = data.tasks.today;
+            });
+           */
         });
         
         
