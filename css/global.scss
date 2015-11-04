@@ -1,0 +1,14 @@
+/*     
+    Document   : Boost Global StyleSheet
+    Author     : Jerrol Krause
+    Description:
+        Master global stylesheet for boostmobile.com
+
+
+
+@import '_variables.scss';
+@import '_mixins.scss';
+@import '_placeholders.scss';
+*/
+@import 'foundation.css';
+@import 'foundation-datepicker.min.css';

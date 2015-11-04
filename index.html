@@ -4,7 +4,8 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>greenThumb</title>
-        <link rel="stylesheet" href="css/foundation.css" />
+        <link rel="stylesheet" href="css/global.min.css" />
+        
         <style>
             #gt-container{padding:20px;}
             .gt-calendar{padding: 5px;margin-bottom: 10px;}
@@ -22,15 +23,10 @@
             .gt-harvestStart{background-color:#c69c6d;z-index:3;right:0px;top:0px;}
         </style>
 
-        <script src="js/vendor/modernizr.js"></script>
-        <script src="js/angular.min.js"></script>
-        <script src="js/vendor/jquery.js"></script>
-        <script src="js/foundation.min.js"></script>
-        <script src="js/moment.min.js"></script>
-
-        <script src="js/produce.js"></script> 
-        <script src="js/model.js"></script> 
-        <script src="js/controller.js"></script>
+       
+        <script src="js/plugins.min.js"></script>
+        <script src="js/scripts.min.js"></script>
+        
 
     </head>
     <body>
@@ -41,7 +37,17 @@
             <hr/>
             <div id="gt-display" ng-controller="gtDisplay">
                 <h3>Display Options:</h3>
-                Date : <input style="width:150px;" ng-value="datetoday" ng-model="confirmed" ng-click="display()"/>
+                Date : <input type="text" class="span2" value="" id="dp1" style="width:200px;" ng-value="datetoday" ng-model="date" ng-change="display()" datepicker=''/> 
+              
+                <hr/>
+                
+                
+                
+             
+                
+                
+                
+                <hr/>
                 <div class="large-4 columns">
                     <h4>Season</h4>
                     <form action="#" id="gt-filter-season">
