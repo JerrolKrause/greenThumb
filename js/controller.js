@@ -1,6 +1,10 @@
 /* global moment, angular */
 /* jshint unused: true */
 
+/* FEATURE IDEAS
+ * - round to nearest saturday
+ */
+
 window.greenThumb = (function () {
     'use strict';
 
@@ -15,27 +19,26 @@ window.greenThumb = (function () {
     greenThumb.app.factory("gtGetData", function ($http, $rootScope) {
 
         var params = {
-            rowWidth: 18, //The width between multiple rows
-            tasksNext: 90, //Show upcoming tasks within this many days
-            tasksPrev: 90 //Show upcoming tasks within this many days
+            rowWidth    : 18,                                                   //The width between multiple rows
+            tasksNext   : 30,                                                   //Show upcoming tasks within this many days
+            tasksPrev   : 30                                                    //Show upcoming tasks within this many days
         };
 
         var data = {
-            today: moment(), //Today's date
-            garden: {},
-            tasks: {today: {}, prev: {}, next: {}},
-            produce: window.gtProduce,
-            update: function (date) {
-                console.log(date.format("YYYYMMDD"));
-                data.today = date;
-                model.build(data.garden);
-            }
+            today       : moment(),                                             //Today's date
+            garden      : {},
+            tasks       : {today: {}, prev: {}, next: {}},
+            produce     : window.gtProduce,
+            update      : function (date) {
+                            data.today = date;
+                            model.build(data.garden);
+                        }
         };
         
          //Override todays date for testing
         data.today = moment().set({year: 2015, month: 2, date: 1, hours: 0});
         
-        
+        //Fetch JSON object of garden to use
         $http({
             method: 'GET',
             url: 'js/model.js'
@@ -43,13 +46,11 @@ window.greenThumb = (function () {
             model.build($response.data[0]);
         });
                 
-                
-
         var model = {
             
             /**
              * Build the data model for the schedule to pass to angular
-             * @param {type} data - An object containing the garden info
+             * @param {type} obj - An object containing the garden info
              * @returns {undefined}
              */
             build: function (obj) {
@@ -112,11 +113,20 @@ window.greenThumb = (function () {
                 //Now we need to add dates for the other planting chores, IE starting seedlings etc.
                 //These are all based off the plant date and pull data from produce.js
                 produce.dates = {
-                    plant: plant,
-                    seedlings: plant.clone().subtract(produce.seedling, 'weeks').day(6),
-                    harvest_start: plant.clone().add(produce.maturity, 'days'),
-                    harvest_finish: plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
+                    plant           : plant,
+                    seedlings       : plant.clone().subtract(produce.seedling, 'weeks'),//.day(6)
+                    harvest_start   : plant.clone().add(produce.maturity, 'days'),
+                    harvest_finish  : plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
                 };
+                
+                //Create parameters needed by the DOM elements
+                produce.dom = {
+                    wSeedlings      : Math.round(produce.seedling * 7 * 100/365 * 10) / 10,
+                    wGrowing        : Math.round(produce.maturity * 100/365 * 10) / 10,
+                    wHarvesting     : Math.round(produce.harvest * 7 * 100/365 * 10) / 10,
+                    position        : Math.round((((produce.dates.seedlings.format("M") - 1) * 8.333) + ((produce.dates.seedlings.format("D") / produce.dates.seedlings.daysInMonth()) * 8.333)) * 10) / 10
+                };
+                
                 return produce;
             }, //end addDates
 
@@ -231,7 +241,6 @@ window.greenThumb = (function () {
     greenThumb.app.controller('gtSchedule', function ($scope, gtGetData) {
       
         $scope.$on('dataPassed', function () {
-            console.log('Data Passed');
             $scope.tasksToday = gtGetData.tasks.today;
             $scope.tasksPrev = gtGetData.tasks.prev;
             $scope.tasksNext = gtGetData.tasks.next;
@@ -252,11 +261,14 @@ window.greenThumb = (function () {
      * Controller for the calender
      */
     greenThumb.app.controller('gtCalendar', function ($scope, gtGetData) {
-
+        
         $scope.name = 'Moms Backyard';
+        //Garden does not need to be updated everytime data is passed, only once
         $scope.$on('dataPassed', function () {
             $scope.garden = gtGetData.garden.areas;
+            console.log($scope.garden);
         });
+       
       
     }).directive('areas', function () {
         return {
@@ -297,16 +309,16 @@ window.greenThumb = (function () {
             restrict: 'A',
             scope: {format: "="},
             link: function (scope, element, attrs, ngModel) {
-                if (typeof (scope.format) == "undefined") {
-                    scope.format = "mm/dd/yyyy"
+                if (typeof (scope.format) === "undefined") {
+                    scope.format = "mm/dd/yyyy";
                 }
                 $(element).fdatepicker({format: scope.format}).on('changeDate', function (ev) {
                     scope.$apply(function () {
                         ngModel.$setViewValue(ev.date);
                     });
-                })
+                });
             }
-        }
+        };
     });
 
     //Helper Methods

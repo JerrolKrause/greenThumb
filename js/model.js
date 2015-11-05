@@ -1,5 +1,5 @@
 [{
-    "name": "Mom\"s Backyard",
+    "name": "My Backyard",
     "areas": [
         {
             "label": "East Wall - Bed 1 of 5",
