@@ -1,0 +1,24 @@
+#gt-container{padding:20px;font-size:0.9em;}
+.gt-col{float:left;text-align:center;width:8.333%;background: #ccc url('../img/pixel-white.png') repeat-y right top;font-size: 0.9rem;}
+
+.gt-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;background-color: #ebebeb;}
+    .gt-area-item{margin-bottom:1px;}
+    .gt-area-item img{margin-right:10px;float:left;}
+    .gt-area-item span{float:left;}
+
+#gt-areas{position:relative;}       
+#gt-date{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:25%;display:none!important;}    
+
+
+.gt-seedlings{background-color:#00a651;min-height: 25px;}
+.gt-growing{background-color:#007236;min-height: 25px;}
+.gt-harvest{background-color:#c69c6d;min-height: 25px;}
+
+.row {max-width: 100%;}
+
+@media only screen and (max-width: 40em) { 
+    #gt-areas{background-color: #ebebeb;padding-top:5px;padding-bottom:5px}
+    .gt-area{padding:0px;margin:0px;background-color: transparent;}
+    #gt-calendar .small-2, #gt-calendar .small-10{padding-left: .25rem;padding-right: .25rem;}
+    .gt-area-item img{float:none;margin-left:auto;margin-right:auto;    display: block;}
+}

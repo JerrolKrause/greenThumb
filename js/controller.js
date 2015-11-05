@@ -261,15 +261,13 @@ window.greenThumb = (function () {
      * Controller for the calender
      */
     greenThumb.app.controller('gtCalendar', function ($scope, gtGetData) {
-        
-        $scope.name = 'Moms Backyard';
+       
         //Garden does not need to be updated everytime data is passed, only once
         $scope.$on('dataPassed', function () {
+            $scope.name = gtGetData.garden.name;
             $scope.garden = gtGetData.garden.areas;
-            console.log($scope.garden);
+            
         });
-       
-      
     }).directive('areas', function () {
         return {
             restrict: 'E',
@@ -286,17 +284,17 @@ window.greenThumb = (function () {
      */
     greenThumb.app.controller('gtDisplay', function ($scope, gtGetData) {
 
+        //When the main model is updated, add the latest date to the date picker
         $scope.$on('dataPassed', function () {
             $scope.date = gtGetData.today.format("MM/DD/YYYY");
         });
 
+        //When the display date input is changed
         $scope.display = function () {
-            
+            //Get the date from the box
             var set = moment($scope.date).add(1, 'days');
-          
             //Update app main date
             gtGetData.update(set);
-            
         };
     });
   

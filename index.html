@@ -3,49 +3,26 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>greenThumb</title>
+        <title>GreenThumb</title>
         <link rel="stylesheet" href="css/global.min.css" />
-        
-        <style>
-            #gt-container{padding:20px;}
-            .gt-calendar{padding: 5px;margin-bottom: 10px;}
-            .gt-description{width:20%;float:left;}
-            .gt-content{width:80%;float:left;position:relative;overflow-x:hidden;}
-            .gt-col{float:left;text-align:center;width:8.333%;background: #ccc url('img/pixel-white.png') repeat-y right top;font-size: 0.9rem;}
-            .gt-area{clear:both;padding: 5px;margin-bottom: 5px;background-color: #ebebeb;}
-
-            .gt-row{min-height:20px;position:relative;}
-            #gt-areas{position:relative;}       
-            #gt-areas-bg{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:20%;}    
-            .gt-plant{background-color:#007236;width:8.666%;min-height: 20px;}
-            
-            
-            .gt-seedlings{background-color:#00a651;}
-            .gt-growing{background-color:#007236;}
-            .gt-harvest{background-color:#c69c6d;}
-            
-            .row {
-max-width: 100%;
-}
-        </style>
-
-       
-        <script src="js/plugins.min.js"></script>
-        <script src="js/scripts.min.js"></script>
-        
-
+        <!--[if lt IE 9]>
+           <script src="js/vendor/html5shiv.min.js"></script>
+       <![endif]-->
     </head>
+
     <body>
         <div id="gt-container">
-            <!-- Display Options -->
 
-            <h1>Schedule</h1>
-            <hr/>
-            <div id="gt-display" ng-controller="gtDisplay">
+            <div class="row">
+                <h1>Schedule</h1>
+                <hr/>
+            </div>
+
+            <!-- Display Options -->
+            <div id="gt-display" class="row" ng-controller="gtDisplay">
                 <h3>Display Options:</h3>
                 Date : <input type="text" class="span2" value="" id="dp1" style="width:200px;" ng-value="datetoday" ng-model="date" ng-change="display()" datepicker=''/> 
-              
-                
+
                 <div style="display:none;">
                     <hr/>
                     <div class="large-4 columns">
@@ -67,17 +44,15 @@ max-width: 100%;
                         </form>
                     </div>
                     <div class="large-4 columns">
-
                     </div>
                 </div>
-                
+                <hr/>
             </div>
             
-            <hr/>
 
 
-            <!-- Schedule -->
-            <div id="gt-schedule" ng-controller="gtSchedule">
+            <!-- Tasks -->
+            <div id="gt-schedule" class="row" ng-controller="gtSchedule">
                 <div class="large-4 columns" id="gt-schedule-today">
                     <h3>Today</h3>
                     <date-entry data="tasksToday"></date-entry>
@@ -96,37 +71,37 @@ max-width: 100%;
 
             <!-- Calendar -->
             <div id="gt-calendar" ng-controller="gtCalendar">
+
                 <h2>Growing Areas:</h2>
-                
-                <div class="row">
-                    <div class="row">
-                        <div class="large-3 columns">Area</div>
-                        <div class="large-9 columns">
-                            <div class="gt-col" data-days="31"><span class="show-for-small-only">J</span><span class="show-for-medium-only">Jan</span><span class="show-for-large-up">January</span></div>
-                            <div class="gt-col" data-days="28"><span class="show-for-small-only">F</span><span class="show-for-medium-only">Feb</span><span class="show-for-large-up">February</span></div>
-                            <div class="gt-col" data-days="31"><span class="show-for-small-only">M</span><span class="show-for-medium-only">Mar</span><span class="show-for-large-up">March</span></div>
-                            <div class="gt-col" data-days="30"><span class="show-for-small-only">A</span><span class="show-for-medium-only">Apr</span><span class="show-for-large-up">April</span></div>
-                            <div class="gt-col" data-days="31"><span class="show-for-small-only">M</span><span class="show-for-medium-only">May</span><span class="show-for-large-up">May</span></div>
-                            <div class="gt-col" data-days="30"><span class="show-for-small-only">J</span><span class="show-for-medium-only">June</span><span class="show-for-large-up">June</span></div>
-                            <div class="gt-col" data-days="31"><span class="show-for-small-only">J</span><span class="show-for-medium-only">July</span><span class="show-for-large-up">July</span></div>
-                            <div class="gt-col" data-days="31"><span class="show-for-small-only">A</span><span class="show-for-medium-only">Aug</span><span class="show-for-large-up">August</span></div>
-                            <div class="gt-col" data-days="30"><span class="show-for-small-only">S</span><span class="show-for-medium-only">Sept</span><span class="show-for-large-up">September</span></div>
-                            <div class="gt-col" data-days="31"><span class="show-for-small-only">O</span><span class="show-for-medium-only">Oct</span><span class="show-for-large-up">October</span></div>
-                            <div class="gt-col" data-days="30"><span class="show-for-small-only">N</span><span class="show-for-medium-only">Nov</span><span class="show-for-large-up">November</span></div>
-                            <div class="gt-col" data-days="31"><span class="show-for-small-only">D</span><span class="show-for-medium-only">Dec</span><span class="show-for-large-up">December</span></div>
-                        </div>
+                <div class="row" id="gt-cal-header">
+                    <div class="large-3 medium-4 small-2 columns show-for-medium-up"></div>
+                    <div class="large-9 medium-8 small-10 columns">
+                        <div class="gt-col" data-days="31"><span class="show-for-small-only">J</span><span class="show-for-medium-only">Jan</span><span class="show-for-large-up">January</span></div>
+                        <div class="gt-col" data-days="28"><span class="show-for-small-only">F</span><span class="show-for-medium-only">Feb</span><span class="show-for-large-up">February</span></div>
+                        <div class="gt-col" data-days="31"><span class="show-for-small-only">M</span><span class="show-for-medium-only">Mar</span><span class="show-for-large-up">March</span></div>
+                        <div class="gt-col" data-days="30"><span class="show-for-small-only">A</span><span class="show-for-medium-only">Apr</span><span class="show-for-large-up">April</span></div>
+                        <div class="gt-col" data-days="31"><span class="show-for-small-only">M</span><span class="show-for-medium-only">May</span><span class="show-for-large-up">May</span></div>
+                        <div class="gt-col" data-days="30"><span class="show-for-small-only">J</span><span class="show-for-medium-only">June</span><span class="show-for-large-up">June</span></div>
+                        <div class="gt-col" data-days="31"><span class="show-for-small-only">J</span><span class="show-for-medium-only">July</span><span class="show-for-large-up">July</span></div>
+                        <div class="gt-col" data-days="31"><span class="show-for-small-only">A</span><span class="show-for-medium-only">Aug</span><span class="show-for-large-up">August</span></div>
+                        <div class="gt-col" data-days="30"><span class="show-for-small-only">S</span><span class="show-for-medium-only">Sept</span><span class="show-for-large-up">September</span></div>
+                        <div class="gt-col" data-days="31"><span class="show-for-small-only">O</span><span class="show-for-medium-only">Oct</span><span class="show-for-large-up">October</span></div>
+                        <div class="gt-col" data-days="30"><span class="show-for-small-only">N</span><span class="show-for-medium-only">Nov</span><span class="show-for-large-up">November</span></div>
+                        <div class="gt-col" data-days="31"><span class="show-for-small-only">D</span><span class="show-for-medium-only">Dec</span><span class="show-for-large-up">December</span></div>
                     </div>
                 </div>
-            
-                <h3>{{name}}</h3>
-                <div id="gt-areas" >
+
+                <h3 ng-bind="name"></h3>
+                <div id="gt-areas">
+                    <div id="gt-date" class="show-for-large-up"></div>
                     <areas data="garden"></areas>
                 </div>
-                
-                <hr/>
+
             </div>
         </div>
 
+        <script src="js/plugins.min.js"></script>
+        <script src="js/scripts.min.js"></script>
         <script>$(document).foundation();</script>
     </body>
 </html>
