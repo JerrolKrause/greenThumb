@@ -7,6 +7,7 @@
             "length": 6,
             "produce": [
                 {"id": "cucumber_diva", "numPlants": 3, "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
+                {"id": "cucumber_diva", "numPlants": 3, "dates" : {"plant" : {"month" : 10 , "day" : 1}}},
                 {"id": "squash_acorn_honeybear", "numPlants": 3, "dates" : {"plant" : {"month" : 2 , "day" : 1}}}
             ]
         },
