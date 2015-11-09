@@ -1,11 +1,13 @@
 <div class="gt-area row" ng-repeat="area in data track by $index">
     <h4 class="large-12 columns show-for-medium-up"> {{area.label}}</h4>
     <div class="gt-area-item clearfix" ng-repeat="produce2 in area.produce track by produce2.id">
-        <div class="large-3 medium-4 small-2 columns"><img src="img/thumbs/default.png" alt="{{produce2.label}} Thumbnail" class="hide-for-medium2"/><span class="show-for-medium-up">{{produce2.label}}</span></div>
+        <div class="large-3 medium-4 small-2 columns"><img src="img/thumbs/default.png" alt="{{produce2.label}} Thumbnail" class="hide-for-medium2"/><span class="show-for-medium-up">{{produce2.label}} ({{produce2.plantCount}})</span></div>
         <div class="large-9 medium-8 small-10 columns">
-            <div class="gt-seedlings" style="float:left;width:{{produce2.dom.wSeedlings}}%;margin-left:{{produce2.dom.position}}%"></div>
-            <div class="gt-growing" style="float:left;width:{{produce2.dom.wGrowing}}%;"></div>
-            <div class="gt-harvest" style="float:left;width:{{produce2.dom.wHarvesting}}%;""></div>
+            <div class="gt-area-row">
+                <div class="gt-seedlings" style="float:left;width:{{produce2.dom.wSeedlings}}%;margin-left:{{produce2.dom.position}}%"></div>
+                <div class="gt-growing" style="float:left;width:{{produce2.dom.wGrowing}}%;"></div>
+                <div class="gt-harvest" style="float:left;width:{{produce2.dom.wHarvesting}}%;""></div>
+            </div>
         </div>
     </div>
 </div>

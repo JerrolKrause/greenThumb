@@ -23,9 +23,15 @@
                 <h3>Display Options:</h3>
                 Date : <input type="text" class="span2" value="" id="dp1" style="width:200px;" ng-value="datetoday" ng-model="date" ng-change="display()" datepicker=''/> 
 
-                <div style="display:none;">
+                <div>
                     <hr/>
                     <div class="large-4 columns">
+                        <h4>Errata</h4>
+                        <form action="#" id="gt-filter-task">
+                            <input type="checkbox" value="seedlings-count" name="gt-filter-seedlings-count" id="gt-filter-seedlings-count" checked="checked" ng-model="numSeedlings" ng-click="calcPlants()"><label for="gt-filter-seedlings-count">Seedling calculator</label>
+                        </form>
+                    </div>
+                    <div class="large-4 columns" style="display:none;">
                         <h4>Season</h4>
                         <form action="#" id="gt-filter-season">
                             <input type="checkbox" value="spring" name="gt-filter-season-spring" id="gt-filter-season-spring"><label for="gt-filter-season-spring">Spring (Mar - June)</label><br/>
@@ -34,7 +40,7 @@
                             <!-- <input type="checkbox" value="winter" name="gt-filter-season-winter" id="gt-filter-season-winter"><label for="gt-filter-season-winter">Winter</label>-->
                         </form>
                     </div>
-                    <div class="large-4 columns">
+                    <div class="large-4 columns" style="display:none;">
                         <h4>Task Type</h4>
                         <form action="#" id="gt-filter-task">
                             <input type="checkbox" value="seedlings" name="gt-filter-task-start-seedlings" id="gt-filter-task-start-seedlings" checked="checked"><label for="gt-filter-task-start-seedlings">Start Seedlings</label><br/>
@@ -43,13 +49,11 @@
                             <input type="checkbox" value="harvestComplete" name="gt-filter-task-complete-harvest" id="gt-filter-task-complete-harvest"><label for="gt-filter-task-complete-harvest">Complete Harvest</label>
                         </form>
                     </div>
-                    <div class="large-4 columns">
-                    </div>
+                   
                 </div>
                 <hr/>
             </div>
             
-
 
             <!-- Tasks -->
             <div id="gt-schedule" class="row" ng-controller="gtSchedule">
@@ -57,13 +61,13 @@
                     <h3>Today</h3>
                     <date-entry data="tasksToday"></date-entry>
                 </div>
-                <div class="large-4 columns" id="gt-schedule-prev">
-                    <h3>Previous</h3>
-                    <date-entry data="tasksPrev"></date-entry>
-                </div>
                 <div class="large-4 columns" id="gt-schedule-next">
                     <h3>Upcoming</h3>
                     <date-entry data="tasksNext"></date-entry>
+                </div>
+                 <div class="large-4 columns" id="gt-schedule-prev">
+                    <h3>Previous</h3>
+                    <date-entry data="tasksPrev"></date-entry>
                 </div>
                 <hr/>
             </div>
@@ -101,7 +105,11 @@
         </div>
 
         <script src="js/plugins.min.js"></script>
-        <script src="js/scripts.min.js"></script>
+        <!-- <script src="js/scripts.min.js"></script>-->
+        
+        <script src="js/produce.js" type="text/javascript"></script>
+        <script src="js/controller.js" type="text/javascript"></script>
+        
         <script>$(document).foundation();</script>
     </body>
 </html>
