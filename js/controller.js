@@ -12,12 +12,15 @@ var greenThumb = angular.module('gtApp', []);                                   
 
 /**
  * Ajaxes in the model content and makes available to angular
+ * @param {type} $http 
+ * @param {type} $rootScope
  */
 greenThumb.factory("gtGetData", function ($http, $rootScope) {
 
     //Main data object
     var data = {
         produce             : window.gtProduce,
+        dates               : {},
         update: function (obj) {
             //Overwrite any parameters supplied by the input object
             angular.merge(data.params, obj);
@@ -31,9 +34,9 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
         today               : moment(),                                         //Todays date
         tasksNext           : 30,                                               //Show upcoming tasks within this many days
         tasksPrev           : 30,                                               //Show upcoming tasks within this many days
-        calcPlants       : true                                              //Automatically calculate how many seedlings should be planted
+        calcPlants          : true,                                             //Automatically calculate how many seedlings should be planted
+        initLoad            : false
     };
-
 
     //Override todays date for testing
     data.params.today = moment().set({year: 2015, month: 2, date: 1, hours: 0});
@@ -45,9 +48,13 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
     }).then(function ($response) {
         model.build($response.data[0]);
     });
-
-
+    
+    
+    
+    //Main model class
     var model = {
+        
+        
         /**
          * Build the data model for the schedule to pass to angular
          * This method contains the master loop
@@ -55,11 +62,10 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
          * @returns {undefined}
          */
         build: function (obj) {
-            //console.log(data.params);
             //Load the garden into into the main data object
             data.garden = obj;
 
-            //Reset tasks, create default object to hold tasks
+            //Reset tasks/create default object to hold tasks
             data.tasks = {today: {}, prev: {}, next: {}};
 
             //Loop through each growing area in the model
@@ -88,48 +94,51 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
                         model.addDates(value2);
                     }
 
-                    //Reset seedling and plant counts
-                    value2.seedlingCount = '';
-                    value2.plantCount = '';
-                    //Calculate the number of seedlings and plants to produce based on grow area width
+                    //If the option to calculate plants is set
                     if(data.params.calcPlants === true && value1.length){
-                        var count = value1.produce.length;      //Number of types of produce in this grow bed. REQUIRES SAME SPACING
-                        var length = value1.length;             //Length of grow bed
-                        var spacing = value2.spacing;           //Spacing between plants
-                        var rows = value2.rowsPerBed || 1;      //# of rows in this bed to plant
-                        
-                        //Length of bed * 12 inches / plant spacing / number of produce items sharing this grow area * number of rows for this plant
-                        var numPlants =  Math.floor(length * 12 / spacing / count * rows);
-                        value2.plantCount = numPlants ;
-                        
-                        //Calculate the number of seedlings. We need a buffer to account for germination failure or weak seedlings.
-                        var seedlingCount;
-                        if(numPlants === 1){
-                            seedlingCount = value2.plantCount * 3;
-                        } else if(numPlants >=2 && numPlants < 5){
-                            seedlingCount = value2.plantCount * 2;
-                        } else if(numPlants >=6 && numPlants < 10){
-                            seedlingCount = value2.plantCount * 1.5;
-                        } else {
-                            seedlingCount = value2.plantCount + Math.floor(value2.plantCount/4);
-                        }
-                        value2.seedlingCount = seedlingCount + ' (' + numPlants +')';
-                        
-                    //Use default values if provided, if not set to blank   
+                       //Calculate tbe number of plants/seedlings needed by this grow bed
+                       model.addPlantCount(value1, value2);
+                    //Use set values if provided, if not set to blank   
                     } else {
                         value2.plantCount = value2.numPlants || '';
                         value2.seedlingCount = value2.seedlingPlants || '';
                     }
                     
+                    
                     //Loop through all the dates within each produce item
                     angular.forEach(data.garden.areas[key1].produce[key2].dates, function (value3, key3) {
+
+                        //Check if the master dates object has already been built, if not build it
+
+                        //Check if the an object exists to hold the date and date object, if not create it
+                        if (!angular.isObject(data.dates[value3.format("YYYYMMDD")])) {
+                            data.dates[value3.format("YYYYMMDD")] = {date: value3};
+                        }
+
+                        //Check if an array exists to hold the dates, if not create it
+                        if (!angular.isArray(data.dates[value3.format("YYYYMMDD")].items)) {
+                            data.dates[value3.format("YYYYMMDD")].items = [];
+                        }
+
+                        //Add the current produce item to the date array
+                        data.dates[value3.format("YYYYMMDD")].items.push(value2);
+
                         //Add the tasks to the view
                         model.addTasks(value2, value3, key3);
-                    });
-
-                });
+                    });//end dates loop
+                   
+                    
+                });//end produce loop
+            });//end grow area loop
+            
+            //Check if each task item is empty, if so set default text
+            angular.forEach(data.tasks, function (value, key) {
+                if (Object.keys(value).length === 0) {
+                    data.tasks[key] = 'Nothing';
+                }
             });
-
+            
+            //console.log(data.dates);
             //Now that the task and garden list has been rebuilt, broadcast the update to the controllers so that the data is updated in the view
             $rootScope.$broadcast('dataPassed');
         }, //end model.build
@@ -147,25 +156,57 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
             //Now we need to add dates for the other planting chores, IE starting seedlings etc.
             //These are all based off the plant date and pull data from produce.js
             produce.dates = {
-                plant: plant,
-                seedlings: plant.clone().subtract(produce.seedling, 'weeks'), //.day(6) <- round to nearest saturday
-                harvest_start: plant.clone().add(produce.maturity, 'days'),
-                harvest_finish: plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
+                plant           : plant,
+                seedlings       : plant.clone().subtract(produce.seedling, 'weeks'), //.day(6) <- round to nearest saturday
+                harvest_start   : plant.clone().add(produce.maturity, 'days'),
+                harvest_finish  : plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
             };
 
-            //Create parameters needed by the DOM elements, mainly for positioning
+            //Create parameters needed by the DOM elements, used for width and positioning of calendar items
             produce.dom = {
-                wSeedlings: Math.round(produce.seedling * 7 * 100 / 365 * 10) / 10 + 5,
-                wGrowing: Math.round(produce.maturity * 100 / 365 * 10) / 10,
-                wHarvesting: Math.round(produce.harvest * 7 * 100 / 365 * 10) / 10,
-                pSeedlings: Math.round((((produce.dates.seedlings.format("M") - 1) * 8.333) + ((produce.dates.seedlings.format("D") / produce.dates.seedlings.daysInMonth()) * 8.333)) * 10) / 10,
-                pGrowing: Math.round((((produce.dates.plant.format("M") - 1) * 8.333) + ((produce.dates.plant.format("D") / produce.dates.plant.daysInMonth()) * 8.333)) * 10) / 10,
-                pHarvesting: Math.round((((produce.dates.harvest_start.format("M") - 1) * 8.333) + ((produce.dates.harvest_start.format("D") / produce.dates.harvest_start.daysInMonth()) * 8.333)) * 10) / 10
+                wSeedlings      : Math.round(produce.seedling * 7 * 100 / 365 * 10) / 10 + 5,
+                wGrowing        : Math.round(produce.maturity * 100 / 365 * 10) / 10,
+                wHarvesting     : Math.round(produce.harvest * 7 * 100 / 365 * 10) / 10,
+                pSeedlings      : Math.round((((produce.dates.seedlings.format("M") - 1) * 8.333) + ((produce.dates.seedlings.format("D") / produce.dates.seedlings.daysInMonth()) * 8.333)) * 10) / 10,
+                pGrowing        : Math.round((((produce.dates.plant.format("M") - 1) * 8.333) + ((produce.dates.plant.format("D") / produce.dates.plant.daysInMonth()) * 8.333)) * 10) / 10,
+                pHarvesting     : Math.round((((produce.dates.harvest_start.format("M") - 1) * 8.333) + ((produce.dates.harvest_start.format("D") / produce.dates.harvest_start.daysInMonth()) * 8.333)) * 10) / 10
             };
             
-            produce.dom.dupeMe = produce.dom.wHarvesting + produce.dom.pHarvesting;
-            
         }, //end model.addDates
+
+
+        /**
+         * Calculates the numer of plants and seedlings needed, determined by the growing area size
+         * @param {type} value1
+         * @param {type} value2
+         * @returns {undefined}
+         */
+        addPlantCount: function (value1, value2) {
+            //console.log(value1);
+            //Reset seedling and plant counts
+            value2.seedlingCount, value2.plantCount = '';
+
+            var count           = value1.produce.length;       //Number of types of produce in this grow bed. REQUIRES SAME SPACING
+            var length          = value1.length;               //Length of grow bed
+            var spacing         = value2.spacing;              //Spacing between plants
+            var rows            = value2.rowsPerBed || 1;      //# of rows in this bed to plant
+
+            //Length of bed * 12 inches / plant spacing / number of produce items sharing this grow area * number of rows for this plant
+            value2.plantCount   = Math.floor(length * 12 / spacing  * rows);
+
+            //Calculate the number of seedlings. We need a buffer to account for germination failure or weak seedlings.
+            var seedlingCount;
+            if (value2.plantCount === 1) {
+                seedlingCount = value2.plantCount * 3;
+            } else if (value2.plantCount >= 2 && value2.plantCount < 5) {
+                seedlingCount = value2.plantCount * 2;
+            } else if (value2.plantCount >= 6 && value2.plantCount < 10) {
+                seedlingCount = value2.plantCount * 1.5;
+            } else {
+                seedlingCount = value2.plantCount + Math.floor(value2.plantCount / 4);
+            }
+            value2.seedlingCount = seedlingCount + ' (' + value2.plantCount + ')';
+        }, //end model.addPlantCount
 
 
         /**
@@ -177,18 +218,18 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
          */
         addTasks: function (produce, value3, key3) {
             //console.log('addTasks');
+            
             //Now loop through all the dates within this produce item
-
             //If Today
             if (value3.isSame(data.params.today, 'day') === true) {
                 //Check if an object has been created for this date, if not create one
-                if (!$.isPlainObject(data.tasks.today[value3.format("YYYYMMDD")])) {
+                if (!angular.isObject(data.tasks.today[value3.format("YYYYMMDD")])) {
                     data.tasks.today[value3.format("YYYYMMDD")] = {
                         label: value3.format("dddd, MMMM Do")
                     };
                 }
                 //Now check if the object has an array to hold the values, if not create one
-                if (!$.isArray(data.tasks.today[value3.format("YYYYMMDD")].items)) {
+                if (!angular.isArray(data.tasks.today[value3.format("YYYYMMDD")].items)) {
                     data.tasks.today[value3.format("YYYYMMDD")].items = [];
                 }
                 //Get a properly formatted task string
@@ -198,13 +239,13 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
                 //If previous    
             } else if (value3.isBetween(data.params.today.clone().subtract(data.params.tasksPrev, 'days'), data.params.today, 'day') === true) {
                 //Check if an object has been created for this date, if not create one
-                if (!$.isPlainObject(data.tasks.prev[value3.format("YYYYMMDD")])) {
+                if (!angular.isObject(data.tasks.prev[value3.format("YYYYMMDD")])) {
                     data.tasks.prev[value3.format("YYYYMMDD")] = {
                         label: value3.format("dddd, MMMM Do")
                     };
                 }
                 //Now check if the object has an array to hold the values, if not create one
-                if (!$.isArray(data.tasks.prev[value3.format("YYYYMMDD")].items)) {
+                if (!angular.isArray(data.tasks.prev[value3.format("YYYYMMDD")].items)) {
                     data.tasks.prev[value3.format("YYYYMMDD")].items = [];
                 }
                 //Get a properly formatted task string
@@ -214,13 +255,13 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
                 //If upcoming  /  
             } else if (value3.isBetween(data.params.today, data.params.today.clone().add(data.params.tasksNext, 'days'), 'day') === true) {
                 //Check if an object has been created for this date, if not create one
-                if (!$.isPlainObject(data.tasks.next[value3.format("YYYYMMDD")])) {
+                if (!angular.isObject(data.tasks.next[value3.format("YYYYMMDD")])) {
                     data.tasks.next[value3.format("YYYYMMDD")] = {
                         label: value3.format("dddd, MMMM Do")
                     };
                 }
                 //Now check if the object has an array to hold the values, if not create one
-                if (!$.isArray(data.tasks.next[value3.format("YYYYMMDD")].items)) {
+                if (!angular.isArray(data.tasks.next[value3.format("YYYYMMDD")].items)) {
                     data.tasks.next[value3.format("YYYYMMDD")].items = [];
                 }
                 //Get a properly formatted task string
@@ -275,11 +316,13 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
  * Controller for the task scheduler
  */
 greenThumb.controller('gtSchedule', function ($scope, gtGetData) {
-
+    
     $scope.$on('dataPassed', function () {
         $scope.tasksToday = gtGetData.tasks.today;
         $scope.tasksPrev = gtGetData.tasks.prev;
         $scope.tasksNext = gtGetData.tasks.next;
+       
+        //console.log(gtGetData.tasks);
     });
 
 }).directive('dateEntry', function () {
@@ -302,8 +345,8 @@ greenThumb.controller('gtCalendar', function ($scope, gtGetData) {
     $scope.$on('dataPassed', function () {
         $scope.name = gtGetData.garden.name;
         $scope.garden = gtGetData.garden.areas;
-
     });
+    
 }).directive('areas', function () {
     return {
         restrict: 'E',

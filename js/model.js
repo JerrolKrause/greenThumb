@@ -30,7 +30,7 @@
             "produce": [
                 {"slug": "melon_earlichamp", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                 {"slug": "melon_diplomat", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
-                 {"slug": "melon_earlichamp", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
+                {"slug": "melon_earlichamp", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
                 {"slug": "melon_diplomat", "dates" : {"plant" : {"month" : 6 , "day" : 1}}}
             ]
         },
@@ -52,7 +52,7 @@
                 {"slug": "tomato_sun_gold", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                 {"slug": "tomato_black_cherry", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                 {"slug": "tomato_matts_wild_cherry", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
-                 {"slug": "tomato_big_beef", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
+                {"slug": "tomato_big_beef", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
                 {"slug": "tomato_sun_gold", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
                 {"slug": "tomato_black_cherry", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
                 {"slug": "tomato_matts_wild_cherry", "dates" : {"plant" : {"month" : 6 , "day" : 1}}}

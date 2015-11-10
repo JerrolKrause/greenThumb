@@ -1,4 +1,7 @@
 #gt-container{padding:20px;font-size:0.9em;}
+    #gt-container .row {max-width: 100%;}
+    #gt-container p, #gt-container li{font-size:0.9em;}
+    
 .gt-col{float:left;text-align:center;width:8.333%;background: #ccc url('../img/pixel-white.png') repeat-y right top;font-size: 0.9rem;}
 
 .gt-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;background-color: #ebebeb;}
@@ -9,14 +12,14 @@
         
     .gt-area-item{margin-bottom:1px;}
         .gt-area-item img{margin-right:10px;float:left;}
-        .gt-area-item span{float:left;}
+        .gt-area-item span{}
 
 #gt-areas{position:relative;}       
 #gt-date{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:25%;display:none!important;}    
 
 
 
-.row {max-width: 100%;}
+
 
 @media only screen and (max-width: 40em) { 
     #gt-areas{background-color: #ebebeb;padding-top:5px;padding-bottom:5px}
