@@ -148,20 +148,22 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
             //These are all based off the plant date and pull data from produce.js
             produce.dates = {
                 plant: plant,
-                seedlings: plant.clone().subtract(produce.seedling, 'weeks'), //.day(6)
+                seedlings: plant.clone().subtract(produce.seedling, 'weeks'), //.day(6) <- round to nearest saturday
                 harvest_start: plant.clone().add(produce.maturity, 'days'),
                 harvest_finish: plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
             };
 
             //Create parameters needed by the DOM elements, mainly for positioning
             produce.dom = {
-                wSeedlings: Math.round(produce.seedling * 7 * 100 / 365 * 10) / 10,
+                wSeedlings: Math.round(produce.seedling * 7 * 100 / 365 * 10) / 10 + 5,
                 wGrowing: Math.round(produce.maturity * 100 / 365 * 10) / 10,
                 wHarvesting: Math.round(produce.harvest * 7 * 100 / 365 * 10) / 10,
-                position: Math.round((((produce.dates.seedlings.format("M") - 1) * 8.333) + ((produce.dates.seedlings.format("D") / produce.dates.seedlings.daysInMonth()) * 8.333)) * 10) / 10
+                pSeedlings: Math.round((((produce.dates.seedlings.format("M") - 1) * 8.333) + ((produce.dates.seedlings.format("D") / produce.dates.seedlings.daysInMonth()) * 8.333)) * 10) / 10,
+                pGrowing: Math.round((((produce.dates.plant.format("M") - 1) * 8.333) + ((produce.dates.plant.format("D") / produce.dates.plant.daysInMonth()) * 8.333)) * 10) / 10,
+                pHarvesting: Math.round((((produce.dates.harvest_start.format("M") - 1) * 8.333) + ((produce.dates.harvest_start.format("D") / produce.dates.harvest_start.daysInMonth()) * 8.333)) * 10) / 10
             };
             
-            
+            produce.dom.dupeMe = produce.dom.wHarvesting + produce.dom.pHarvesting;
             
         }, //end model.addDates
 

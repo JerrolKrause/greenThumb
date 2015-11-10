@@ -2,7 +2,11 @@
 .gt-col{float:left;text-align:center;width:8.333%;background: #ccc url('../img/pixel-white.png') repeat-y right top;font-size: 0.9rem;}
 
 .gt-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;background-color: #ebebeb;}
-    .gt-area-row{width:auto;position: absolute;left: 0;top: 0;right: 0;bottom: 0;overflow: hidden;height: 25px;}
+    .gt-area-row{position:relative;height: 25px;overflow:hidden;}
+        .gt-seedlings{position:absolute;z-index:11;top:0px;background-color:#00a651;height: 25px;}
+        .gt-growing{position:absolute;z-index:12;top:0px;background-color:#007236;height: 25px;}
+        .gt-harvest{position:absolute;z-index:10;top:0px;background-color:#c69c6d;height: 25px;}
+        
     .gt-area-item{margin-bottom:1px;}
         .gt-area-item img{margin-right:10px;float:left;}
         .gt-area-item span{float:left;}
@@ -11,9 +15,6 @@
 #gt-date{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:25%;display:none!important;}    
 
 
-.gt-seedlings{background-color:#00a651;min-height: 25px;}
-.gt-growing{background-color:#007236;min-height: 25px;}
-.gt-harvest{background-color:#c69c6d;min-height: 25px;}
 
 .row {max-width: 100%;}
 

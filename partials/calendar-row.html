@@ -4,9 +4,15 @@
         <div class="large-3 medium-4 small-2 columns"><img src="img/thumbs/default.png" alt="{{produce2.label}} Thumbnail" class="hide-for-medium2"/><span class="show-for-medium-up">{{produce2.label}} ({{produce2.plantCount}})</span></div>
         <div class="large-9 medium-8 small-10 columns">
             <div class="gt-area-row">
-                <div class="gt-seedlings" style="float:left;width:{{produce2.dom.wSeedlings}}%;margin-left:{{produce2.dom.position}}%"></div>
-                <div class="gt-growing" style="float:left;width:{{produce2.dom.wGrowing}}%;"></div>
-                <div class="gt-harvest" style="float:left;width:{{produce2.dom.wHarvesting}}%;""></div>
+                <div class="gt-seedlings" style="left:{{produce2.dom.pSeedlings}}%;width:{{produce2.dom.wSeedlings}}%;"></div>
+                <div class="gt-growing" style="left:{{produce2.dom.pGrowing}}%;width:{{produce2.dom.wGrowing}}%;"></div>
+                <div class="gt-harvest" style="left:{{produce2.dom.pHarvesting}}%;width:{{produce2.dom.wHarvesting}}%;"></div>
+                
+                <div ng-if="produce2.dom.pSeedlings + produce2.dom.wSeedlings > 100" class="gt-seedlings" style="left:{{-(100 - produce2.dom.pSeedlings)}}%;width:{{produce2.dom.wSeedlings}}%;"></div>
+                <div ng-if="produce2.dom.pGrowing + produce2.dom.wGrowing > 100" class="gt-growing" style="left:{{-(100 - produce2.dom.pGrowing)}}%;width:{{produce2.dom.wGrowing}}%;"></div>
+                <div ng-if="produce2.dom.pHarvesting + produce2.dom.wHarvesting > 100" class="gt-harvest" style="left:{{-(100 - produce2.dom.pHarvesting)}}%;width:{{produce2.dom.wHarvesting}}%;"></div>
+              
+                
             </div>
         </div>
     </div>

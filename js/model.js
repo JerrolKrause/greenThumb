@@ -9,7 +9,7 @@
                 {"slug": "cucumber_diva", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                 {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                 {"slug": "cucumber_diva", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 6 , "day" : 1}}}
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 10 , "day" : 1}}}
             ]
         },
         {
@@ -20,7 +20,7 @@
                 {"slug": "squash_butternut", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                 {"slug": "squash_butternut_butterscotch", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                 {"slug": "squash_butternut", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
-                {"slug": "squash_butternut_butterscotch", "dates" : {"plant" : {"month" : 6 , "day" : 1}}}
+                {"slug": "squash_butternut_butterscotch", "dates" : {"plant" : {"month" : 7 , "day" : 1}}}
             ]
         },
         {
