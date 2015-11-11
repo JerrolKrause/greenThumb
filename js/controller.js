@@ -25,7 +25,7 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
             //Overwrite any parameters supplied by the input object
             angular.merge(data.params, obj);
             //Now rebuild the appropriate items in the garden
-            model.build(data.garden);
+            model.initialize(data.garden);
         }
     };
 
@@ -46,7 +46,7 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
         method: 'GET',
         url: 'js/model.js'
     }).then(function ($response) {
-        model.build($response.data[0]);
+        model.initialize($response.data[0]);
     });
     
     
@@ -61,39 +61,24 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
          * @param {type} obj - An object containing the garden info. Originally passed from ajax then stored in the data object
          * @returns {undefined}
          */
-        build: function (obj) {
+        initialize: function (obj) {
             //Load the garden into into the main data object
             data.garden = obj;
-
-            //Reset tasks/create default object to hold tasks
-            data.tasks = {today: {}, prev: {}, next: {}};
 
             //Loop through each growing area in the model
             angular.forEach(data.garden.areas, function (value1, key1) {
                 //Loop through the produce within each area
                 angular.forEach(value1.produce, function (value2, key2) {
 
-                    //Check if this item has an ID set, this ensure this only happens once per loop
-                    //If not set, we need to take the ID from the model and use that to pull in all the produce data
-                    if (!value2.hasOwnProperty('id')) {
-                        //If this produce item has a parent, load the child properties first
-                        if (data.produce[value2.slug].hasOwnProperty('parent')) {
-                            value2 = angular.extend(value2, data.produce[data.produce[value2.slug].parent]);
-                        }
-
-                        //Now load the OVERRIDE properties from the main produce item, this will replace any properties from a parent produce item
-                        value2 = angular.extend(value2, data.produce[value2.slug]);
-                        //Add an ID for 'track by' performance issue
-                        value2.id = key2;
+                    if(data.params.initLoad === false){
+                        model.build(value1, key1,value2, key2);
                     }
-
-                    //Check if the dates have already been generated, only generate on first pass
-                    if (typeof value2.dates.seedlings === 'undefined') {
-                        //Update the model with the seedling, harvest start and harvest complete dates
-                        //Object needs to be duplicate since we are reusing data from the input object
-                        model.addDates(value2);
-                    }
-
+                    
+                    //model.refresh();
+                  
+                   
+                   
+                     /* */
                     //If the option to calculate plants is set
                     if(data.params.calcPlants === true && value1.length){
                        //Calculate tbe number of plants/seedlings needed by this grow bed
@@ -103,46 +88,88 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
                         value2.plantCount = value2.numPlants || '';
                         value2.seedlingCount = value2.seedlingPlants || '';
                     }
-                    
-                    
-                    //Loop through all the dates within each produce item
-                    angular.forEach(data.garden.areas[key1].produce[key2].dates, function (value3, key3) {
-
-                        //Check if the master dates object has already been built, if not build it
-
-                        //Check if the an object exists to hold the date and date object, if not create it
-                        if (!angular.isObject(data.dates[value3.format("YYYYMMDD")])) {
-                            data.dates[value3.format("YYYYMMDD")] = {date: value3};
-                        }
-
-                        //Check if an array exists to hold the dates, if not create it
-                        if (!angular.isArray(data.dates[value3.format("YYYYMMDD")].items)) {
-                            data.dates[value3.format("YYYYMMDD")].items = [];
-                        }
-
-                        //Add the current produce item to the date array
-                        data.dates[value3.format("YYYYMMDD")].items.push(value2);
-
-                        //Add the tasks to the view
-                        model.addTasks(value2, value3, key3);
-                    });//end dates loop
                    
                     
                 });//end produce loop
             });//end grow area loop
             
-            //Check if each task item is empty, if so set default text
-            angular.forEach(data.tasks, function (value, key) {
-                if (Object.keys(value).length === 0) {
-                    data.tasks[key] = 'Nothing';
-                }
-            });
+            
+            model.addTasks();
+            
+            data.params.initLoad = true;
+            
+          
             
             //console.log(data.dates);
             //Now that the task and garden list has been rebuilt, broadcast the update to the controllers so that the data is updated in the view
             $rootScope.$broadcast('dataPassed');
         }, //end model.build
 
+
+        /**
+         * 
+         * @param {type} value1
+         * @param {type} key1
+         * @param {type} value2
+         * @param {type} key2
+         * @returns {undefined}
+         */
+        build: function (value1, key1,value2, key2) {
+            //Check if this item has an ID set, this ensure this only happens once per loop
+            //If not set, we need to take the ID from the model and use that to pull in all the produce data
+            if (!value2.hasOwnProperty('id')) {
+                //If this produce item has a parent, load the child properties first
+                if (data.produce[value2.slug].hasOwnProperty('parent')) {
+                    value2 = angular.extend(value2, data.produce[data.produce[value2.slug].parent]);
+                }
+
+                //Now load the OVERRIDE properties from the main produce item, this will replace any properties from a parent produce item
+                value2 = angular.extend(value2, data.produce[value2.slug]);
+                //Add an ID for 'track by' performance issue
+                value2.id = key2;
+            }
+
+            //Check if the dates have already been generated, only generate on first pass
+            if (typeof value2.dates.seedlings === 'undefined') {
+                //Update the model with the seedling, harvest start and harvest complete dates
+                //Object needs to be duplicate since we are reusing data from the input object
+                model.addDates(value2);
+            }
+
+            //Loop through all the dates within each produce item
+            angular.forEach(data.garden.areas[key1].produce[key2].dates, function (value3, key3) {
+
+                //Check if the an object exists to hold the date and date object, if not create it
+                if (!angular.isObject(data.dates[value3.format("YYYYMMDD")])) {
+                    data.dates[value3.format("YYYYMMDD")] = {date: value3};
+                }
+
+                //Check if an array exists to hold the dates, if not create it
+                if (!angular.isObject(data.dates[value3.format("YYYYMMDD")].items)) {
+                    data.dates[value3.format("YYYYMMDD")].items = {};
+                }
+                
+                //Check if an array exists to hold the dates, if not create it
+                if (!angular.isArray(data.dates[value3.format("YYYYMMDD")].items[key3])) {
+                    data.dates[value3.format("YYYYMMDD")].items[key3] = [];
+                }
+
+                //Add the current produce item to the date array
+                data.dates[value3.format("YYYYMMDD")].items[key3].push(value2);
+                //data.dates[value3.format("YYYYMMDD")][key3].push(value2);
+            });//end dates loop
+        },
+
+
+        /**
+         * 
+         * @returns {undefined}
+         */
+        refresh : function(){
+            //console.log('model.refresh');
+            
+            
+        },
 
         /**
          * Adds the seedling, harvest start and harvest complete dates to the object. These dates are based off the plant date.
@@ -184,7 +211,7 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
         addPlantCount: function (value1, value2) {
             //console.log(value1);
             //Reset seedling and plant counts
-            value2.seedlingCount, value2.plantCount = '';
+            value2.seedlingCount = value2.plantCount = '';
 
             var count           = value1.produce.length;       //Number of types of produce in this grow bed. REQUIRES SAME SPACING
             var length          = value1.length;               //Length of grow bed
@@ -216,59 +243,31 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
          * @param {type} key3
          * @returns {undefined}
          */
-        addTasks: function (produce, value3, key3) {
-            //console.log('addTasks');
-            
-            //Now loop through all the dates within this produce item
-            //If Today
-            if (value3.isSame(data.params.today, 'day') === true) {
-                //Check if an object has been created for this date, if not create one
-                if (!angular.isObject(data.tasks.today[value3.format("YYYYMMDD")])) {
-                    data.tasks.today[value3.format("YYYYMMDD")] = {
-                        label: value3.format("dddd, MMMM Do")
-                    };
+        addTasks: function () {
+           
+            //Reset tasks/create default object to hold tasks
+            data.tasks = {today: {}, prev: {}, next: {}};
+
+            //Loop through the dates in the date object
+            angular.forEach(data.dates, function (value, key) {
+                //If task occurs today
+                if (value.date.isSame(data.params.today, 'day') === true) {
+                    model.formatTasks(value, data.tasks.today);
+                //If task is previous    
+                } else if (value.date.isBetween(data.params.today.clone().subtract(data.params.tasksPrev, 'days'), data.params.today, 'day') === true) {
+                    model.formatTasks(value, data.tasks.prev);
+                //If task is upcoming/next     
+                } else if (value.date.isBetween(data.params.today, data.params.today.clone().add(data.params.tasksNext, 'days'), 'day') === true) {
+                    model.formatTasks(value, data.tasks.next);
                 }
-                //Now check if the object has an array to hold the values, if not create one
-                if (!angular.isArray(data.tasks.today[value3.format("YYYYMMDD")].items)) {
-                    data.tasks.today[value3.format("YYYYMMDD")].items = [];
+            });
+         
+            //Check if each task item is empty, if so set default text
+            angular.forEach(data.tasks, function (value, key) {
+                if (Object.keys(value).length === 0) {
+                    data.tasks[key] = 'Nothing';
                 }
-                //Get a properly formatted task string
-                var task = model.formatTasks(key3, produce);
-                //Then send it to the previous task container object
-                data.tasks.today[value3.format("YYYYMMDD")].items.push(task);
-                //If previous    
-            } else if (value3.isBetween(data.params.today.clone().subtract(data.params.tasksPrev, 'days'), data.params.today, 'day') === true) {
-                //Check if an object has been created for this date, if not create one
-                if (!angular.isObject(data.tasks.prev[value3.format("YYYYMMDD")])) {
-                    data.tasks.prev[value3.format("YYYYMMDD")] = {
-                        label: value3.format("dddd, MMMM Do")
-                    };
-                }
-                //Now check if the object has an array to hold the values, if not create one
-                if (!angular.isArray(data.tasks.prev[value3.format("YYYYMMDD")].items)) {
-                    data.tasks.prev[value3.format("YYYYMMDD")].items = [];
-                }
-                //Get a properly formatted task string
-                var task = model.formatTasks(key3, produce);
-                //Then send it to the previous task container object
-                data.tasks.prev[value3.format("YYYYMMDD")].items.push(task);
-                //If upcoming  /  
-            } else if (value3.isBetween(data.params.today, data.params.today.clone().add(data.params.tasksNext, 'days'), 'day') === true) {
-                //Check if an object has been created for this date, if not create one
-                if (!angular.isObject(data.tasks.next[value3.format("YYYYMMDD")])) {
-                    data.tasks.next[value3.format("YYYYMMDD")] = {
-                        label: value3.format("dddd, MMMM Do")
-                    };
-                }
-                //Now check if the object has an array to hold the values, if not create one
-                if (!angular.isArray(data.tasks.next[value3.format("YYYYMMDD")].items)) {
-                    data.tasks.next[value3.format("YYYYMMDD")].items = [];
-                }
-                //Get a properly formatted task string
-                var task = model.formatTasks(key3, produce);
-                //Then send it to the previous task container object
-                data.tasks.next[value3.format("YYYYMMDD")].items.push(task);
-            }
+            });
         }, //end model.addTasks
 
 
@@ -278,32 +277,49 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
          * @param {obj} obj - The plant object
          * @returns {controller_L4.greenThumb.model.formatTasks.obj} - Returns the plant object with the dates added
          */
-        formatTasks: function (type, obj) {
-
-            var str;
+        formatTasks: function (dateItems, taskObj) {
             
-            //Figure out which activity type this is, set appropriate string for output in task pane
-            switch (type) {
-                case 'seedlings':
-                    str = 'Start ' + obj.seedlingCount + ' seedlings for ' + obj.label;
-                    break;
-                case 'plant':
-                    str = 'Plant ' + obj.plantCount + ' ' + obj.label;
-                    break;
-                case 'harvest_start':
-                    str = 'Start harvesting ' + obj.label;
-                    break;
-                case 'harvest_finish':
-                    str = 'Finish harvesting ' + obj.label;
-                    break;
-            }
-
-            var obj = {
-                label: str,
-                slug: 'filter-task-' + type,
-                produce: obj
-            };
-            return obj;
+            //Loop through each of the task types in the dateItems obj, IE seedlings, plant, harvest
+            //This implementation can accomodate multiple tasks type occuring on the same day (IE start seedlings and plant something)
+            angular.forEach(dateItems.items, function (value, key) {
+                //Now loop through each individual task item within the group
+                angular.forEach(value, function (value2, key2) {
+                    //console.log(value2)
+                    var str;
+                    
+                    //Figure out which activity type this is, set appropriate string for output in task pane
+                    switch (key) {
+                        case 'seedlings':
+                            str = 'Start ' + value2.seedlingCount + ' seedlings for ' + value2.label;
+                            break;
+                        case 'plant':
+                            str = 'Plant ' + value2.plantCount + ' ' + value2.label;
+                            break;
+                        case 'harvest_start':
+                            str = 'Start harvesting ' + value2.label;
+                            break;
+                        case 'harvest_finish':
+                            str = 'Finish harvesting ' + value2.label;
+                            break;
+                    }
+                    
+                    var obj = {
+                        label: str,
+                        slug: 'filter-task-' + key
+                    };
+                    
+                    //Make sure the date object exists, if not create it
+                    if (!angular.isObject(taskObj[dateItems.date.format("YYYYMMDD")])) {
+                        taskObj[dateItems.date.format("YYYYMMDD")] = {
+                            label: dateItems.date.format("dddd, MMMM Do"),
+                            items : []
+                        };
+                    }
+                    
+                    //Load the task into the task object
+                    taskObj[dateItems.date.format("YYYYMMDD")].items.push(obj); 
+                });
+            });
         }
     };//end model.formatTasks
 
@@ -321,8 +337,6 @@ greenThumb.controller('gtSchedule', function ($scope, gtGetData) {
         $scope.tasksToday = gtGetData.tasks.today;
         $scope.tasksPrev = gtGetData.tasks.prev;
         $scope.tasksNext = gtGetData.tasks.next;
-       
-        //console.log(gtGetData.tasks);
     });
 
 }).directive('dateEntry', function () {
