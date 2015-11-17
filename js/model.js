@@ -6,10 +6,19 @@
             "width": 1.5,
             "length": 5,
             "produce": [
-                {"slug": "cucumber_diva", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
+                {"slug": "cucumber_diva", "dates" : {"plant" : {"month" : 0 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 1 , "day" : 1}}},
                 {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
-                {"slug": "cucumber_diva", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 10 , "day" : 1}}}
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 3 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 4 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 5 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 7 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 8 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 9 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 10 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 11 , "day" : 1}}},
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 12 , "day" : 1}}}
             ]
         },
         {

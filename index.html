@@ -26,18 +26,17 @@
                 <div>
                     <hr/>
                     <div class="large-4 columns">
+                        <h4>Season</h4>
+                        <form action="#" id="gt-filter-season">
+                            <input type="checkbox" value="spring" name="gt-filter-season-spring" id="gt-filter-season-spring" ng-model="filter.spring" ng-click="filterSeason('filterSpring')"><label for="gt-filter-season-spring">Spring (Mar - June)</label><br/>
+                            <input type="checkbox" value="summer" name="gt-filter-season-summer" id="gt-filter-season-summer" ng-model="filter.summer" ng-click="filterSeason('filterSummer')"><label for="gt-filter-season-summer">Summer (July - Oct)</label><br/>
+                            <input type="checkbox" value="fall" name="gt-filter-season-fall" id="gt-filter-season-fall" ng-model="filter.fall" ng-click="filterSeason('filterFall')"><label for="gt-filter-season-fall">Fall (Nov - Feb)</label>
+                        </form>
+                    </div>
+                    <div class="large-4 columns">
                         <h4>Errata</h4>
                         <form action="#" id="gt-filter-task">
                             <input type="checkbox" value="seedlings-count" name="gt-filter-seedlings-count" id="gt-filter-seedlings-count" checked="checked" ng-model="numSeedlings" ng-click="calcPlants()"><label for="gt-filter-seedlings-count">Calculate # of Plants</label>
-                        </form>
-                    </div>
-                    <div class="large-4 columns" style="display:none;">
-                        <h4>Season</h4>
-                        <form action="#" id="gt-filter-season">
-                            <input type="checkbox" value="spring" name="gt-filter-season-spring" id="gt-filter-season-spring"><label for="gt-filter-season-spring">Spring (Mar - June)</label><br/>
-                            <input type="checkbox" value="summer" name="gt-filter-season-summer" id="gt-filter-season-summer"><label for="gt-filter-season-summer">Summer (July - Oct)</label><br/>
-                            <input type="checkbox" value="fall" name="gt-filter-season-fall" id="gt-filter-season-fall"><label for="gt-filter-season-fall">Fall (Nov - Feb)</label><br/>
-                            <!-- <input type="checkbox" value="winter" name="gt-filter-season-winter" id="gt-filter-season-winter"><label for="gt-filter-season-winter">Winter</label>-->
                         </form>
                     </div>
                     <div class="large-4 columns" style="display:none;">
@@ -56,7 +55,7 @@
             
 
             <!-- Tasks -->
-            <div id="gt-schedule" class="row" ng-controller="gtSchedule">
+            <div id="gt-schedule" class="row" ng-controller="gtSchedule" style="display:none;">
                 <div class="large-4 columns" id="gt-schedule-today">
                     <h3>Today</h3>
                     <date-entry data="tasksToday"></date-entry>
@@ -98,7 +97,7 @@
                 <h3 ng-bind="name"></h3>
                 <div id="gt-areas">
                     <div id="gt-date" class="show-for-large-up"></div>
-                    <areas data="garden"></areas>
+                    <areas data="garden" data2="params"></areas>
                 </div>
 
             </div>
