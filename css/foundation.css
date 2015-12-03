@@ -1454,7 +1454,7 @@ input:not([type]), input[type="text"], input[type="password"], input[type="date"
   border-color: #cccccc;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.75);
-  display: block;
+  display: inline-block;
   font-family: inherit;
   font-size: 0.875rem;
   height: 2.3125rem;

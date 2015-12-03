@@ -7,7 +7,10 @@
 
 
 'use strict';
-var greenThumb = angular.module('gtApp', []);                                   //Angular app
+var greenThumb = angular.module('gtApp', ['ui.router']);                                   //Angular app
+
+
+
 
 
 /**
@@ -15,7 +18,7 @@ var greenThumb = angular.module('gtApp', []);                                   
  * @param {type} $http 
  * @param {type} $rootScope
  */
-greenThumb.factory("gtGetData", function ($http, $rootScope) {
+greenThumb.factory("gtGetData", function ($http, $rootScope, $stateParams, $state) {
 
     //Main data object
     var data = {
@@ -36,12 +39,10 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
         tasksPrev           : 30,                                               //Show upcoming tasks within this many days
         calcPlants          : true,                                             //Automatically calculate how many seedlings should be planted
         initLoad            : false,                                            //Flag to ensure certain only items fire on first load
-        filters             : false                                             //Holds filtering options
+        filters             : {season : false, tasks : false}                                             //Holds filtering options
     };
 
-    //Override todays date for testing
-    data.params.today = moment().set({year: 2015, month: 2, date: 1, hours: 0});
-
+    
     //Fetch JSON object of garden to use
     $http({
         method: 'GET',
@@ -51,9 +52,19 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
     });
     
     
-    
     //Main model class
     var model = {
+        
+        
+        state: function () {
+            //Override todays date for testing
+            if (typeof $stateParams.date !== 'undefined') {
+                var date = $stateParams.date.split('-');
+                data.params.today = moment().set({year: parseInt(date[0], 10), month: parseInt(date[1], 10) - 1, date: parseInt(date[2], 10), hours: 0});
+            } else {
+                data.params.today = moment().set({year: 2015, month: 2, date: 1, hours: 0});
+            }
+        },
         
         /**
          * Build the data model for the schedule to pass to angular
@@ -64,6 +75,12 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
         initialize: function (obj) {
             //Load the garden into into the main data object
             data.garden = obj;
+            
+            if (data.params.initLoad === false) {
+                console.log('State on load')
+                model.state();
+            }
+           
             
             //Loop through each growing area in the model
             angular.forEach(data.garden.areas, function (value1, key1) {
@@ -201,7 +218,7 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
                 plant           : plant,
                 seedlings       : plant.clone().subtract(produce.seedling, 'weeks'), //.day(6) <- round to nearest saturday
                 harvest_start   : plant.clone().add(produce.maturity, 'days'),
-                harvest_finish  : plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
+                harvest_complete  : plant.clone().add((produce.harvest * 7) + produce.maturity, 'days')
             };
 
             //Create parameters needed by the DOM elements, used for width and positioning of calendar items
@@ -276,7 +293,7 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
          * @returns {controller_L4.greenThumb.model.formatTasks.obj} - Returns the plant object with the dates added
          */
         addTasks: function (dateItems, taskObj) {
-            
+         
             //Loop through each of the task types in the dateItems obj, IE seedlings, plant, harvest
             //This implementation can accomodate multiple tasks type occuring on the same day (IE start seedlings and plant something)
             angular.forEach(dateItems.items, function (value, key) {
@@ -296,14 +313,14 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
                         case 'harvest_start':
                             str = 'Start harvesting ' + value2.label;
                             break;
-                        case 'harvest_finish':
+                        case 'harvest_complete':
                             str = 'Finish harvesting ' + value2.label;
                             break;
                     }
                     
                     var obj = {
                         label: str,
-                        slug: 'filter-task-' + key
+                        slug: key
                     };
                     
                     //Make sure the date object exists, if not create it
@@ -314,16 +331,24 @@ greenThumb.factory("gtGetData", function ($http, $rootScope) {
                         };
                     }
                     
-                    //Load the task into the task object
-                    taskObj[dateItems.date.format("YYYYMMDD")].items.push(obj); 
+                    //Before loading this task into the tasks object, we need to meet the following conditions:
+                    //If no filtering options are set, show all
+                    //If the KEY of the current task item matches a filtering option AND is not UNDEFINED, show this one item
+                    if (data.params.filters.tasks === false || data.params.filters.tasks[key] !== false && typeof data.params.filters.tasks[key] !== 'undefined' ) {
+                        //Load the task into the task object
+                        taskObj[dateItems.date.format("YYYYMMDD")].items.push(obj);
+                    }
+                    
                 });
             });
+            //console.log(taskObj);
         }
+      
     };//end model.formatTasks
 
+     
     return data;
 });
-
 
 
 /**
@@ -335,13 +360,15 @@ greenThumb.controller('gtSchedule', function ($scope, gtGetData) {
         $scope.tasksToday   = gtGetData.tasks.today;
         $scope.tasksPrev    = gtGetData.tasks.prev;
         $scope.tasksNext    = gtGetData.tasks.next;
+        $scope.params   = gtGetData.params;
     });
 
 }).directive('dateEntry', function () {
     return {
         restrict: 'E',
         scope: {
-            data: '='
+            data: '=',
+            data2: '='
         },
         templateUrl: 'partials/date-entry.html'
     };
@@ -375,7 +402,7 @@ greenThumb.controller('gtCalendar', function ($scope, gtGetData) {
 /**
  * Controller for the display & interactive options
  */
-greenThumb.controller('gtDisplay', function ($scope, gtGetData) {
+greenThumb.controller('gtDisplay', function ($scope, gtGetData, $stateParams, $state) {
     //Set default state of checkbox
     $scope.numSeedlings = true;
 
@@ -385,9 +412,19 @@ greenThumb.controller('gtDisplay', function ($scope, gtGetData) {
     });
 
     //When the display date input is changed
-    $scope.display = function () {
+    $scope.display = function (date) {
+        //Get the date from the main dropdown OR todays date
+        var date;
+        if(date === 'today'){
+            date =  moment();
+        } else {
+            date =  moment($scope.date).add(1, 'days');
+        }
+        
         //Update app main date
-        gtGetData.update({today: moment($scope.date).add(1, 'days')});
+        $state.go('.', {date: date.format('YYYY-MM-DD')}, {notify: false});
+        gtGetData.update({today: date});
+        
     };
 
     //When the seedling calculator is turned on
@@ -395,20 +432,60 @@ greenThumb.controller('gtDisplay', function ($scope, gtGetData) {
         //Set the seedling calculator param to true so the application will calculate the # of seedlings
         gtGetData.update({calcPlants: $scope.numSeedlings});
     };
-    
-    //Filter seasons
-    $scope.filterSeason = function(item){
-        var filter = false;
-        angular.forEach($scope.filter, function (value, key) {
-            if(value === true){
-                filter = $scope.filter;
+   
+   
+   
+    //Update all filters
+    $scope.filterGarden = function () {
+        //Clone the filterOptions object so we can manipulate it
+        var options = angular.copy($scope.filterOptions);
+
+        //The purpose of this loop is to detect if ALL options for each category is set to FALSE so we can set the entire group to false
+        //This is necessary to SHOW ALL content when all options are set to false
+        //Loop through the filtering CATEGORIES
+        angular.forEach(options, function (value, key) {
+            var hasFilters = false;
+            //Now loop through the filtering OPTIONS within each CATEGORY
+            angular.forEach(options[key], function (value2, key2) {
+                //If an option is set to true, trip the flag so we know a filtering option is present
+                if (value2 === true) {
+                    hasFilters = true;
+                }
+            });
+
+            //If NO filters are present for this category, set the entire category to false
+            if (hasFilters === false) {
+                options[key] = false;
             }
         });
-        
-        gtGetData.update({filters: filter});
+
+
+        //console.log(filterOptions);
+        gtGetData.update({filters: options});
     };
     
+    
+    
+    
+    
 });
+
+
+/**
+ * 
+ * @param {type} param
+ */
+greenThumb.config(function ($stateProvider, $urlRouterProvider) {
+    $stateProvider.state('state', {
+        url: '/?date&sort',
+        controller: 'gtDisplay',
+        controllerAs: 'state'
+       
+    });
+
+    $urlRouterProvider.otherwise('/');
+});
+
 
 /**
  * Adds the datepicker functionality. Requires jQuery :(

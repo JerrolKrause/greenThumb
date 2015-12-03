@@ -2,27 +2,16 @@
     "name": "My Backyard",
     "areas": [
         {
-            "label": "East Wall - Bed 1 of 5",
+            "label": "East Wall - Bed 1 of 6",
             "width": 1.5,
             "length": 5,
             "produce": [
                 {"slug": "cucumber_diva", "dates" : {"plant" : {"month" : 0 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 1 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 3 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 4 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 5 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 7 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 8 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 9 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 10 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 11 , "day" : 1}}},
-                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 12 , "day" : 1}}}
+                {"slug": "squash_acorn_honeybear", "dates" : {"plant" : {"month" : 1 , "day" : 1}}}
             ]
         },
         {
-            "label": "East Wall - Bed 2 of 5",
+            "label": "East Wall - Bed 2 of 6",
             "width": 1.5,
             "length": 5,
             "produce": [
@@ -33,7 +22,7 @@
             ]
         },
         {
-            "label": "East Wall - Bed 3 of 5",
+            "label": "East Wall - Bed 3 of 6",
             "width": 1.5,
             "length": 5,
             "produce": [
@@ -44,7 +33,7 @@
             ]
         },
         {
-            "label": "East Wall - Bed 4 of 5",
+            "label": "East Wall - Bed 4 of 6",
             "width": 1.5,
             "length": 5,
             "produce": [
@@ -53,7 +42,7 @@
             ]
         },
         {
-            "label": "East Wall - Bed 5 of 5",
+            "label": "East Wall - Bed 5 of 6",
             "width": 1.5,
             "length": 5,
             "produce": [
@@ -65,6 +54,14 @@
                 {"slug": "tomato_sun_gold", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
                 {"slug": "tomato_black_cherry", "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
                 {"slug": "tomato_matts_wild_cherry", "dates" : {"plant" : {"month" : 6 , "day" : 1}}}
+            ]
+        },
+        {
+            "label": "East Wall - Bed 6 of 6",
+            "width": 1.5,
+            "length": 5,
+            "produce": [
+                {"slug": "tomato_big_beef", "dates" : {"plant" : {"month" : 2 , "day" : 1}}}
             ]
         },
         {

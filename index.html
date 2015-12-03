@@ -18,56 +18,54 @@
                 <hr/>
             </div>
 
-            <!-- Display Options -->
-            <div id="gt-display" class="row" ng-controller="gtDisplay">
-                <h3>Display Options:</h3>
-                Date : <input type="text" class="span2" value="" id="dp1" style="width:200px;" ng-value="datetoday" ng-model="date" ng-change="display()" datepicker=''/> 
-
-                <div>
-                    <hr/>
-                    <div class="large-4 columns">
-                        <h4>Season</h4>
-                        <form action="#" id="gt-filter-season">
-                            <input type="checkbox" value="spring" name="gt-filter-season-spring" id="gt-filter-season-spring" ng-model="filter.spring" ng-click="filterSeason('filterSpring')"><label for="gt-filter-season-spring">Spring (Mar - June)</label><br/>
-                            <input type="checkbox" value="summer" name="gt-filter-season-summer" id="gt-filter-season-summer" ng-model="filter.summer" ng-click="filterSeason('filterSummer')"><label for="gt-filter-season-summer">Summer (July - Oct)</label><br/>
-                            <input type="checkbox" value="fall" name="gt-filter-season-fall" id="gt-filter-season-fall" ng-model="filter.fall" ng-click="filterSeason('filterFall')"><label for="gt-filter-season-fall">Fall (Nov - Feb)</label>
-                        </form>
-                    </div>
-                    <div class="large-4 columns">
-                        <h4>Errata</h4>
-                        <form action="#" id="gt-filter-task">
-                            <input type="checkbox" value="seedlings-count" name="gt-filter-seedlings-count" id="gt-filter-seedlings-count" checked="checked" ng-model="numSeedlings" ng-click="calcPlants()"><label for="gt-filter-seedlings-count">Calculate # of Plants</label>
-                        </form>
-                    </div>
-                    <div class="large-4 columns" style="display:none;">
-                        <h4>Task Type</h4>
-                        <form action="#" id="gt-filter-task">
-                            <input type="checkbox" value="seedlings" name="gt-filter-task-start-seedlings" id="gt-filter-task-start-seedlings" checked="checked"><label for="gt-filter-task-start-seedlings">Start Seedlings</label><br/>
-                            <input type="checkbox" value="planting" name="gt-filter-task-plant" id="gt-filter-task-plant" checked="checked"><label for="gt-filter-task-plant">Plant</label><br/>
-                            <input type="checkbox" value="harvestStart" name="gt-filter-task-harvest" id="gt-filter-task-harvest"><label for="gt-filter-task-harvest">Harvest</label><br/>
-                            <input type="checkbox" value="harvestComplete" name="gt-filter-task-complete-harvest" id="gt-filter-task-complete-harvest"><label for="gt-filter-task-complete-harvest">Complete Harvest</label>
-                        </form>
-                    </div>
-                </div>
-                
-                <hr/>
-            </div>
-            
-
             <!-- Tasks -->
-            <div id="gt-schedule" class="row" ng-controller="gtSchedule" style="display:none;">
+            <div id="gt-schedule" class="row" ng-controller="gtSchedule" style="display:none1;">
                 <div class="large-4 columns" id="gt-schedule-today">
                     <h3>Today</h3>
-                    <date-entry data="tasksToday"></date-entry>
+                    <date-entry data="tasksToday" data2="params"></date-entry>
                 </div>
                 <div class="large-4 columns" id="gt-schedule-next">
-                    <h3>Upcoming</h3>
-                    <date-entry data="tasksNext"></date-entry>
+                    <ul class="tabs" data-tab>
+                        <li class="tab-title active"><a href="#panel1"><h3>Upcoming</h3></a></li>
+                        <li class="tab-title"><a href="#panel2"><h3>Previous</h3></a></li>
+                    </ul>
+                    <div class="tabs-content">
+                        <div class="content active" id="panel1">
+                            <date-entry data="tasksNext" data2="params"></date-entry>
+                        </div>
+                        <div class="content" id="panel2">
+                            <date-entry data="tasksPrev" data2="params"></date-entry>
+                        </div>
+                    </div>
+
+
                 </div>
-                 <div class="large-4 columns" id="gt-schedule-prev">
-                    <h3>Previous</h3>
-                    <date-entry data="tasksPrev"></date-entry>
+                <div class="large-4 columns" id="gt-schedule-prev" ng-controller="gtDisplay">
+                     <h3>Display Options:</h3>
+                <p>Date : <input type="text" class="span2" value="" id="dp1" style="width:200px;" ng-value="datetoday" ng-model="date" ng-change="display()" datepicker=''/> <a href="#" ng-click="display('today')">Today</a></p>
+
+                    <h4>Season</h4>
+                    <form action="#" id="gt-filter-season">
+                        <input type="checkbox" value="spring" name="gt-filter-season-spring" id="gt-filter-season-spring" ng-model="filterOptions.season.spring" ng-click="filterGarden()"><label for="gt-filter-season-spring">Spring (Mar - June)</label><br/>
+                        <input type="checkbox" value="summer" name="gt-filter-season-summer" id="gt-filter-season-summer" ng-model="filterOptions.season.summer" ng-click="filterGarden()"><label for="gt-filter-season-summer">Summer (July - Oct)</label><br/>
+                        <input type="checkbox" value="fall" name="gt-filter-season-fall" id="gt-filter-season-fall" ng-model="filterOptions.season.fall" ng-click="filterGarden()"><label for="gt-filter-season-fall">Fall (Nov - Feb)</label>
+                    </form>
+                    
+                    <h4>Errata</h4>
+                    <form action="#" id="gt-filter-task">
+                        <input type="checkbox" value="seedlings-count" name="gt-filter-seedlings-count" id="gt-filter-seedlings-count" checked="checked" ng-model="numSeedlings" ng-click="calcPlants()"><label for="gt-filter-seedlings-count">Calculate # of Plants</label>
+                    </form>
+                    
+                    <h4>Task Type</h4>
+                    <form action="#" id="gt-filter-task">
+                        <input type="checkbox" value="seedlings" name="gt-filter-task-start-seedlings" id="gt-filter-task-start-seedlings" checked="checked" ng-click="filterGarden()" ng-model="filterOptions.tasks.seedlings"><label for="gt-filter-task-start-seedlings">Start Seedlings</label><br/>
+                        <input type="checkbox" value="planting" name="gt-filter-task-plant" id="gt-filter-task-plant" checked="checked" ng-click="filterGarden()" ng-model="filterOptions.tasks.plant"><label for="gt-filter-task-plant">Plant</label><br/>
+                        <input type="checkbox" value="harvestStart" name="gt-filter-task-harvest" id="gt-filter-task-harvest" ng-click="filterGarden()" ng-model="filterOptions.tasks.harvest_start"><label for="gt-filter-task-harvest">Harvest</label><br/>
+                        <input type="checkbox" value="harvestComplete" name="gt-filter-task-complete-harvest" id="gt-filter-task-complete-harvest" ng-click="filterGarden()" ng-model="filterOptions.tasks.harvest_complete"><label for="gt-filter-task-complete-harvest">Complete Harvest</label>
+                    </form>
                 </div>
+                
+                
                 <hr/>
             </div>
 
@@ -105,10 +103,10 @@
 
         <script src="js/plugins.min.js"></script>
         <!-- <script src="js/scripts.min.js"></script>-->
-        
+
         <script src="js/produce.js" type="text/javascript"></script>
         <script src="js/controller.js" type="text/javascript"></script>
-        
+
         <script>$(document).foundation();</script>
     </body>
 </html>

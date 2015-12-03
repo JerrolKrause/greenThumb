@@ -1,7 +1,7 @@
 <p ng-if="data.length"><strong>{{data}}</strong></p>
-<div class="filter-tasks" ng-repeat="tasks in data track by $index">   
-    <p><strong>{{tasks.label}}</strong></p>
+<div class="filter-tasks" ng-repeat="tasks in data track by $index" ng-if="tasks.items.length != 0">   
+    <p><strong>{{tasks.label}}</strong> - Count: {{tasks.items.length}}</p>
     <ul>
-        <li ng-repeat="task in tasks.items" ng-class="[task.slug, 'filter-task']">{{task.label}}</li>
+        <li ng-repeat="task in tasks.items" ng-class="[task.slug, data2.filters.tasks[task.slug], 'filter-task']" ng-if="data2.filters.tasks == false || data2.filters.tasks[task.slug] == true">{{task.label}}</li>
     </ul>
 </div>
