@@ -92,7 +92,7 @@ var gtProduce = {
     potato: {
         label: "Potatos",
         maturity: 65,
-        seedling: 2,
+        seedling: 4,
         harvest: 8,
         spacing: 8,
         vertical: false,
