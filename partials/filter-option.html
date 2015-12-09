@@ -1,0 +1,8 @@
+<form action="#" name="display-options">
+    <div ng-repeat="content in data">
+        <h4>{{content.label}}</h4>
+        <div ng-repeat="option in content.data"  >
+              <input type="checkbox" id="{{option.id}}" value="{{option.label}}" ng-model="filterOptions[content.id][option.id]" ng-checked="{{option.selected}}" ng-click="filterGarden()"><label for="{{option.id}}"> {{option.label}}</label>
+        </div>
+    </div>
+</form>

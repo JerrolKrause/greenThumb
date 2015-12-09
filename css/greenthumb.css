@@ -17,7 +17,7 @@
 #gt-areas{position:relative;}       
 #gt-date{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:25%;display:none!important;}    
 
-
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
 
 
 

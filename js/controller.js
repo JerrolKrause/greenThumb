@@ -350,6 +350,7 @@ window.greenThumb = (function(){
                     var date = $stateParams.date.split('-');
                     data.params.today = moment().set({year: parseInt(date[0], 10), month: parseInt(date[1], 10) - 1, date: parseInt(date[2], 10), hours: 0});
                 } else {
+                    //Set a default override date
                     data.params.today = moment().set({year: 2015, month: 2, date: 1, hours: 0});
                 }
             }//end model.state
@@ -411,8 +412,38 @@ window.greenThumb = (function(){
      * Controller for the display & interactive options
      */
     greenThumb.controller('gtDisplay', function ($scope, gtGetData, $stateParams, $state) {
-        //Set default state of checkbox
-        $scope.numSeedlings = true;
+        
+       //Create list and default values of filtering options
+        $scope.filters = [
+            {
+                label: 'Season',
+                id: 'season',
+                data: [
+                    {id: 'spring', label: 'Spring (Mar - June)', selected: false},
+                    {id: 'summer', label: 'Summer (July - Oct)', selected: false},
+                    {id: 'fall', label: 'Fall (Nov - Feb)', selected: false}
+                ]},
+            {
+                label: 'Task Type',
+                id: 'tasks',
+                data: [
+                    {id: 'seedlings', label: 'Start Seedlings', selected: true},
+                    {id: 'plant', label: 'Plant', selected: true},
+                    {id: 'harvest_start', label: 'Harvest', selected: false},
+                    {id: 'harvest_complete', label: 'Complete Harvest', selected: false}
+                ]
+            },
+            {
+                label: 'Misc',
+                id: 'misc',
+                data: [
+                    {id: 'calcSeedlings', label: 'Calculate # of Plants', selected: false}
+                ]
+            }
+        ];
+        
+        //Set a default object to hold filtering options passed from the app
+        $scope.filterOptions = {};
 
         //When the main model is updated, add the latest date to the date picker
         $scope.$on('dataPassed', function () {
@@ -438,25 +469,35 @@ window.greenThumb = (function(){
         //When the seedling calculator is turned on
         $scope.calcPlants = function () {
             //Set the seedling calculator param to true so the application will calculate the # of seedlings
-            gtGetData.update({calcPlants: $scope.numSeedlings});
+            gtGetData.update({calcPlants: $scope.calcSeedlings});
         };
+        
 
         //Update all filters
         $scope.filterGarden = function () {
-            //Clone the filterOptions object so we can manipulate it
-            var options = angular.copy($scope.filterOptions);
+            //Pass filters to update function
+            gtGetData.update({filters: $scope.filterOptions});
+            
+            var queryStr = '?';
 
             //The purpose of this loop is to detect if ALL options for each category is set to FALSE so we can set the entire group to false
             //This is necessary to SHOW ALL content when all options are set to false
             //Loop through the filtering CATEGORIES
             angular.forEach(options, function (value, key) {
                 var hasFilters = false;
+                
                 //Now loop through the filtering OPTIONS within each CATEGORY
                 angular.forEach(options[key], function (value2, key2) {
                     //If an option is set to true, trip the flag so we know a filtering option is present
                     if (value2 === true) {
                         hasFilters = true;
                     }
+                    
+                    //If this filtering parameter is set to true, add it to the query string list
+                    if(value2 === true){
+                        queryStr += 'filter-' + key + '-' + key2 + '=' + value2 + '&';
+                    }
+                    
                 });
 
                 //If NO filters are present for this category, set the entire category to false
@@ -464,10 +505,31 @@ window.greenThumb = (function(){
                     options[key] = false;
                 }
             });
+            
+            //console.log(queryStr.slice(0,-1));
+            //?filter-season-sprint=true&filter-tasks-seedlings=true
+            
+            //Update app main date
+            //$state.go('.', {filters: options.tasks}, {notify: false});
 
             //console.log(filterOptions);
-            gtGetData.update({filters: options});
+            
         };
+    }).directive('filterOption', function () {
+        
+        /* */
+        return {
+            restrict: 'E',
+            scope: {
+                data: '='
+            },
+            templateUrl: 'partials/filter-option.html',
+            controller: 'gtDisplay'
+        };
+       
+        
+        
+        
     });
 
 
@@ -478,10 +540,9 @@ window.greenThumb = (function(){
      */
     greenThumb.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('state', {
-            url: '/?date&sort',
-            controller: 'gtDisplay',
-            controllerAs: 'state'
-
+            url             : '/?date',//'/?date&filters'
+            controller      : 'gtDisplay',
+            controllerAs    : 'state'
         });
 
         $urlRouterProvider.otherwise('/');
@@ -493,18 +554,18 @@ window.greenThumb = (function(){
      */
     greenThumb.directive('datepicker', function DatePicker() {
         return {
-            require: 'ngModel',
-            restrict: 'A',
-            scope: {format: "="},
-            link: function (scope, element, attrs, ngModel) {
-                if (typeof (scope.format) === "undefined") {
-                    scope.format = "mm/dd/yyyy";
-                }
-                $(element).fdatepicker({format: scope.format}).on('changeDate', function (ev) {
-                    scope.$apply(function () {
-                        ngModel.$setViewValue(ev.date);
-                    });
-                });
+            require     : 'ngModel',
+            restrict    : 'A',
+            scope       : {format: "="},
+            link        : function (scope, element, attrs, ngModel) {
+                            if (typeof (scope.format) === "undefined") {
+                                scope.format = "mm/dd/yyyy";
+                            }
+                            $(element).fdatepicker({format: scope.format}).on('changeDate', function (ev) {
+                                scope.$apply(function () {
+                                    ngModel.$setViewValue(ev.date);
+                                });
+                        });
             }
         };
     });
