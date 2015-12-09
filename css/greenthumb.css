@@ -10,15 +10,27 @@
         .gt-growing{position:absolute;z-index:12;top:0px;background-color:#007236;height: 25px;}
         .gt-harvest{position:absolute;z-index:10;top:0px;background-color:#c69c6d;height: 25px;}
         
+        .gt-produce{background: url('../img/thumbs/sprite-produce.png') no-repeat 0px 0px;padding-left: 30px;line-height: 25px;    min-height: 25px;}
+            .cucumber{background-position:0px -50px;}
+            .broccoli{background-position:0px -100px;}
+            .brussel_sprouts{background-position:0px -150px;}
+            .carrot{background-position:0px -200px;}
+            .lettuce{background-position:0px -250px;}
+            .melon{background-position:0px -300px;}
+            .potato{background-position:0px -350px;}
+            .pumpkin{background-position:0px -400px;}
+            .sweet_potato{background-position:0px -450px;}
+            .squash{background-position:0px -500px;}
+            .swiss_chard{background-position:0px -550px;}
+            .tomato{background-position:0px -600px;}
+           
     .gt-area-item{margin-bottom:1px;}
         .gt-area-item img{margin-right:10px;float:left;}
-        .gt-area-item span{}
 
 #gt-areas{position:relative;}       
 #gt-date{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:25%;display:none!important;}    
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
-
 
 
 @media only screen and (max-width: 40em) { 
