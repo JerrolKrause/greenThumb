@@ -14,8 +14,10 @@
         <div id="gt-container">
 
             <div class="row">
-                <h1>Schedule</h1>
-                <hr/>
+                <div class="columns">
+                    <h1>Schedule</h1>
+                    <hr/>
+                </div>
             </div>
 
             <!-- Tasks -->
@@ -73,8 +75,10 @@
 
             <!-- Calendar -->
             <div id="gt-calendar" ng-controller="gtCalendar">
-
-                <h2>Growing Areas:</h2>
+                <div class="columns">
+                    <h2>Growing Areas:</h2>
+                </div>
+                
                 <div class="row" id="gt-cal-header">
                     <div class="large-3 medium-4 small-2 columns show-for-medium-up"></div>
                     <div class="large-9 medium-8 small-10 columns">
@@ -92,8 +96,11 @@
                         <div class="gt-col" data-days="31"><span class="show-for-small-only">D</span><span class="show-for-medium-only">Dec</span><span class="show-for-large-up">December</span></div>
                     </div>
                 </div>
-
-                <h3 ng-bind="name"></h3>
+                
+                <div class="columns">
+                    <h3 ng-bind="name"></h3>
+                </div>
+                
                 <div id="gt-areas">
                     <div id="gt-date" class="show-for-large-up"></div>
                     <areas data="garden" data2="params"></areas>

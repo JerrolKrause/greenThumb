@@ -1,4 +1,4 @@
-#gt-container{padding:20px;font-size:0.9em;}
+#gt-container{font-size:0.9em;}
     #gt-container .row {max-width: 100%;}
     #gt-container p, #gt-container li{font-size:0.9em;}
     
@@ -10,7 +10,8 @@
         .gt-growing{position:absolute;z-index:12;top:0px;background-color:#007236;height: 25px;}
         .gt-harvest{position:absolute;z-index:10;top:0px;background-color:#c69c6d;height: 25px;}
         
-        .gt-produce{background: url('../img/thumbs/sprite-produce.png') no-repeat 0px 0px;padding-left: 30px;line-height: 25px;    min-height: 25px;}
+        .gt-produce{background: url('../img/thumbs/sprite-produce.png') no-repeat 0px 0px;padding-left: 30px;line-height: 25px;    min-height: 25px;position:relative;}
+            .gt-produce .show-for-small{ font-size: .8em;position: absolute;bottom: 0px;line-height: initial;text-shadow: -1px -1px #fff;    left: 20px;}
             .cucumber{background-position:0px -50px;}
             .broccoli{background-position:0px -100px;}
             .brussel_sprouts{background-position:0px -150px;}
@@ -27,10 +28,11 @@
     .gt-area-item{margin-bottom:1px;}
         .gt-area-item img{margin-right:10px;float:left;}
 
-#gt-areas{position:relative;}       
+#gt-areas{position:relative;clear:both;}       
 #gt-date{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:25%;display:none!important;}    
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
+
 
 
 @media only screen and (max-width: 40em) { 

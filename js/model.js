@@ -69,7 +69,8 @@
             "width": 1.5,
             "length": 30,
             "produce": [
-                {"slug": "lettuce", "dates" : {"plant" : {"month" : 2 , "day" : 1}}}
+                {"slug": "lettuce", "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
+                {"slug": "brussel_sprouts", "dates" : {"plant" : {"month" : 2 , "day" : 1}}}
             ]
         }
     ]

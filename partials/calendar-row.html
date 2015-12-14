@@ -4,7 +4,7 @@
     <div class="gt-area-item clearfix gt-season-{{produce2.dom.season}}" ng-repeat="produce2 in area.produce track by produce2.id" ng-if="data2.filters.season == false || data2.filters.season[produce2.dom.season] == true">
         
         <div class="large-3 medium-4 small-2 columns">
-            <div class="gt-produce {{produce2.parent}}"> <div class="show-for-medium-up">{{produce2.label}} <span ng-if="produce2.plantCount">({{produce2.plantCount}})</span></div></div>
+            <div class="gt-produce {{produce2.parent}}"><div class="show-for-small">{{produce2.label_short}}</div> <div class="show-for-medium-up">{{produce2.label}} <span ng-if="produce2.plantCount">({{produce2.plantCount}})</span></div></div>
            
         </div>
         

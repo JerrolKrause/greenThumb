@@ -161,29 +161,32 @@ window.greenThumb = (function(){
                         //If this produce item has a parent, load the child properties first
                         if (data.produce[value2.slug].hasOwnProperty('parent')) {
                             value2 = angular.extend(value2, data.produce[data.produce[value2.slug].parent]);
+                            value2.label_parent = data.produce[data.produce[value2.slug].parent].label;
+                        } else {
+                            value2.label_parent = '';
+                            value2.parent = value2.slug;
                         }
-                        
                         
                         //Now load the OVERRIDE properties from the main produce item, this will replace any properties from a parent produce item
                         value2 = angular.extend(value2, data.produce[value2.slug]);
                         //Add an ID for 'track by' performance issue
                         value2.id = key2;
-                        //Add the slug of the produce category, IE tomato or squash
-                        value2.parent = value2.slug;
-                        value2.label_short = value2.label;
-                        
-                        
-                        if (value2.label_short.indexOf(',') !== -1) {
-                            //console.log(value2.label_short);
-                            //console.log(value2.label_short.split(', ')[1].split(' '));
-                            //console.log(value2.label_short.split(', ')[1].charAt(0));
-                        }
-                        
-                        
+                       
                         
                     }
                     
-
+                    //Create a small/few character label for use on a mobile screen
+                    value2.label_short = '';
+                    angular.forEach(value2.label.split(' '), function (value, key) {
+                        value2.label_short += value.charAt(0);
+                    });
+                    
+                    if(value2.label_short.length === 1){
+                        value2.label_short += value2.label.charAt(1);
+                    }
+                    //Only show the first 2 characters of the produce name
+                    //value2.label_short = value2.label.charAt(0) + value2.label.charAt(1);
+                   
                     //Check if the dates have already been generated, only generate on first pass
                     if (typeof value2.dates.seedlings === 'undefined') {
                         //Update the model with the seedling, harvest start and harvest complete dates

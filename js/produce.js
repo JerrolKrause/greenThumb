@@ -10,12 +10,12 @@ var gtProduce = {
         rowsPerBed: 2
     },
     broccoli_arcadia: {
-        label: "Broccoli, Arcadia",
+        label: "Arcadia",
         //maturity: 63,
         parent: "broccoli"
     },
     broccoli_belstar: {
-        label: "Broccoli, Belstar",
+        label: "Belstar",
         //maturity: 66,
         parent: "broccoli"
     },
@@ -47,7 +47,7 @@ var gtProduce = {
         rowsPer: 1
     },
     cucumber_diva: {
-        label: "Cucumber, Diva",
+        label: "Diva",
         //maturity: 60,
         parent: "cucumber"
     },
@@ -70,22 +70,22 @@ var gtProduce = {
         rowsPerBed: 1
     },
     melon_earlichamp: {
-        label: "Melon, Earlichamp Cantalope",
+        label: "Earlichamp Cantalope",
         //maturity: 72,
         parent: "melon"
     },
     melon_diplomat: {
-        label: "Melon, Diplomat Galia",
+        label: "Diplomat Galia",
         //maturity: 70,
         parent: "melon"
     },
     melon_serenade: {
-        label: "Melon, Serenade Butterscotch",
+        label: "Serenade Butterscotch",
         //maturity: 80,
         parent: "melon"
     },
     melon_sapomiel: {
-        label: "Melon, Sapomiel Piel Del Sapo",
+        label: "Sapomiel Piel Del Sapo",
         //maturity: 80,
         parent: "melon"
     },
@@ -99,12 +99,12 @@ var gtProduce = {
         rowsPerBed: 2
     },
     potato_yukon_gold: {
-        label: "Potato, Yukon Gold",
+        label: "Yukon Gold",
         maturity: 80,
         parent: "potato"
     },
     potato_kennebec: {
-        label: "Potato, Kennebec",
+        label: "Kennebec",
         maturity: 100,
         parent: "potato"
     },
@@ -136,17 +136,17 @@ var gtProduce = {
         rowsPer: 1
     },
     squash_butternut: {
-        label: "Squash, Waltham Butternut",
+        label: "Waltham Butternut",
         //maturity: 105,
         parent: "squash"
     },
     squash_butternut_butterscotch: {
-        label: "Squash, Butterscotch PMR",
+        label: "Butterscotch PMR",
         //maturity: 100,
         parent: "squash"
     },
     squash_acorn_honeybear: {
-        label: "Squash, Honey Bear",
+        label: "Honey Bear",
         //maturity: 85,
         parent: "squash"
     },
@@ -169,27 +169,27 @@ var gtProduce = {
         rowsPer: 1
     },
     tomato_big_beef: {
-        label: "Tomato, Big Beef",
+        label: "Big Beef",
         //maturity: 70,
         parent: "tomato"
     },
     tomato_sun_gold: {
-        label: "Tomato, Sun Gold",
+        label: "Sun Gold",
         //maturity: 57,
         parent: "tomato"
     },
     tomato_black_cherry: {
-        label: "Tomato, Black Cherry",
+        label: "Black Cherry",
         //maturity: 64,
         parent: "tomato"
     },
     tomato_matts_wild_cherry: {
-        label: "Tomato, Matts Wild Cherry",
+        label: "Matts Wild Cherry",
         //maturity: 60,
         parent: "tomato"
     },
     tomato_supersweet_100: {
-        label: "Tomato, Supersweet 100",
+        label: "Supersweet 100",
         //maturity: 60,
         parent: "tomato"
     }
