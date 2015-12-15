@@ -1,4 +1,4 @@
-<div class="gt-area row" ng-repeat="area in data track by $index" ng-if="data2.filters.season == false || data2.filters.season[area.seasons[0]] || data2.filters.season[area.seasons[1]] || data2.filters.season[area.seasons[2]]">
+<div class="gt-area row" ng-repeat="area in data track by $index" ng-if="data2.filters.season == false || data2.filters.season[area.seasons[0]] || data2.filters.season[area.seasons[1]] || data2.filters.season[area.seasons[2]] || data2.filters.season[area.seasons[3]]">
     <h4 class="large-12 columns show-for-medium-up">{{area.label}}</h4>
     
     <div class="gt-area-item clearfix gt-season-{{produce2.dom.season}}" ng-repeat="produce2 in area.produce track by produce2.id" ng-if="data2.filters.season == false || data2.filters.season[produce2.dom.season] == true">
