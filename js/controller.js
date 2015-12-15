@@ -39,7 +39,7 @@ window.greenThumb = (function(){
             tasksPrev           : 30,                                           //Show upcoming tasks within this many days
             calcPlants          : true,                                         //Automatically calculate how many seedlings should be planted
             initLoad            : false,                                        //Flag to ensure certain only items fire on first load
-            filters             : {season : false, tasks : false, misc : false}               //Holds filtering options
+            filters             : {season : false, tasks : false, misc : false} //Holds filtering options
         };
 
         //Fetch JSON object of garden to use
@@ -73,6 +73,7 @@ window.greenThumb = (function(){
 
                     //Loop through each growing area in the model
                     angular.forEach(data.garden.areas, function (value1, key1) {
+                        
                         //Loop through the produce within each area
                         angular.forEach(value1.produce, function (value2, key2) {
 
@@ -137,9 +138,8 @@ window.greenThumb = (function(){
                         seedlingCount = value2.plantCount + Math.floor(value2.plantCount / 4);
                     }
                     value2.seedlingCount = seedlingCount + ' (' + value2.plantCount + ')';
-                } //end model.calcPlants
-
-            },
+                } //end view.calcPlants
+            },//end view
 
 
             //Class object for methods that only happen on initialization/load
@@ -171,8 +171,6 @@ window.greenThumb = (function(){
                         value2 = angular.extend(value2, data.produce[value2.slug]);
                         //Add an ID for 'track by' performance issue
                         value2.id = key2;
-                       
-                        
                     }
                     
                     //Create a small/few character label for use on a mobile screen
@@ -193,7 +191,17 @@ window.greenThumb = (function(){
                         //Object needs to be duplicate since we are reusing data from the input object
                         model.initialize.addDates(value2);
                     }
-
+                    
+                    //Check if seasons is undefined, if so assign it
+                    if(!angular.isArray(value1.seasons)){
+                        value1.seasons = [];
+                    }
+                    
+                    //If the value isn't already present add it to the array
+                    if(value1.seasons.indexOf(value2.dom.season) === -1){
+                        value1.seasons.push(value2.dom.season);
+                    }
+                    
                     //Loop through all the dates within each produce item
                     angular.forEach(data.garden.areas[key1].produce[key2].dates, function (value3, key3) {
 
@@ -216,6 +224,7 @@ window.greenThumb = (function(){
                         data.dates[value3.format("YYYYMMDD")].items[key3].push(value2);
                     });//end dates loop
                 },//end model.initialize.build
+                
                 
                 /**
                  * Adds the seedling, harvest start and harvest complete dates to the object. These dates are based off the plant date.
@@ -258,7 +267,6 @@ window.greenThumb = (function(){
                         //console.log('Fall/Winter Planting: ('+ plant.format("MMMM") +') ' + produce.label);
                         produce.dom.season = 'fall';
                     }
-
                 } //end model.initialize.addDates
             },//end model.initialize
 
@@ -349,7 +357,6 @@ window.greenThumb = (function(){
                                 //Load the task into the task object
                                 taskObj[dateItems.date.format("YYYYMMDD")].items.push(obj);
                             }
-
                         });
                     });
                 }//end model.tasks.create
@@ -411,7 +418,7 @@ window.greenThumb = (function(){
             $scope.garden   = gtGetData.garden.areas;
             $scope.params   = gtGetData.params;
         });
-
+        
     }).directive('areas', function () {
         return {
             restrict: 'E',
@@ -419,7 +426,8 @@ window.greenThumb = (function(){
                 data: '=',
                 data2: '='
             },
-            templateUrl: 'partials/calendar-row.html'
+            templateUrl: 'partials/calendar-row.html',
+            controller: 'gtCalendar'
         };
     });
 
@@ -509,7 +517,6 @@ window.greenThumb = (function(){
                 }
             });
             
-             
             //Pass filters to update function
             gtGetData.update({filters: options});
             
@@ -553,8 +560,6 @@ window.greenThumb = (function(){
             
         };
     }).directive('filterOption', function () {
-        
-        /* */
         return {
             restrict: 'E',
             scope: {
@@ -606,4 +611,3 @@ window.greenThumb = (function(){
     //Make this application public and available in console
     return greenThumb;
 })();
-
