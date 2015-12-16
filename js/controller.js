@@ -37,15 +37,21 @@ window.greenThumb = (function(){
 
         //Application parameters
         data.params = {
-            today               : moment(),                                     //Todays date
+            dates               : {
+                main            : moment(),                                     //Main date var used by app. This can be changed in the display options
+                today           : moment(),                                     //Always shows todays date
+                main_pos        : false,                                        //Holds the position of the main date for use in the calendar
+                today_pos       : false                                         //Holds the position of todays date for use in the calendar
+            },
             tasksNext           : 30,                                           //Show upcoming tasks within this many days
             tasksPrev           : 30,                                           //Show upcoming tasks within this many days
-            calcPlants          : true,                                         //Automatically calculate how many seedlings should be planted
+            calcPlants          : false,                                         //Automatically calculate how many seedlings should be planted
             initLoad            : false,                                        //Flag to ensure certain only items fire on first load
-            filters             : {season : false, tasks : false, misc : false} //Holds filtering options
+            filters             : {season : false, tasks : false, misc : false} //Holds filtering options.
         };
         
-        data.params.today = moment().set({year: 2015, month: 2, date: 1, hours: 0});
+        //Override todays date
+        data.params.dates.main = moment().set({year: 2015, month: 2, date: 1, hours: 0});
 
         //Fetch JSON object of garden to use
         $http({
@@ -105,7 +111,10 @@ window.greenThumb = (function(){
 
                     //After init, set this flag to false
                     data.params.initLoad = true;
-
+                    
+                    data.params.dates.main_pos = Math.round((((data.params.dates.main.format("M") - 1) * 8.333) + ((data.params.dates.main.format("D") / data.params.dates.main.daysInMonth()) * 8.333)) * 10) / 10;
+                    data.params.dates.today_pos = Math.round((((data.params.dates.today.format("M") - 1) * 8.333) + ((data.params.dates.today.format("D") / data.params.dates.today.daysInMonth()) * 8.333)) * 10) / 10;
+                    
                     //Now that the task and garden list has been rebuilt, broadcast the update to the controllers so that the data is updated in the view
                     $rootScope.$broadcast('dataPassed');
 
@@ -302,13 +311,13 @@ window.greenThumb = (function(){
                     angular.forEach(data.dates, function (value, key) {
                         //console.log(value);
                         //If task occurs today
-                        if (value.date.isSame(data.params.today, 'day') === true) {
+                        if (value.date.isSame(data.params.dates.main, 'day') === true) {
                             model.tasks.create(value, data.tasks.today);
                             //If task is previous    
-                        } else if (value.date.isBetween(data.params.today.clone().subtract(data.params.tasksPrev, 'days'), data.params.today, 'day') === true) {
+                        } else if (value.date.isBetween(data.params.dates.main.clone().subtract(data.params.tasksPrev, 'days'), data.params.dates.main, 'day') === true) {
                             model.tasks.create(value, data.tasks.prev);
                             //If task is upcoming/next     
-                        } else if (value.date.isBetween(data.params.today, data.params.today.clone().add(data.params.tasksNext, 'days'), 'day') === true) {
+                        } else if (value.date.isBetween(data.params.dates.main, data.params.dates.main.clone().add(data.params.tasksNext, 'days'), 'day') === true) {
                             model.tasks.create(value, data.tasks.next);
                         }
                     });
@@ -387,7 +396,7 @@ window.greenThumb = (function(){
                 //Override todays date for testing
                 if (typeof $stateParams.date !== 'undefined') {
                     var date = $stateParams.date.split('-');
-                    data.params.today = moment().set({year: parseInt(date[0], 10), month: parseInt(date[1], 10) - 1, date: parseInt(date[2], 10), hours: 0});
+                    data.params.dates.main = moment().set({year: parseInt(date[0], 10), month: parseInt(date[1], 10) - 1, date: parseInt(date[2], 10), hours: 0});
                 }
             }//end model.state
         };//end model
@@ -427,9 +436,11 @@ window.greenThumb = (function(){
 
         //Garden does not need to be updated everytime data is passed, only once
         $scope.$on('dataPassed', function () {
-            $scope.name     = gtGetData.garden.name;
-            $scope.garden   = gtGetData.garden.areas;
-            $scope.params   = gtGetData.params;
+            $scope.name         = gtGetData.garden.name;
+            $scope.garden       = gtGetData.garden.areas;
+            $scope.params       = gtGetData.params;
+            $scope.main_pos     = gtGetData.params.dates.main_pos;
+            $scope.today_pos    = gtGetData.params.dates.today_pos;
         });
         
     }).directive('areas', function () {
@@ -458,7 +469,7 @@ window.greenThumb = (function(){
         };
         
         //Get current season
-        var season = gtGetData.getSeason(gtGetData.params.today);
+        var season = gtGetData.getSeason(gtGetData.params.dates.main);
         //Set the default filtering option to the current season, both in the view and in the model
         $scope.filterOptions.season[season] = true;
         gtGetData.params.filters.season = {};
@@ -466,11 +477,17 @@ window.greenThumb = (function(){
       
         //When the main model is updated, add the latest date to the date picker
         $scope.$on('dataPassed', function () {
-            $scope.date = gtGetData.params.today.format("MM/DD/YYYY");
+            $scope.date = gtGetData.params.dates.main.format("MM/DD/YYYY");
         });
 
         //When the display date input is changed
         $scope.display = function (date) {
+            
+            //On a date change, set all the season filtering to false to show all calendar items
+            angular.forEach($scope.filterOptions.season, function(value,key){ 
+                $scope.filterOptions.season[key] = false;
+            });
+           
             //Get the date from the main dropdown OR todays date
             var date;
             if(date === 'today'){
@@ -482,10 +499,10 @@ window.greenThumb = (function(){
             //Update app main date
             gtGetData.params.filters.season = false;
             
-            
             $state.go('.', {date: date.format('YYYY-MM-DD')}, {notify: false});
-            gtGetData.update({today: date});
-
+            
+            var obj = {dates : {main : date}};
+            gtGetData.update(obj);
         };
 
         //When the seedling calculator is turned on

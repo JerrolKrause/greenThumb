@@ -29,7 +29,11 @@
         .gt-area-item img{margin-right:10px;float:left;}
 
 #gt-areas{position:relative;clear:both;}       
-#gt-date{border-left:1px solid #ccc;position:absolute;height:100%;margin-left:25%;display:none!important;}    
+    #gt-today{position:absolute;left: 0px;right: 0px;top: 0px;bottom: 0px;}    
+      #gt-today .columns{height: 100%;}  
+      #gt-today2{height:100%;position: relative;}
+        #gt-main-line{background-color:#f00;position: absolute;width: 1px;height: 100%;}
+        #gt-today-line{background-color:#007ba4;position: absolute;width: 1px;height: 100%;}
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
 
