@@ -46,7 +46,7 @@ window.greenThumb = (function(){
         };
         
         //Override todays date
-        data.params.dates.main = moment().set({year: 2015, month: 2, date: 1, hours: 0});
+        //data.params.dates.main = moment().set({year: 2015, month: 2, date: 1, hours: 0});
 
         //Fetch JSON object of garden to use
         $http({

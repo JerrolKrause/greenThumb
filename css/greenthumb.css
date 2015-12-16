@@ -21,7 +21,7 @@
   text-align: center;
   width: 8.333%;
   background: #ccc url("../img/pixel-white.png") repeat-y right top;
-  font-size: 0.9rem; }
+  font-size: 0.8rem; }
 
 #gt-schedule {
   border-top: 1px solid #ccc;
@@ -119,6 +119,10 @@
     background-position: 0px -550px; }
   .gt-produce.tomato {
     background-position: 0px -600px; }
+  .gt-produce.bell_pepper {
+    background-position: 0px -650px; }
+  .gt-produce .inline {
+    display: inline !important; }
 
 .gt-area-item {
   margin-bottom: 1px; }
@@ -166,5 +170,9 @@
   #gt-schedule-prev {
     border-top: 1px solid #ccc; } }
 /* Large */
+/* XT-Large */
+@media only screen and (min-width: 90.063em) {
+  .gt-col {
+    font-size: 0.9rem; } }
 
 /*# sourceMappingURL=greenthumb.css.map */

@@ -1,5 +1,22 @@
 
 var gtProduce = {
+    bell_pepper: {
+        label: "Bell Pepper",
+        maturity: 85,
+        seedling: 7,
+        harvest: 12,
+        spacing: 12,
+        vertical: false,
+        rowsPerBed: 2
+    },
+    bell_pepper_flavorburst: {
+       label: "Flavorburst",
+        parent: "bell_pepper"
+    },
+    bell_pepper_ace: {
+       label: "Ace",
+        parent: "bell_pepper"
+    },
     broccoli: {
         label: "Broccoli",
         maturity: 60,

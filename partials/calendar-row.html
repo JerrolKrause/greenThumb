@@ -5,8 +5,12 @@
         
         <div class="large-3 medium-4 small-2 columns">
             <div class="gt-produce {{produce2.parent}}">
-                <div class="show-for-small">{{produce2.label_short}}</div>
-                <div class="show-for-medium-up">{{produce2.label}} <span ng-if="produce2.plantCount">({{produce2.plantCount}})</span></div>
+                <div class="inline">
+                <span class="show-for-small">{{produce2.label_short}}</span>
+                <span class="show-for-medium-up">{{produce2.label}} </span>
+                <span class="show-for-large-up">{{produce2.label_parent}} </span>
+                <span class="show-for-medium-up" ng-if="produce2.plantCount">({{produce2.plantCount}})</span>
+               </div>
             </div>
         </div>
         
