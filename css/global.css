@@ -13,6 +13,173 @@
 @import url(foundation.css);
 @import url(foundation-datepicker.min.css);
 @import url(foundation-icons.css);
-@import url(greenthumb.css);
+/*
+ * Variables
+ */
+/*
+ * Content
+ */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }
+
+#gt-container {
+  font-size: 0.9em; }
+
+#gt-container .row {
+  max-width: 100%; }
+
+#gt-container p, #gt-container li {
+  font-size: 0.9em; }
+
+.gt-col {
+  float: left;
+  text-align: center;
+  width: 8.333%;
+  background: #ccc url("../img/pixel-white.png") repeat-y right top;
+  font-size: 0.9rem; }
+
+#gt-schedule {
+  border-top: 1px solid #ccc;
+  padding-top: 20px; }
+
+#gt-areas {
+  position: relative;
+  clear: both; }
+
+#gt-today {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px; }
+
+#gt-today .columns {
+  height: 100%; }
+
+#gt-today2 {
+  height: 100%;
+  position: relative; }
+
+#gt-main-line {
+  background-color: #f00;
+  position: absolute;
+  width: 1px;
+  height: 100%; }
+
+#gt-today-line {
+  background-color: #007ba4;
+  position: absolute;
+  width: 1px;
+  height: 100%; }
+
+.gt-area {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+  background-color: #ebebeb; }
+
+.gt-area-row {
+  position: relative;
+  height: 25px;
+  overflow: hidden; }
+
+.gt-seedlings {
+  position: absolute;
+  z-index: 11;
+  top: 0px;
+  background-color: #00a651;
+  height: 25px; }
+
+.gt-growing {
+  position: absolute;
+  z-index: 12;
+  top: 0px;
+  background-color: #007236;
+  height: 25px; }
+
+.gt-harvest {
+  position: absolute;
+  z-index: 10;
+  top: 0px;
+  background-color: #c69c6d;
+  height: 25px; }
+
+.gt-produce {
+  background: url("../img/thumbs/sprite-produce.png") no-repeat 0px 0px;
+  padding-left: 30px;
+  line-height: 25px;
+  min-height: 25px;
+  position: relative; }
+  .gt-produce.cucumber {
+    background-position: 0px -50px; }
+  .gt-produce.broccoli {
+    background-position: 0px -100px; }
+  .gt-produce.brussel_sprouts {
+    background-position: 0px -150px; }
+  .gt-produce.carrot {
+    background-position: 0px -200px; }
+  .gt-produce.lettuce {
+    background-position: 0px -250px; }
+  .gt-produce.melon {
+    background-position: 0px -300px; }
+  .gt-produce.potato {
+    background-position: 0px -350px; }
+  .gt-produce.pumpkin {
+    background-position: 0px -400px; }
+  .gt-produce.sweet_potato {
+    background-position: 0px -450px; }
+  .gt-produce.squash {
+    background-position: 0px -500px; }
+  .gt-produce.swiss_chard {
+    background-position: 0px -550px; }
+  .gt-produce.tomato {
+    background-position: 0px -600px; }
+
+.gt-area-item {
+  margin-bottom: 1px; }
+  .gt-area-item img {
+    margin-right: 10px;
+    float: left; }
+
+/*
+ * Media Queries
+ */
+/* Small */
+@media only screen and (max-width: 40em) {
+  #gt-areas {
+    background-color: #ebebeb;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+
+  .gt-area {
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent; }
+
+  #gt-calendar .small-2, #gt-calendar .small-10 {
+    padding-left: .25rem;
+    padding-right: .25rem; }
+
+  .gt-area-item img {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block; }
+
+  #gt-schedule-prev {
+    border-top: 1px solid #ccc; }
+
+  .gt-produce .show-for-small {
+    font-size: .8em;
+    position: absolute;
+    bottom: 0px;
+    line-height: initial;
+    text-shadow: -1px -1px #fff;
+    left: 20px; } }
+/* Medium */
+@media only screen and (min-width: 40.063em) and (max-width: 64em) {
+  #gt-schedule-prev {
+    border-top: 1px solid #ccc; } }
+/* Large */
 
 /*# sourceMappingURL=global.css.map */
