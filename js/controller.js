@@ -42,7 +42,7 @@ window.greenThumb = (function(){
             tasksPrev           : 30,                                           //Show upcoming tasks within this many days
             calcPlants          : false,                                        //Automatically calculate how many seedlings should be planted
             initLoad            : false,                                        //Flag to ensure certain only items fire on first load
-            filters             : {season : false, tasks : false, misc : false} //Holds filtering options.
+            filters             : {season : {}, tasks : {}, misc : {}} //Holds filtering options.
         };
         
         //Override todays date
@@ -76,9 +76,26 @@ window.greenThumb = (function(){
                     if (data.params.initLoad === false) {
                         model.state();
                     }
+                    
+                    //Default show all calendar items
+                    //This param checks if all season checkboxes have been set to false, if so show all calendar items
+                    var showAllCalendar = true;
+                    angular.forEach(data.params.filters.season, function (value) {
+                        console.log('value: ' + value);
+                        if (value === true) {
+                            showAllCalendar = false;
+                        }
+                    });
+                   
 
                     //Loop through each growing area in the model
                     angular.forEach(data.garden.areas, function (value1, key1) {
+                        
+                        //Default area is visible
+                        value1.visible = true;
+                        //Counter to hold how many produce items within this area are hidden
+                        var count = 0;
+                        
                         
                         //Loop through the produce within each area
                         angular.forEach(value1.produce, function (value2, key2) {
@@ -87,7 +104,16 @@ window.greenThumb = (function(){
                             if (data.params.initLoad === false) {
                                 model.initialize.build(value1, key1, value2, key2);
                             }
-
+                            
+                            //Calendar row is default visible
+                            value2.visible = true;
+                            
+                            //If a season checkbox has been set and is NOT equal to this produce items season value, HIDE
+                            if(data.params.filters.season[value2.dom.season] !== true && showAllCalendar === false){
+                                value2.visible = false;
+                                count ++;
+                            }
+                            
                             //If the option to calculate plants is set
                             if (data.params.calcPlants === false && value1.length) {
                                 value2.plantCount = value2.numPlants;
@@ -100,6 +126,12 @@ window.greenThumb = (function(){
                             }
 
                         });//end produce loop
+                        
+                        //If all produce items in this area are hidden, set this area to HIDE
+                        if(count === value1.produce.length){
+                            value1.visible = false;
+                        }
+                        
                     });//end grow area loop
 
                     //Refresh the task pane list
@@ -195,6 +227,9 @@ window.greenThumb = (function(){
                     }
                     //Only show the first 2 characters of the produce name
                     //value2.label_short = value2.label.charAt(0) + value2.label.charAt(1);
+                   
+                    //Default is visible
+                    value2.visible = true;
                    
                     //Check if the dates have already been generated, only generate on first pass
                     if (typeof value2.dates.seedlings === 'undefined') {
@@ -352,6 +387,8 @@ window.greenThumb = (function(){
                             data.tasks[key] = 'Nothing';
                         }
                     });
+                    console.log(data.tasks.today);
+                    
                 }, //end model.tasks.refresh
                 
                 
@@ -362,6 +399,16 @@ window.greenThumb = (function(){
                  * @returns {controller_L4.greenThumb.model.formatTasks.obj} - Returns the plant object with the dates added
                  */
                 create: function (dateItems, taskObj) {
+                    
+                    //Default show all task items
+                    //This param checks if all season task have been set to false, if so show all task items
+                    var showAllTasks = true;
+                    angular.forEach(data.params.filters.tasks, function (value) {
+                        if (value === true) {
+                            showAllTasks = false;
+                        }
+                    });
+                    
                     //Loop through each of the task types in the dateItems obj, IE seedlings, plant, harvest
                     //This implementation can accomodate multiple tasks type occuring on the same day (IE start seedlings and plant something)
                     angular.forEach(dateItems.items, function (value, key) {
@@ -402,7 +449,7 @@ window.greenThumb = (function(){
                             //Before loading this task into the tasks object, we need to meet the following conditions:
                             //If no filtering options are set, show all
                             //If the KEY of the current task item matches a filtering option AND is not UNDEFINED, show this one item
-                            if (data.params.filters.tasks === false || data.params.filters.tasks[key] !== false && typeof data.params.filters.tasks[key] !== 'undefined') {
+                            if (showAllTasks === true || (data.params.filters.tasks[key] !== false && typeof data.params.filters.tasks[key] !== 'undefined')) {
                                 //Load the task into the task object
                                 taskObj[dateItems.date.format("YYYYMMDD")].items.push(obj);
                             }
@@ -499,7 +546,7 @@ window.greenThumb = (function(){
         $scope.filterOptions.season[season] = true;
         gtGetData.params.filters.season = {};
         gtGetData.params.filters.season[season] = true;
-      */
+        */
      
         //When the main model is updated, add the latest date to the date picker
         $scope.$on('dataPassed', function () {
@@ -531,6 +578,7 @@ window.greenThumb = (function(){
             gtGetData.update(obj);
         };
 
+
         //When the seedling calculator is turned on
         $scope.calcPlants = function () {
             //Set the seedling calculator param to true so the application will calculate the # of seedlings
@@ -551,17 +599,13 @@ window.greenThumb = (function(){
                         isSet = true;
                     }
                 });
-
-                //If all the season values are set to false, set the entire parameter to false
-                if (isSet === false) {
-                    $scope.filterOptions[key] = false;
-                }
             });
             
             //Pass filters to update function
             gtGetData.update({filters: $scope.filterOptions});
         };
     });
+
 
     /**
      * URL routing app. Manages the state of the app based on URL parameters

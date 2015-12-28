@@ -50,6 +50,7 @@
                         <div class="row">
                             <div class="large-6 medium-6 columns">
                                 <h4>Season</h4>
+                                <input type="checkbox" value="smart" name="smart" id="smart" ng-model="filterOptions.season.smart" ng-click="filterGarden()"><label for="smart" title="Show only produce items currently growing">Smart View</label><br/>
                                 <input type="checkbox" value="spring" name="spring" id="spring" ng-model="filterOptions.season.spring" ng-click="filterGarden()"><label for="spring" title="(Mar - May)">Spring</label><br/>
                                 <input type="checkbox" value="summer" name="summer" id="summer" ng-model="filterOptions.season.summer" ng-click="filterGarden()"><label for="summer" title="(June - Aug)">Summer</label><br/>
                                 <input type="checkbox" value="fall" name="fall" id="fall" ng-model="filterOptions.season.fall" ng-click="filterGarden()"><label for="fall" title="(Sept - Nov)">Fall</label><br/>

@@ -2,6 +2,6 @@
 <div class="filter-tasks" ng-repeat="tasks in data track by $index" ng-if="tasks.items.length != 0">   
     <p><strong>{{tasks.label}}</strong></p>
     <ul>
-        <li ng-repeat="task in tasks.items" ng-class="[task.slug, data2.filters.tasks[task.slug], 'filter-task']" ng-if="data2.filters.tasks == false || data2.filters.tasks[task.slug] == true">{{task.label}}</li>
+        <li ng-repeat="task in tasks.items" ng-class="[task.slug, data2.filters.tasks[task.slug], 'filter-task']" ng-if2="data2.filters.tasks == false || data2.filters.tasks[task.slug] == true">{{task.label}}</li>
     </ul>
 </div>
