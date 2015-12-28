@@ -60,8 +60,8 @@
             "width": 1.5,
             "length": 30,
             "produce": [
-                {"slug": "bell_pepper_flavorburst", "numPlants" : 10, "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
-                {"slug": "bell_pepper_ace", "numPlants" : 10, "dates" : {"plant" : {"month" : 2 , "day" : 1}}}
+                {"slug": "bell_pepper_flavorburst", "numPlants" : 5, "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
+                {"slug": "bell_pepper_ace", "numPlants" : 5, "dates" : {"plant" : {"month" : 2 , "day" : 1}}}
             ]
         },
         {

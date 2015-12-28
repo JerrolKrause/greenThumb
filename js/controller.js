@@ -90,7 +90,7 @@ window.greenThumb = (function(){
 
                             //If the option to calculate plants is set
                             if (data.params.calcPlants === false && value1.length) {
-                                value2.plantCount = value2.numPlants
+                                value2.plantCount = value2.numPlants;
                                 //Calculate tbe number of plants/seedlings needed by this grow bed
                                 model.view.calcPlants(value1, value2);
                             //Use set values if provided, if not set to blank   
@@ -116,6 +116,7 @@ window.greenThumb = (function(){
 
                     console.log(data);
                 }, //end model.updateView
+                
                 
                 /**
                  * Calculates the numer of plants and seedlings needed, determined by the growing area size
@@ -229,11 +230,39 @@ window.greenThumb = (function(){
                         if (!angular.isArray(data.dates[value3.format("YYYYMMDD")].items[key3])) {
                             data.dates[value3.format("YYYYMMDD")].items[key3] = [];
                         }
-
+                        
                         //Add the current produce item to the date array
                         data.dates[value3.format("YYYYMMDD")].items[key3].push(value2);
+                        
+                        
+                        //Check if this produce item falls within the first 3 months of the year
+                        //If so, duplicate this item and add a year so it's tasks will show up at the end of the year or when the year rolls over
+                        //Otherwise this produce tasks will only show for THIS YEAR and won't have tasks for next year
+                        if(parseInt(value3.format("M")) <= 3){
+                            //Duplicate the date object and add a year
+                            var nextYear = value3.clone().add(1, 'year');
+                            //Check if the an object exists to hold the date and date object, if not create it
+                            if (!angular.isObject(data.dates[nextYear.format("YYYYMMDD")])) {
+                                data.dates[nextYear.format("YYYYMMDD")] = {date: nextYear};
+                            }
+
+                            //Check if an array exists to hold the dates, if not create it
+                            if (!angular.isObject(data.dates[nextYear.format("YYYYMMDD")].items)) {
+                                data.dates[nextYear.format("YYYYMMDD")].items = {};
+                            }
+
+                            //Check if an array exists to hold the dates, if not create it
+                            if (!angular.isArray(data.dates[nextYear.format("YYYYMMDD")].items[key3])) {
+                                data.dates[nextYear.format("YYYYMMDD")].items[key3] = [];
+                            }
+                            
+                            //Add the current produce item to the date array
+                            data.dates[nextYear.format("YYYYMMDD")].items[key3].push(value2);
+                        }
+                        
                     });//end dates loop
                 },//end model.initialize.build
+                
                 
                 /**
                  * Adds the seedling, harvest start and harvest complete dates to the object. These dates are based off the plant date.
@@ -270,6 +299,7 @@ window.greenThumb = (function(){
                     produce.dom.season = model.initialize.getSeason(plant);
                 }, //end model.initialize.addDates
                 
+                
                 /**
                  * Return a string of the season of the date supplied
                  * @param {type} date - A moment.js date object
@@ -300,13 +330,10 @@ window.greenThumb = (function(){
                  * @returns {undefined}
                  */
                 refresh: function () {
-                    //console.log(data.dates);
                     //Reset tasks/create default object to hold tasks
                     data.tasks = {today: {}, prev: {}, next: {}};
-
                     //Loop through the dates in the date object
                     angular.forEach(data.dates, function (value, key) {
-                        //console.log(value);
                         //If task occurs today
                         if (value.date.isSame(data.params.dates.main, 'day') === true) {
                             model.tasks.create(value, data.tasks.today);
@@ -326,6 +353,7 @@ window.greenThumb = (function(){
                         }
                     });
                 }, //end model.tasks.refresh
+                
                 
                 /**
                  * Create the string used in the task pane
@@ -370,7 +398,7 @@ window.greenThumb = (function(){
                                     items: []
                                 };
                             }
-
+                            
                             //Before loading this task into the tasks object, we need to meet the following conditions:
                             //If no filtering options are set, show all
                             //If the KEY of the current task item matches a filtering option AND is not UNDEFINED, show this one item
@@ -382,6 +410,7 @@ window.greenThumb = (function(){
                     });
                 }//end model.tasks.create
             },//end model.tasks
+            
             
             /**
              * Manages the state of the application by using query parameters and UI routing
