@@ -540,29 +540,28 @@ window.greenThumb = (function(){
         
         //Update all filters
         $scope.filterGarden = function () {
-
-            var options = angular.copy($scope.filterOptions);
-
+            //Var to check if any checkboxes have been checked
+            var isSet = false;
             //Loop through all the filtering options. If they are ALL set to false, set the master key to false
-            angular.forEach(options, function (value, key) {
+            //This sets the display options to SHOW ALL if none of the checkboxes are set
+            angular.forEach($scope.filterOptions, function (value, key) {
                 angular.forEach(value, function (value2, key2) {
-                    //console.log(key2 + ' - ' + value2);
-                    if (value2 === false) {
-                        //console.log('Is False');
-                        delete options[key][key2];
+                    //If a checkbox is set to true, set the master setting so we know not to override it
+                    if (value2 === true) {
+                        isSet = true;
                     }
                 });
 
-                if (Object.keys(value).length === 0) {
-                    options[key] = false;
+                //If all the season values are set to false, set the entire parameter to false
+                if (isSet === false) {
+                    $scope.filterOptions[key] = false;
                 }
             });
-
+            
             //Pass filters to update function
-            gtGetData.update({filters: options});
-
+            gtGetData.update({filters: $scope.filterOptions});
         };
-    })
+    });
 
     /**
      * URL routing app. Manages the state of the app based on URL parameters
