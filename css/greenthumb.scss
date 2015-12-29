@@ -2,6 +2,8 @@
  * Variables
  */
 $border-color: #ccc;
+$bg-color: #efefef;
+ 
 
 /*
  * Content
@@ -12,7 +14,7 @@ $border-color: #ccc;
     #gt-container .row {max-width: 100%;}
     #gt-container p, #gt-container li{font-size:0.9em;}
     
-.gt-col{float:left;text-align:center;width:8.333%;background: #ccc url('../img/pixel-white.png') repeat-y right top;font-size: 0.8rem;}
+.gt-col{float:left;text-align:center;width:8.333%;background: $bg-color url('../img/pixel-white.png') repeat-y right top;font-size: 0.8rem;}
 
 #gt-schedule{border-top:1px solid $border-color;padding-top:20px;}
 
@@ -24,7 +26,7 @@ $border-color: #ccc;
         #gt-main-line{background-color:#f00;position: absolute;width: 1px;height: 100%;}
         #gt-today-line{background-color:#007ba4;position: absolute;width: 1px;height: 100%;}
 
-.gt-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;background-color: #ebebeb;}
+.gt-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;background-color: $bg-color;}
     .gt-area-row{position:relative;height: 25px;overflow:hidden;}
         .gt-seedlings{position:absolute;z-index:11;top:0px;background-color:#00a651;height: 25px;}
         .gt-growing{position:absolute;z-index:12;top:0px;background-color:#007236;height: 25px;}
@@ -59,7 +61,7 @@ $border-color: #ccc;
 
 /* Small */
 @media only screen and (max-width: 40em) { 
-    #gt-areas{background-color: #ebebeb;padding-top:5px;padding-bottom:5px}
+    #gt-areas{background-color: $bg-color;padding-top:5px;padding-bottom:5px}
     .gt-area{padding:0px;margin:0px;background-color: transparent;}
     #gt-calendar .small-2, #gt-calendar .small-10{padding-left: .25rem;padding-right: .25rem;}
     .gt-area-item img{float:none;margin-left:auto;margin-right:auto;    display: block;}

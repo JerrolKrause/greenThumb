@@ -81,7 +81,6 @@ window.greenThumb = (function(){
                     //This param checks if all season checkboxes have been set to false, if so show all calendar items
                     var showAllCalendar = true;
                     angular.forEach(data.params.filters.season, function (value) {
-                        console.log('value: ' + value);
                         if (value === true) {
                             showAllCalendar = false;
                         }
@@ -108,12 +107,19 @@ window.greenThumb = (function(){
                             //Calendar row is default visible
                             value2.visible = true;
                             
+                            //If the smart view season filtering option is set
+                            if (data.params.filters.season.smart === true) {
+                                //Check if the main date is between the seedling start date and the harvest complete date. If not, hide this item
+                                if (!data.params.dates.main.isBetween(value2.dates.seedlings, value2.dates.harvest_complete)) {
+                                    value2.visible = false;
+                                    count++;
+                                }
                             //If a season checkbox has been set and is NOT equal to this produce items season value, HIDE
-                            if(data.params.filters.season[value2.dom.season] !== true && showAllCalendar === false){
+                            } else if (data.params.filters.season[value2.dom.season] !== true && showAllCalendar === false) {
                                 value2.visible = false;
-                                count ++;
+                                count++;
                             }
-                            
+
                             //If the option to calculate plants is set
                             if (data.params.calcPlants === false && value1.length) {
                                 value2.plantCount = value2.numPlants;
@@ -372,10 +378,10 @@ window.greenThumb = (function(){
                         //If task occurs today
                         if (value.date.isSame(data.params.dates.main, 'day') === true) {
                             model.tasks.create(value, data.tasks.today);
-                            //If task is previous    
+                        //If task is previous    
                         } else if (value.date.isBetween(data.params.dates.main.clone().subtract(data.params.tasksPrev, 'days'), data.params.dates.main, 'day') === true) {
                             model.tasks.create(value, data.tasks.prev);
-                            //If task is upcoming/next     
+                        //If task is upcoming/next     
                         } else if (value.date.isBetween(data.params.dates.main, data.params.dates.main.clone().add(data.params.tasksNext, 'days'), 'day') === true) {
                             model.tasks.create(value, data.tasks.next);
                         }
@@ -387,7 +393,6 @@ window.greenThumb = (function(){
                             data.tasks[key] = 'Nothing';
                         }
                     });
-                    console.log(data.tasks.today);
                     
                 }, //end model.tasks.refresh
                 
@@ -555,12 +560,7 @@ window.greenThumb = (function(){
 
         //When the display date input is changed
         $scope.display = function (date) {
-            
-            //On a date change, set all the season filtering to false to show all calendar items
-            angular.forEach($scope.filterOptions.season, function(value,key){ 
-                $scope.filterOptions.season[key] = false;
-            });
-           
+        
             //Get the date from the main dropdown OR todays date
             var date;
             if(date === 'today'){
@@ -569,9 +569,6 @@ window.greenThumb = (function(){
                 date =  moment($scope.date).add(1, 'days');
             }
 
-            //Update app main date
-            gtGetData.params.filters.season = false;
-            
             $state.go('.', {date: date.format('YYYY-MM-DD')}, {notify: false});
             
             var obj = {dates : {main : date}};
