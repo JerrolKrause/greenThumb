@@ -1,23 +1,41 @@
 /*
  * Variables
  */
-$border-color: #ccc;
-$bg-color: #efefef;
- 
+$border-color:      #ccc;
+$bg-color:          #efefef;
+$link-color:        #197b30;
+$link-color-hover:  #603913;
+
+@mixin link-color-dk(){background-color:$link-color;color:#fff;}
+@mixin link-color-lt(){background-color:#d9f0dc;color:$link-color;}
+
 
 /*
  * Content
  */
+a, a:link{color:$link-color;}
+a:hover{color:$link-color-hover;}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
+.button, .button:link, button{@include link-color-lt();height: 2.3125rem;margin: 0 0 1rem;padding: .5rem;font-size: 0.9rem;margin-bottom:0px;border-radius: 5px;}
+.button:hover, button:hover{@include link-color-dk();}
+
+label{color:$link-color;cursor:pointer;}
+    label:hover{text-decoration:underline;}
+input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
+
+#dropcal{border-radius: 0px 5px 5px 0px;position:relative;left:-3px;padding:0px;padding-left: 10px;padding-right: 10px;height:auto;font-size:30px;top: 6px;}
+#today{position:relative;top:-2px;}
+
+
+
 
 #gt-container{font-size:0.9em;}
     #gt-container .row {max-width: 100%;}
     #gt-container p, #gt-container li{font-size:0.9em;}
     
 .gt-col{float:left;text-align:center;width:8.333%;background: $bg-color url('../img/pixel-white.png') repeat-y right top;font-size: 0.8rem;}
-
 #gt-schedule{border-top:1px solid $border-color;padding-top:20px;}
-
 
 #gt-areas{position:relative;clear:both;}       
     #gt-today{position:absolute;left: 0px;right: 0px;top: 0px;bottom: 0px;}    
@@ -55,6 +73,23 @@ $bg-color: #efefef;
             img{margin-right:10px;float:left;}
         }
 
+        .dropdown-menu{list-style:none;margin:0px;padding:0px;position:absolute;z-index: 1;background-color: #f5f5f5;border: 1px solid #e3e3e3; box-shadow: 10px 10px 25px 0px rgba(0,0,0,0.5);outline:0px;}
+        .dropdown-menu div:active{outline:none;}
+            .dropdown-menu li{list-style:none;margin:0px;padding:0px;}
+            .dropdown-menu table{min-width:350px;}
+            .dropdown-menu thead, .dropdown-menu tr, .dropdown-menu th{background:none;padding:0px;}
+            
+            .dropdown-menu td{background:none;border:0px;padding:0px;width:42px;}
+            .dropdown-menu button{padding:0px;margin:0px; border-radius: 3px;border-color: #ccc;padding: .5625rem .625rem;@include link-color-lt();}  
+                .dropdown-menu button:hover, .dropdown-menu button.btn-info{@include link-color-dk();}
+                .dropdown-menu .btn{width:100%;}
+                    .dropdown-menu .btn-group .btn-info{margin-bottom:10px;}
+                    .dropdown-menu .btn-danger, .dropdown-menu .btn-success{display:none;}
+            .dropdown-menu button span{background-color: none;}
+       
+            
+            
+            
 /*
  * Media Queries
  */

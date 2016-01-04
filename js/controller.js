@@ -1,10 +1,11 @@
 /* global moment, angular */
 /* jshint unused: true */
 
-
-window.greenThumb = (function(){
+//Silly variable instantiation but lets the code match the app name of green.thumb :)
+var green = {};
+green.thumb = (function(){
     'use strict';
-    var greenThumb = angular.module('gtApp', ['ui.router']);                    //Angular app
+    var greenThumb = angular.module('gtApp', ['ui.router','ui.bootstrap']);                    //Angular app
 
     /**
      * Creates the model/data object for use by the rest of the application
@@ -19,12 +20,14 @@ window.greenThumb = (function(){
         var data = {
             produce             : window.gtProduce,
             dates               : {},
+            //Takes input object and updates the data.params filtering/sorting options 
             update: function (obj) {
                 //Overwrite any parameters supplied by the input object
                 angular.merge(data.params, obj);
                 //Now rebuild the appropriate items in the garden
                 model.view.update(data.garden);
             },
+            //Allows a method outside the factory to get the current season
             getSeason : function(date){
                 return model.initialize.getSeason(date);
             }
@@ -45,7 +48,7 @@ window.greenThumb = (function(){
             filters             : {season : {}, tasks : {}, misc : {}} //Holds filtering options.
         };
         
-        //Override todays date
+        //Override todays date for testing
         //data.params.dates.main = moment().set({year: 2015, month: 2, date: 1, hours: 0});
 
         //Fetch JSON object of garden to use
@@ -86,9 +89,6 @@ window.greenThumb = (function(){
                         }
                     });
                     
-                    console.log('Current Day: ' + data.params.dates.main.dayOfYear());
-                   
-
                     //Loop through each growing area in the model
                     angular.forEach(data.garden.areas, function (value1, key1) {
                         
@@ -480,6 +480,27 @@ window.greenThumb = (function(){
                     var date = $stateParams.date.split('-');
                     data.params.dates.main = moment().set({year: parseInt(date[0], 10), month: parseInt(date[1], 10) - 1, date: parseInt(date[2], 10), hours: 0});
                 }
+                
+                if (typeof $stateParams.filter_season_smart !== 'undefined') {
+                    data.params.filters.season.smart = true;
+                }
+                
+                if (typeof $stateParams.filter_season_spring !== 'undefined') {
+                    data.params.filters.season.spring = true;
+                }
+                
+                if (typeof $stateParams.filter_season_summer !== 'undefined') {
+                    data.params.filters.season.summer = true;
+                }
+                
+                if (typeof $stateParams.filter_season_fall !== 'undefined') {
+                    data.params.filters.season.fall = true;
+                }
+                
+                if (typeof $stateParams.filter_season_winter !== 'undefined') {
+                    data.params.filters.season.winter = true;
+                }
+                
             }//end model.state
         };//end model
 
@@ -542,7 +563,9 @@ window.greenThumb = (function(){
      * Controller for the display & interactive options
      */
     greenThumb.controller('gtDisplay', function ($scope, gtGetData, $stateParams, $state) {
- 
+        
+       
+        
         //Placeholder for filtering options. Necessary to bind events
         $scope.filterOptions = {
             season : {},
@@ -550,49 +573,96 @@ window.greenThumb = (function(){
             misc : {}
         };
         
-       $scope.filterOptions.season.smart = true;
-       gtGetData.params.filters.season.smart = true;
-     
+        var onLoad = false;
+         
         //When the main model is updated, add the latest date to the date picker
         $scope.$on('dataPassed', function () {
+           if(!onLoad){
+               onLoad = true;
+               $scope.updateFilters();
+           }
+            
             $scope.date = gtGetData.params.dates.main.format("MM/DD/YYYY");
         });
 
-        //When the display date input is changed
-        $scope.display = function (date) {
-        
-            //Get the date from the main dropdown OR todays date
-            var date;
-            if(date === 'today'){
-                date =  moment();
-            } else {
-                date =  moment($scope.date).add(1, 'days');
+
+        //On application load, have the season filters match the query parameter options
+        $scope.updateFilters = function () {
+            if ($stateParams.filter_season_smart === 'true') {
+                $scope.filterOptions.season.smart = true;
             }
-
-            $state.go('.', {date: date.format('YYYY-MM-DD')}, {notify: false});
-            
-            var obj = {dates : {main : date}};
-            gtGetData.update(obj);
+            if ($stateParams.filter_season_spring === 'true') {
+                $scope.filterOptions.season.spring = true;
+            }
+            if ($stateParams.filter_season_summer === 'true') {
+                $scope.filterOptions.season.summer = true;
+            }
+            if ($stateParams.filter_season_fall === 'true') {
+                $scope.filterOptions.season.fall = true;
+            }
+            if ($stateParams.filter_season_winter === 'true') {
+                $scope.filterOptions.season.winter = true;
+            }
         };
 
 
-        //When the seedling calculator is turned on
-        $scope.calcPlants = function () {
-            //Set the seedling calculator param to true so the application will calculate the # of seedlings
-            gtGetData.update({calcPlants: $scope.calcSeedlings});
+        $scope.open = function ($event) {
+            $scope.status.opened = true;
         };
+
+
+        $scope.status = {
+            opened: false
+        };
+
         
         
-        //Update all filters
-        $scope.filterGarden = function () {
+        /**
+         * Main filtering/sorting function
+         * @data {object} - Data from the form fontend
+         * @returns {undefined}
+         */
+        $scope.filterSort = function(data){
             
+            var params = {};        //Object to hold filtering params for the model
+            var filtersObj ={};     //Object to hold query parameters for UI routing
+
+            //If smartview is set to true, set all the other season checkboxes to false
             if($scope.filterOptions.season.smart === true){
                 $scope.filterOptions.season.spring = $scope.filterOptions.season.summer = $scope.filterOptions.season.fall = $scope.filterOptions.season.winter = false;
             }
             
-            //Pass filters to update function
-            gtGetData.update({filters: $scope.filterOptions});
-        };
+            //Loop through all the filtering options, add them to the query param object
+            angular.forEach($scope.filterOptions, function(value1, key1){
+                 angular.forEach(value1, function(value2, key2){
+                     if(value2 === true){
+                         filtersObj['filter_'+key1+'_' + key2] = value2;
+                     }
+                });
+            });
+            
+            //Now load the updated filters into the params object
+            params.filters = $scope.filterOptions;
+            
+            //Get the date from the main dropdown OR todays date
+            var date;
+            if(data === 'today'){
+                date =  moment();
+            } else {
+                date =  moment($scope.date);
+            };
+            
+            //Make sure that the date in the query param is NOT today's date. This prevents bookmarking todays date
+            if(date.format('YYYY-MM-DD') !== gtGetData.params.dates.today.format('YYYY-MM-DD')){
+                params.dates = {main : date};
+                filtersObj.date = date.format('YYYY-MM-DD');
+            }
+            
+            //Pass the data to the model and the UI routing
+            gtGetData.update(params);
+            $state.go('.', filtersObj, {inherit: false, notify : false});
+        };//end filterSort
+        
     });
 
 
@@ -603,36 +673,13 @@ window.greenThumb = (function(){
      */
     greenThumb.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('state', {
-            url             : '/?date',//'/?date&filters'
-            controller      : 'gtDisplay',
-            controllerAs    : 'state'
+            url             : '/?date&filter_season_smart&filter_season_spring&filter_season_summer&filter_season_fall&filter_season_winter'
         });
 
         $urlRouterProvider.otherwise('/');
-    });
+    });//end UI state provider
 
 
-    /**
-     * Adds the datepicker functionality. Requires jQuery :(
-     */
-    greenThumb.directive('datepicker', function DatePicker() {
-        return {
-            require     : 'ngModel',
-            restrict    : 'A',
-            scope       : {format: "="},
-            link        : function (scope, element, attrs, ngModel) {
-                            if (typeof (scope.format) === "undefined") {
-                                scope.format = "mm/dd/yyyy";
-                            }
-                            $(element).fdatepicker({format: scope.format}).on('changeDate', function (ev) {
-                                scope.$apply(function () {
-                                    ngModel.$setViewValue(ev.date);
-                                });
-                        });
-            }
-        };
-    });
-    
     //Make this application public and available in console
     return greenThumb;
 })();

@@ -4,8 +4,54 @@
 /*
  * Content
  */
+a, a:link {
+  color: #197b30; }
+
+a:hover {
+  color: #603913; }
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
+
+.button, .button:link, button {
+  background-color: #d9f0dc;
+  color: #197b30;
+  height: 2.3125rem;
+  margin: 0 0 1rem;
+  padding: .5rem;
+  font-size: 0.9rem;
+  margin-bottom: 0px;
+  border-radius: 5px; }
+
+.button:hover, button:hover {
+  background-color: #197b30;
+  color: #fff; }
+
+label {
+  color: #197b30;
+  cursor: pointer; }
+
+label:hover {
+  text-decoration: underline; }
+
+input[type="checkbox"] {
+  cursor: pointer;
+  border-color: #197b30; }
+
+#dropcal {
+  border-radius: 0px 5px 5px 0px;
+  position: relative;
+  left: -3px;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: auto;
+  font-size: 30px;
+  top: 6px; }
+
+#today {
+  position: relative;
+  top: -2px; }
 
 #gt-container {
   font-size: 0.9em; }
@@ -129,6 +175,63 @@
   .gt-area-item img {
     margin-right: 10px;
     float: left; }
+
+.dropdown-menu {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: 1;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.5);
+  outline: 0px; }
+
+.dropdown-menu div:active {
+  outline: none; }
+
+.dropdown-menu li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px; }
+
+.dropdown-menu table {
+  min-width: 350px; }
+
+.dropdown-menu thead, .dropdown-menu tr, .dropdown-menu th {
+  background: none;
+  padding: 0px; }
+
+.dropdown-menu td {
+  background: none;
+  border: 0px;
+  padding: 0px;
+  width: 42px; }
+
+.dropdown-menu button {
+  padding: 0px;
+  margin: 0px;
+  border-radius: 3px;
+  border-color: #ccc;
+  padding: .5625rem .625rem;
+  background-color: #d9f0dc;
+  color: #197b30; }
+
+.dropdown-menu button:hover, .dropdown-menu button.btn-info {
+  background-color: #197b30;
+  color: #fff; }
+
+.dropdown-menu .btn {
+  width: 100%; }
+
+.dropdown-menu .btn-group .btn-info {
+  margin-bottom: 10px; }
+
+.dropdown-menu .btn-danger, .dropdown-menu .btn-success {
+  display: none; }
+
+.dropdown-menu button span {
+  background-color: none; }
 
 /*
  * Media Queries
