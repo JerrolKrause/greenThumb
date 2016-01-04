@@ -42,21 +42,15 @@
                 </div>
                 
                 <div class="large-4 columns" id="gt-schedule-prev" ng-controller="gtDisplay">
-                    
+
                     <h3>Display Options:</h3>
                     <p>Date : <input type="text" class="span2 form-control" uib-datepicker-popup="{{format}}" id="dp1" style="width:100px;" ng-value="datetoday" ng-model="date" ng-change="filterSort()" is-open="status.opened" datepicker-options="dateOptions" disabled="disabled"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open($event)"></a>
-                        
-                       
-                   
                         <!-- 
-                         <input type="submit" class="button fi-calendar"  id="dropcal" value="Cal" ng-click="open($event)"/>
+                        <input type="submit" class="button fi-calendar"  id="dropcal" value="Cal" ng-click="open($event)"/>
                         <a href="#" class="button" id="today" ng-click="filterSort('today')">Today</a></p>
                         -->
-
-                </p>
-                    
-                    
+                    </p>
                     
                     
                     <form action="#" id="gt-filter-season">
