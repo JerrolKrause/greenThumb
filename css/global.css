@@ -15,21 +15,35 @@
 /*
  * Variables
  */
+@font-face {
+  font-family: 'BPreplay';
+  src: url(../fonts/BPreplay.otf); }
 /*
  * Content
  */
+body {
+  background-color: #fff; }
+
+h1, h2, h3, h4, h5 {
+  color: #005300;
+  font-family: "BPreplay", sans-serif; }
+
 a, a:link {
-  color: #197b30; }
+  color: #aa6c39; }
 
 a:hover {
-  color: #603913; }
+  color: #552700;
+  text-decoration: underline; }
+
+*:focus {
+  outline: none; }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
 .button, .button:link, button {
-  background-color: #d9f0dc;
-  color: #197b30;
+  background-color: #aa6c39;
+  color: #fff;
   height: 2.3125rem;
   margin: 0 0 1rem;
   padding: .5rem;
@@ -38,54 +52,80 @@ a:hover {
   border-radius: 5px; }
 
 .button:hover, button:hover {
-  background-color: #197b30;
-  color: #fff; }
+  background-color: #552700;
+  text-decoration: none; }
+
+.fi {
+  margin-right: 10px; }
+
+.task-toggle {
+  font-size: 12px;
+  float: right;
+  margin-top: 15px; }
 
 label {
-  color: #197b30;
+  color: #aa6c39;
   cursor: pointer; }
 
 label:hover {
+  color: #552700;
   text-decoration: underline; }
 
 input[type="checkbox"] {
   cursor: pointer;
-  border-color: #197b30; }
-
-#dropcal {
-  border-radius: 0px 5px 5px 0px;
-  position: relative;
-  left: -3px;
-  padding: 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: auto;
-  font-size: 30px;
-  top: 6px; }
+  border-color: #aa6c39; }
 
 #today {
   position: relative;
   top: -2px; }
 
+#gt-cal-header {
+  padding-bottom: 5px !important; }
+
+#gt-header {
+  background-color: #1e1f22; }
+  #gt-header h1 {
+    color: #aa6c39; }
+  #gt-header h1 .green {
+    color: #2d882d; }
+  #gt-header h1 .white {
+    color: #fff; }
+
 #gt-container {
   font-size: 0.9em; }
-
-#gt-container .row {
-  max-width: 100%; }
-
-#gt-container p, #gt-container li {
-  font-size: 0.9em; }
+  #gt-container .row {
+    max-width: 100%; }
+  #gt-container p, #gt-container li {
+    font-size: 0.9em; }
 
 .gt-col {
   float: left;
   text-align: center;
   width: 8.333%;
-  background: #efefef url("../img/pixel-white.png") repeat-y right top;
+  background: #f7f7f7 url("../img/pixel-white.png") repeat-y right top;
   font-size: 0.8rem; }
+  .gt-col:first-child {
+    border-radius: 5px 0px 0px 5px; }
+  .gt-col:last-child {
+    border-radius: 0px 5px 5px 0px; }
 
 #gt-schedule {
   border-top: 1px solid #ccc;
   padding-top: 20px; }
+  #gt-schedule h3, #gt-schedule .tabs {
+    border-bottom: 1px solid #552700; }
+  #gt-schedule #dp1 {
+    border-radius: 5px 0px 0px 5px; }
+  #gt-schedule #dropcal {
+    border-radius: 0px 5px 5px 0px;
+    position: relative;
+    left: -3px;
+    padding: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: auto;
+    font-size: 30px;
+    top: 6px; }
 
 #gt-areas {
   position: relative;
@@ -121,7 +161,7 @@ input[type="checkbox"] {
   padding-bottom: 10px;
   padding-top: 10px;
   margin-bottom: 5px;
-  background-color: #efefef; }
+  background-color: #f7f7f7; }
 
 .gt-area-row {
   position: relative;
@@ -132,22 +172,24 @@ input[type="checkbox"] {
   position: absolute;
   z-index: 11;
   top: 0px;
-  background-color: #00a651;
-  height: 25px; }
+  background-color: #00a627;
+  height: 25px;
+  border-radius: 5px 0px 0px 5px; }
 
 .gt-growing {
   position: absolute;
   z-index: 12;
   top: 0px;
-  background-color: #007236;
+  background-color: #037200;
   height: 25px; }
 
 .gt-harvest {
   position: absolute;
   z-index: 10;
   top: 0px;
-  background-color: #c69c6d;
-  height: 25px; }
+  background-color: #c79359;
+  height: 25px;
+  border-radius: 0px 5px 5px 0px; }
 
 .gt-produce {
   background: url("../img/thumbs/sprite-produce.png") no-repeat 0px 0px;
@@ -222,10 +264,10 @@ input[type="checkbox"] {
     border-radius: 3px;
     border-color: #ccc;
     padding: .5625rem .625rem;
-    background-color: #d9f0dc;
-    color: #197b30; }
+    background-color: #fff7f1;
+    color: #552700; }
   .dropdown-menu button:hover, .dropdown-menu button.btn-info {
-    background-color: #197b30;
+    background-color: #aa6c39;
     color: #fff; }
   .dropdown-menu .btn {
     width: 100%; }
@@ -242,7 +284,7 @@ input[type="checkbox"] {
 /* Small */
 @media only screen and (max-width: 40em) {
   #gt-areas {
-    background-color: #efefef;
+    background-color: #f7f7f7;
     padding-top: 5px;
     padding-bottom: 5px; }
 

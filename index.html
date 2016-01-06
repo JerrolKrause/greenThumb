@@ -13,41 +13,36 @@
     <body>
         <div id="gt-container">
 
-            <div class="row">
+            <div class="row" id="gt-header">
                 <div class="columns">
-                    <h1>green.thumb</h1>
+                    <h1><span class="green">green</span><span class="white">.</span>thumb</h1>
                 </div>
             </div>
 
             <!-- Tasks -->
             <div id="gt-schedule" class="row" ng-controller="gtSchedule">
                 <div class="large-4 medium-6 columns" id="gt-schedule-today">
-                    <h3>Today</h3>
+                    <h3><span class="fi fi-checkbox"></span>Today's Tasks</h3>
                     <date-entry data="tasksToday" data2="params"></date-entry>
                 </div>
                 
                 <div class="large-4 medium-6 columns" id="gt-schedule-next">
-                    <ul class="tabs" data-tab>
-                        <li class="tab-title active"><a href="#panel1"><h3>Upcoming</h3></a></li>
-                        <li class="tab-title"><a href="#panel2"><h3>Previous</h3></a></li>
-                    </ul>
-                    <div class="tabs-content">
-                        <div class="content active" id="panel1">
-                            <date-entry data="tasksNext" data2="params"></date-entry>
-                        </div>
-                        <div class="content" id="panel2">
-                            <date-entry data="tasksPrev" data2="params"></date-entry>
-                        </div>
+                    <div class="gt-panel">
+                        <h3><span class="fi fi-list-thumbnails"></span>Upcoming Tasks<a class="task-toggle" href="#">Previous Tasks</a></h3>
+                        <date-entry data="tasksNext" data2="params"></date-entry>
+                    </div>
+                    <div class="gt-panel hide">
+                        <h3><span class="fi fi-list-thumbnails"></span>Previous Tasks<a class="task-toggle" href="#">Upcoming Tasks</a></h3>
+                        <date-entry data="tasksPrev" data2="params"></date-entry>
                     </div>
                 </div>
                 
                 <div class="large-4 columns" id="gt-schedule-prev" ng-controller="gtDisplay">
 
-                    <h3>Filtering Options:</h3>
+                    <h3><span class="fi fi-wrench"></span>Filtering Options:</h3>
                     <p>Date : <input type="text" class="span2 form-control" uib-datepicker-popup="{{format}}" id="dp1" style="width:100px;" ng-value="datetoday" ng-model="date" ng-change="filterSort()" is-open="status.opened" datepicker-options="dateOptions" disabled="disabled"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open($event)"></a> <a href="#" ng-click="filterSort('reset')">Reset All</a>
                     </p>
-                    
                     
                     <form action="#" id="gt-filter-season">
                         <div class="row">
@@ -73,7 +68,6 @@
                             <div class="columns">
                                 <h4>Misc</h4>
                                 <input type="checkbox" id="calcSeedlings" value="Calculate # of Plants" ng-model="calcSeedlings" ng-click="filterSort()" class="ng-pristine ng-untouched ng-valid"><label for="calcSeedlings">Calculate # of Plants</label>
-                                
                             </div>
                         </div>
                     </form>
@@ -87,7 +81,7 @@
             <!-- Calendar -->
             <div id="gt-calendar" ng-controller="gtCalendar">
                 <div class="columns">
-                    <h2>Growing Areas:</h2>
+                    <h2 ng-bind="name"></h2>
                 </div>
                 
                 <div class="row" id="gt-cal-header">
@@ -108,10 +102,7 @@
                     </div>
                 </div>
                 
-                <div class="columns">
-                    <h3 ng-bind="name"></h3>
-                </div>
-                
+           
                 <div id="gt-areas">
                     
                     <div id="gt-today">
@@ -124,6 +115,7 @@
                     
                     <areas data="garden" data2="params"></areas>
                 </div>
+                 
 
             </div>
         </div>
