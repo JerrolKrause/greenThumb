@@ -172,12 +172,12 @@ var gtProduce = {
         maturity: 50,
         seedling: 4,
         harvest: 20,
-        spacing: 6,
+        spacing: 12,
         vertical: false,
         rowsPer: 2
     },
     tomato: {
-        label: "Tomatos",
+        label: "Tomato",
         maturity: 90,
         seedling: 8,
         harvest: 16,

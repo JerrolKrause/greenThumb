@@ -186,52 +186,41 @@ input[type="checkbox"] {
   border: 1px solid #e3e3e3;
   box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.5);
   outline: 0px; }
-
-.dropdown-menu div:active {
-  outline: none; }
-
-.dropdown-menu li {
-  list-style: none;
-  margin: 0px;
-  padding: 0px; }
-
-.dropdown-menu table {
-  min-width: 350px; }
-
-.dropdown-menu thead, .dropdown-menu tr, .dropdown-menu th {
-  background: none;
-  padding: 0px; }
-
-.dropdown-menu td {
-  background: none;
-  border: 0px;
-  padding: 0px;
-  width: 42px; }
-
-.dropdown-menu button {
-  padding: 0px;
-  margin: 0px;
-  border-radius: 3px;
-  border-color: #ccc;
-  padding: .5625rem .625rem;
-  background-color: #d9f0dc;
-  color: #197b30; }
-
-.dropdown-menu button:hover, .dropdown-menu button.btn-info {
-  background-color: #197b30;
-  color: #fff; }
-
-.dropdown-menu .btn {
-  width: 100%; }
-
-.dropdown-menu .btn-group .btn-info {
-  margin-bottom: 10px; }
-
-.dropdown-menu .btn-danger, .dropdown-menu .btn-success {
-  display: none; }
-
-.dropdown-menu button span {
-  background-color: none; }
+  .dropdown-menu div:active {
+    outline: none; }
+  .dropdown-menu li {
+    list-style: none;
+    margin: 0px;
+    padding: 0px; }
+  .dropdown-menu table {
+    min-width: 350px; }
+  .dropdown-menu thead, .dropdown-menu tr, .dropdown-menu th {
+    background: none;
+    padding: 0px; }
+  .dropdown-menu td {
+    background: none;
+    border: 0px;
+    padding: 0px;
+    width: 42px; }
+  .dropdown-menu button {
+    padding: 0px;
+    margin: 0px;
+    border-radius: 3px;
+    border-color: #ccc;
+    padding: .5625rem .625rem;
+    background-color: #d9f0dc;
+    color: #197b30; }
+  .dropdown-menu button:hover, .dropdown-menu button.btn-info {
+    background-color: #197b30;
+    color: #fff; }
+  .dropdown-menu .btn {
+    width: 100%; }
+  .dropdown-menu .btn-group .btn-info {
+    margin-bottom: 10px; }
+  .dropdown-menu .btn-danger, .dropdown-menu .btn-success {
+    display: none; }
+  .dropdown-menu button span {
+    background-color: none; }
 
 /*
  * Media Queries
@@ -267,7 +256,15 @@ input[type="checkbox"] {
     bottom: 0px;
     line-height: initial;
     text-shadow: -1px -1px #fff;
-    left: 20px; } }
+    left: 20px; }
+
+  .dropdown-menu {
+    position: absolute;
+    left: 0px !important; }
+    .dropdown-menu table {
+      min-width: 304px; }
+    .dropdown-menu button {
+      padding: 0px; } }
 /* Medium */
 @media only screen and (min-width: 40.063em) and (max-width: 64em) {
   #gt-schedule-prev {
