@@ -58,14 +58,15 @@ a:hover {
 .fi {
   margin-right: 10px; }
 
-.task-toggle {
+.subtext {
   font-size: 12px;
   float: right;
   margin-top: 15px; }
 
 label {
   color: #aa6c39;
-  cursor: pointer; }
+  cursor: pointer;
+  margin-right: 0px !important; }
 
 label:hover {
   color: #552700;
@@ -110,22 +111,26 @@ input[type="checkbox"] {
     border-radius: 0px 5px 5px 0px; }
 
 #gt-schedule {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #aa6c39;
   padding-top: 20px; }
   #gt-schedule h3, #gt-schedule .tabs {
-    border-bottom: 1px solid #552700; }
+    border-bottom: 1px solid #aa6c39; }
   #gt-schedule #dp1 {
     border-radius: 5px 0px 0px 5px; }
   #gt-schedule #dropcal {
     border-radius: 0px 5px 5px 0px;
     position: relative;
-    left: -3px;
+    left: -4px;
     padding: 0px;
     padding-left: 10px;
     padding-right: 10px;
     height: auto;
     font-size: 30px;
     top: 6px; }
+
+#gt-calendar h2 {
+  border-top: 1px solid #aa6c39;
+  padding-top: 5px; }
 
 #gt-areas {
   position: relative;
@@ -303,9 +308,6 @@ input[type="checkbox"] {
     margin-right: auto;
     display: block; }
 
-  #gt-schedule-prev {
-    border-top: 1px solid #ccc; }
-
   .gt-produce .show-for-small {
     font-size: .8em;
     position: absolute;
@@ -322,9 +324,6 @@ input[type="checkbox"] {
     .dropdown-menu button {
       padding: 0px; } }
 /* Medium */
-@media only screen and (min-width: 40.063em) and (max-width: 64em) {
-  #gt-schedule-prev {
-    border-top: 1px solid #ccc; } }
 /* Large */
 /* XT-Large */
 @media only screen and (min-width: 90.063em) {

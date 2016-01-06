@@ -24,7 +24,7 @@ $orange-dk  :       #552700;
 
 $link-color:        $orange-mid;
 $link-color-hover:  $orange-dk ;
-$border-color:      #ccc;
+$border-color:      $orange-mid;
 $bg-color:          #f7f7f7;
 
 @mixin link-color-dk(){background-color:$orange-mid;color:#fff;}
@@ -52,13 +52,14 @@ a:hover{color:$link-color-hover;text-decoration:underline;}
 .fi{margin-right: 10px;}
 
 
-.task-toggle{font-size:12px;float:right;margin-top: 15px;}    
+.subtext{font-size:12px;float:right;margin-top: 15px;}    
 
 
-
-label{color:$link-color;cursor:pointer;}
+label{color:$link-color;cursor:pointer;margin-right:0px!important;}
     label:hover{color:$link-color-hover;text-decoration:underline;}
 input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
+
+
 
 #today{position:relative;top:-2px;}
 #gt-cal-header{padding-bottom: 5px!important;}
@@ -85,11 +86,14 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 
 #gt-schedule{
     border-top:1px solid $border-color;padding-top:20px;
-    h3, .tabs{border-bottom:1px solid $orange-dk;}
+    h3, .tabs{border-bottom:1px solid $border-color}
     #dp1{border-radius: 5px 0px 0px 5px;}
-    #dropcal{border-radius: 0px 5px 5px 0px;position:relative;left:-3px;padding:0px;padding-left: 10px;padding-right: 10px;height:auto;font-size:30px;top: 6px;}
+    #dropcal{border-radius: 0px 5px 5px 0px;position:relative;left:-4px;padding:0px;padding-left: 10px;padding-right: 10px;height:auto;font-size:30px;top: 6px;}
 }
 
+#gt-calendar{
+    h2{border-top: 1px solid $border-color;padding-top: 5px;}
+}
 
 
 #gt-areas{position:relative;clear:both;}       
@@ -104,8 +108,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
         .gt-seedlings{position:absolute;z-index:11;top:0px;background-color:#00a627;height: 25px;border-radius: 5px 0px 0px 5px;}
         .gt-growing{position:absolute;z-index:12;top:0px;background-color:#037200;height: 25px;}
         .gt-harvest{position:absolute;z-index:10;top:0px;background-color:#c79359;height: 25px;border-radius: 0px 5px 5px 0px;}
-        
-        
         
         .gt-produce{
             background: url('../img/thumbs/sprite-produce.png') no-repeat 0px 0px;padding-left: 30px;line-height: 25px;    min-height: 25px;position:relative;
@@ -146,6 +148,7 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
                 button span{background-color: none;}
         }
         
+        
             
 /*
  * Media Queries
@@ -157,7 +160,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     .gt-area{padding:0px;margin:0px;background-color: transparent;}
     #gt-calendar .small-2, #gt-calendar .small-10{padding-left: .25rem;padding-right: .25rem;}
     .gt-area-item img{float:none;margin-left:auto;margin-right:auto;    display: block;}
-    #gt-schedule-prev{border-top:1px solid $border-color;}
     .gt-produce .show-for-small{ font-size: .8em;position: absolute;bottom: 0px;line-height: initial;text-shadow: -1px -1px #fff;left: 20px;}
     .dropdown-menu{
         position:absolute;left:0px!important;
@@ -168,7 +170,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 
 /* Medium */
 @media only screen and (min-width: 40.063em) and (max-width: 64em){ 
-    #gt-schedule-prev{border-top:1px solid $border-color;}
 }
 
 /* Large */
