@@ -490,7 +490,8 @@ green.thumb = (function(){
                                     showAllTasks === true ||
                                     (data.params.filters.tasks[key] !== false && typeof data.params.filters.tasks[key] !== 'undefined')
                                     ) {
-                                //Load the task into the task object
+                                //Don't load this content if this is a direct sow with a redundant plant date
+                                //This can be improved by combining this if statement with the above one... tricky
                                 if (value2.directSow !== true || (value2.directSow === true && key !== 'plant')) {
                                     taskObj[dateItems.date.format("YYYYMMDD")].items.push(obj);
                                 }
