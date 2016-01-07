@@ -10,7 +10,7 @@
             "width": 1.5,
             "length": 5,
             "produce": [
-                 {"slug": "cucumber_diva", "numPlants" : 3, "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
+                 {"slug": "cucumber_diva", "numPlants" : 3, "directSow" : true ,"dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                  {"slug": "squash_acorn_honeybear", "numPlants" : 3, "dates" : {"plant" : {"month" : 2 , "day" : 1}}},
                  {"slug": "pumpkin", "numPlants" : 2, "dates" : {"plant" : {"month" : 6 , "day" : 1}}},
                  {"slug": "brussel_sprouts", "numPlants" : 3, "dates" : {"plant" : {"month" : 10 , "day" : 1}}}

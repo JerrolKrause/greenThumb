@@ -86,11 +86,21 @@ input[type="checkbox"] {
 #gt-header {
   background-color: #1e1f22; }
   #gt-header h1 {
-    color: #aa6c39; }
+    color: #aa6c39;
+    margin-bottom: 0px; }
   #gt-header h1 .green {
     color: #2d882d; }
   #gt-header h1 .white {
     color: #fff; }
+  #gt-header p {
+    margin: 0px;
+    color: #fff;
+    font-family: "BPreplay", sans-serif;
+    position: relative;
+    top: -12px;
+    left: 25px;
+    margin-bottom: -5px;
+    display: inline; }
 
 #gt-container {
   font-size: 0.9em; }
@@ -131,6 +141,18 @@ input[type="checkbox"] {
 #gt-calendar h2 {
   border-top: 1px solid #aa6c39;
   padding-top: 5px; }
+#gt-calendar #legend {
+  font-size: 10px; }
+  #gt-calendar #legend span {
+    padding: 3px 5px;
+    color: #fff;
+    border-radius: 5px; }
+  #gt-calendar #legend .leg-seedling {
+    background-color: #00a627; }
+  #gt-calendar #legend .leg-growing {
+    background-color: #037200; }
+  #gt-calendar #legend .leg-harvest {
+    background-color: #c79359; }
 
 #gt-areas {
   position: relative;
@@ -180,6 +202,9 @@ input[type="checkbox"] {
   background-color: #00a627;
   height: 25px;
   border-radius: 5px 0px 0px 5px; }
+
+.gt-directsow {
+  background-color: #037200; }
 
 .gt-growing {
   position: absolute;
@@ -325,6 +350,9 @@ input[type="checkbox"] {
       padding: 0px; } }
 /* Medium */
 /* Large */
+@media only screen and (min-width: 64.0625em) {
+  #gt-calendar #legend {
+    font-size: 12px; } }
 /* XT-Large */
 @media only screen and (min-width: 90.063em) {
   .gt-col {

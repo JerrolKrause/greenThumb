@@ -8,19 +8,19 @@
                 <div class="inline">
                 <span class="show-for-small">{{produce2.label_short}}</span>
                 <span class="show-for-medium-up">{{produce2.label}} </span>
-                <span class="show-for-large-up">{{produce2.label_parent}} </span>
-                <span class="show-for-medium-up" ng-if="produce2.plantCount">({{produce2.plantCount}})</span>
+                <span class="show-for-large-up">{{produce2.label_parent}}</span>
+                <span class="show-for-medium-up" ng-if="produce2.plantCount"></span>
                </div>
             </div>
         </div>
         
         <div class="large-9 medium-8 small-10 columns">
             <div class="gt-area-row">
-                <div class="gt-seedlings" style="left:{{produce2.dom.pSeedlings}}%;width:{{produce2.dom.wSeedlings}}%;"></div>
+                <div class="gt-seedlings" ng-class="{ 'gt-directsow': produce2.directSow}" style="left:{{produce2.dom.pSeedlings}}%;width:{{produce2.dom.wSeedlings}}%;"></div>
                 <div class="gt-growing" style="left:{{produce2.dom.pGrowing}}%;width:{{produce2.dom.wGrowing}}%;"></div>
                 <div class="gt-harvest" style="left:{{produce2.dom.pHarvesting}}%;width:{{produce2.dom.wHarvesting}}%;"></div>
                 
-                <div ng-if="produce2.dom.pSeedlings + produce2.dom.wSeedlings > 100" class="gt-seedlings" style="left:{{-(100 - produce2.dom.pSeedlings)}}%;width:{{produce2.dom.wSeedlings}}%;"></div>
+                <div ng-if="produce2.dom.pSeedlings + produce2.dom.wSeedlings > 100" class="gt-seedlings"  ng-class="{ 'gt-directsow': produce2.directSow}" style="left:{{-(100 - produce2.dom.pSeedlings)}}%;width:{{produce2.dom.wSeedlings}}%;"></div>
                 <div ng-if="produce2.dom.pGrowing + produce2.dom.wGrowing > 100" class="gt-growing" style="left:{{-(100 - produce2.dom.pGrowing)}}%;width:{{produce2.dom.wGrowing}}%;"></div>
                 <div ng-if="produce2.dom.pHarvesting + produce2.dom.wHarvesting > 100" class="gt-harvest" style="left:{{-(100 - produce2.dom.pHarvesting)}}%;width:{{produce2.dom.wHarvesting}}%;"></div>
             </div>

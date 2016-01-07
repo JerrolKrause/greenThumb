@@ -67,10 +67,12 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 
 #gt-header{
     background-color:#1e1f22;
-    h1{color:$brown-mid;}
+    h1{color:$brown-mid;margin-bottom:0px;}
     h1 .green{color:$green-mid;}
     h1 .white{color:#fff;}
+    p{margin:0px;color:#fff;font-family: "BPreplay", sans-serif;position: relative;top: -12px;left: 25px;margin-bottom: -5px;display:inline;}
 }
+
 
 #gt-container{
     font-size:0.9em;
@@ -93,7 +95,16 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 
 #gt-calendar{
     h2{border-top: 1px solid $border-color;padding-top: 5px;}
+    #legend{
+        font-size:10px;
+        span{padding:3px 5px;color:#fff;border-radius: 5px;}
+        .leg-seedling{background-color:#00a627;}
+        .leg-growing{background-color:#037200;}
+        .leg-harvest{background-color:#c79359;}
+    }
 }
+
+
 
 
 #gt-areas{position:relative;clear:both;}       
@@ -106,6 +117,7 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 .gt-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;background-color: $bg-color;}
     .gt-area-row{position:relative;height: 25px;overflow:hidden;}
         .gt-seedlings{position:absolute;z-index:11;top:0px;background-color:#00a627;height: 25px;border-radius: 5px 0px 0px 5px;}
+        .gt-directsow{background-color:#037200;}
         .gt-growing{position:absolute;z-index:12;top:0px;background-color:#037200;height: 25px;}
         .gt-harvest{position:absolute;z-index:10;top:0px;background-color:#c79359;height: 25px;border-radius: 0px 5px 5px 0px;}
         
@@ -166,18 +178,23 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
         table {min-width: 304px;}
         button{padding:0px;}
     }
+    
 }
 
 /* Medium */
 @media only screen and (min-width: 40.063em) and (max-width: 64em){ 
+
 }
+
+
 
 /* Large */
 @media only screen and (min-width: 64.0625em){
-   
+    #gt-calendar #legend{font-size:12px;}
 }
 
 /* XT-Large */
 @media only screen and (min-width: 90.063em) { 
     .gt-col{font-size: 0.9rem;}
+   
 }
