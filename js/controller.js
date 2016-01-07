@@ -56,6 +56,10 @@ green.thumb = (function(){
             method: 'GET',
             url: 'js/model.js'
         }).then(function ($response) {
+            //For eventual use down the road to add edit/save capability
+            //data.model = angular.copy($response.data[0]);
+            //console.log(JSON.stringify(data.model))
+            
             //Pass data to updateview for display
             model.view.update($response.data[0]);
         });
