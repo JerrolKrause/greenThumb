@@ -30,41 +30,50 @@ $bg-color:          #f7f7f7;
 @mixin link-color-dk(){background-color:$orange-mid;color:#fff;}
 @mixin link-color-lt(){background-color:$orange-lt;color:$orange-dk;}
 
-
 @font-face{font-family:'BPreplay';src:url(../fonts/BPreplay.otf);}
 
 
 /*
  * Content
  */
+
+/* Generic HTML */
 body{background-color:#fff;}
 h1, h2, h3, h4, h5{color:$green-dk;font-family: "BPreplay", sans-serif;position:relative;}
 
 
-
 a, a:link{color:$link-color;}
+    
 a:hover{color:$link-color-hover;text-decoration:underline;}
 *:focus {outline: none;}
 
+label{color:$link-color;cursor:pointer;margin-right:0px!important;}
+    label:hover{color:$link-color-hover;text-decoration:underline;}
+input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
+
+/* Universal Styles */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
-.button, .button:link, button{@include link-color-dk();height: 2.3125rem;margin: 0 0 1rem;padding: .5rem;font-size: 0.9rem;margin-bottom:0px;border-radius: 5px;}
-.button:hover, button:hover{background-color:$orange-dk;text-decoration:none;}
+.button, .button:link, button, .reveal-modal .button.close-reveal-modal{@include link-color-dk();height: 2.3125rem;margin: 0 0 1rem;padding: .5rem 0.85rem;font-size: 0.9rem;margin-bottom:0px;border-radius: 5px;position:initial;font-weight:initial;line-height:initial;}
+.button:hover, button:hover, .button.close-reveal-modal:hover{color:#fff!important;background-color:$orange-dk;text-decoration:none!important;}
+   
+
+
 .fi{margin-right: 10px;}
+.subtext{font-size:12px;float:right;margin-top: 15px;}    
 
 .tooltip{
     border-radius:5px;padding:5px 10px;display:inline!important;box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);background-color: #1e1f22!important;width:250px;
     &.top{margin-top:-10px;}
 }
 
+/* Modal Window Styling */
+.reveal-modal .close-reveal-modal{color:$link-color;}
+    .reveal-modal:hover .close-reveal-modal:hover{color:$link-color-hover;text-decoration:underline;}
 
 
 
-.subtext{font-size:12px;float:right;margin-top: 15px;}    
+#gt-new-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;display:inline-block;text-align:left;margin-left: 10px;margin-top: 5px;}
 
-
-label{color:$link-color;cursor:pointer;margin-right:0px!important;}
-    label:hover{color:$link-color-hover;text-decoration:underline;}
-input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 
 
 
@@ -111,6 +120,9 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     }
 }
 
+.gt-produce2{
+    display:inline-block;width:50px;height:50px;background: url('../img/thumbs/sprite-produce-med.png') no-repeat 0px 0px;
+}
 
 
 

@@ -133,6 +133,7 @@ green.thumb = (function(){
                                 value2.visible = false;
                                 count++;
                             }
+                            
 
                             //If the option to calculate plants is set
                             if (data.params.calcPlants === false && value1.length) {
@@ -150,6 +151,12 @@ green.thumb = (function(){
                         //If all produce items in this area are hidden, set this area to HIDE
                         if(count === value1.produce.length){
                             value1.visible = false;
+                        }
+                        
+                        //If this grow area has no produce items and no filtering options are set, show it
+                        //This ensures that a newly created grow area will show so you can add produce items
+                        if(value1.produce.length === 0 && showAllCalendar === true){
+                            value1.visible = true;
                         }
                         
                     });//end grow area loop
@@ -600,10 +607,71 @@ green.thumb = (function(){
             $scope.today_pos    = gtGetData.params.dates.today_pos;
         });
         
-        $scope.gtEdit = function(){
-            console.log('Edit Me');
-        }
         
+        
+        $scope.updateObj ={};
+        
+        
+        //When the edit button is clicked
+        $scope.gtEdit = function (obj) {
+            console.log(obj);
+            $scope.editinput = '';
+            $scope.editinput = obj.label;
+            
+            $('#gt-editinput').focus();
+            
+            
+            if(obj.type === ('name' || 'area')){
+                $scope.edittitle = 'Edit Name';
+                $scope.editupdate = 'Update';
+            } else if(obj.type === 'add-area'){
+                $scope.edittitle = 'Enter Name Of New Area';
+                $scope.editupdate = 'Add Area';
+                
+            }
+            
+            
+            $scope.updateObj = obj;
+        };
+        
+        //When the update  button within the model is clicked
+        $scope.gtUpdate = function () {
+            console.log($scope.updateObj);
+            //Get the new label from the edit input box
+            $scope.updateObj.label = $scope.editinput;
+          
+            //Update the data based on what type of info it is
+            switch ($scope.updateObj.type) {
+                //Name change for the garden
+                case 'name':
+                    $scope.name = $scope.updateObj.label;
+                    gtGetData.garden.name = $scope.updateObj.label;
+                    break;
+                //Name change for the growing area
+                case 'area':
+                    gtGetData.garden.areas[$scope.updateObj.id].label = $scope.updateObj.label;
+                    break;    
+                case 'add-area':
+                    console.log('Hello World');
+                    var obj = {
+                        label   :   $scope.updateObj.label,
+                        produce :   [],
+                        visible :   true
+                    };
+                    gtGetData.garden.areas.push(obj);
+                    break;        
+            }
+             
+             
+        };
+        
+        
+        
+        
+        
+        
+        
+
     }).directive('areas', function () {
         return {
             restrict: 'E',
@@ -611,12 +679,12 @@ green.thumb = (function(){
                 data: '=',
                 data2: '='
             },
+            replace: true,
             templateUrl: 'partials/calendar-row.html',
             controller: 'gtCalendar'
         };
     });
-
-
+    
     /**
      * Controller for the display & interactive options
      */

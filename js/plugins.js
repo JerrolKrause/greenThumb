@@ -6,4 +6,3 @@
 // @koala-prepend "vendor/ui-bootstrap-tooltip.min.js"
 // @koala-prepend "vendor/foundation.min.js"
 // @koala-prepend "vendor/moment.min.js"
-

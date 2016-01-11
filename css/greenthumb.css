@@ -7,6 +7,7 @@
 /*
  * Content
  */
+/* Generic HTML */
 body {
   background-color: #fff; }
 
@@ -25,41 +26,6 @@ a:hover {
 *:focus {
   outline: none; }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important; }
-
-.button, .button:link, button {
-  background-color: #aa6c39;
-  color: #fff;
-  height: 2.3125rem;
-  margin: 0 0 1rem;
-  padding: .5rem;
-  font-size: 0.9rem;
-  margin-bottom: 0px;
-  border-radius: 5px; }
-
-.button:hover, button:hover {
-  background-color: #552700;
-  text-decoration: none; }
-
-.fi {
-  margin-right: 10px; }
-
-.tooltip {
-  border-radius: 5px;
-  padding: 5px 10px;
-  display: inline !important;
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
-  background-color: #1e1f22 !important;
-  width: 250px; }
-  .tooltip.top {
-    margin-top: -10px; }
-
-.subtext {
-  font-size: 12px;
-  float: right;
-  margin-top: 15px; }
-
 label {
   color: #aa6c39;
   cursor: pointer;
@@ -72,6 +38,63 @@ label:hover {
 input[type="checkbox"] {
   cursor: pointer;
   border-color: #aa6c39; }
+
+/* Universal Styles */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }
+
+.button, .button:link, button, .reveal-modal .button.close-reveal-modal {
+  background-color: #aa6c39;
+  color: #fff;
+  height: 2.3125rem;
+  margin: 0 0 1rem;
+  padding: .5rem 0.85rem;
+  font-size: 0.9rem;
+  margin-bottom: 0px;
+  border-radius: 5px;
+  position: initial;
+  font-weight: initial;
+  line-height: initial; }
+
+.button:hover, button:hover, .button.close-reveal-modal:hover {
+  color: #fff !important;
+  background-color: #552700;
+  text-decoration: none !important; }
+
+.fi {
+  margin-right: 10px; }
+
+.subtext {
+  font-size: 12px;
+  float: right;
+  margin-top: 15px; }
+
+.tooltip {
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: inline !important;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  background-color: #1e1f22 !important;
+  width: 250px; }
+  .tooltip.top {
+    margin-top: -10px; }
+
+/* Modal Window Styling */
+.reveal-modal .close-reveal-modal {
+  color: #aa6c39; }
+
+.reveal-modal:hover .close-reveal-modal:hover {
+  color: #552700;
+  text-decoration: underline; }
+
+#gt-new-area {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+  display: inline-block;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 5px; }
 
 #today {
   position: relative;
@@ -150,6 +173,12 @@ input[type="checkbox"] {
     background-color: #037200; }
   #gt-calendar #legend .leg-harvest {
     background-color: #c79359; }
+
+.gt-produce2 {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background: url("../img/thumbs/sprite-produce-med.png") no-repeat 0px 0px; }
 
 #gt-areas {
   position: relative;

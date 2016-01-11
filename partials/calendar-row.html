@@ -2,7 +2,7 @@
     <h4 class="large-12 columns show-for-medium-up">
         {{area.label}}
         
-        <a class="fi fi-widget gt-edit has-tip" data-tooltip href="#" uib-tooltip="Edit the name of this growing area" ng-click="gtEdit()"></a>
+        <a class="fi fi-widget gt-edit has-tip" data-tooltip href="#" uib-tooltip="Edit the name of this growing area" data-reveal-id="gt-modal-edit" ng-click="gtEdit({label : area.label, update : false, type : 'area', id : $index})"></a>
         <a class="fi fi-plus gt-edit gt-plus has-tip" data-tooltip href="#" uib-tooltip="Add a new produce item" ng-click="gtEdit()"></a>
         <a class="fi fi-x gt-edit gt-delete has-tip" data-tooltip href="#" uib-tooltip="Delete this growing area" tooltip-placement="left" ng-click="gtEdit()"></a>
         
@@ -19,7 +19,7 @@
                 <span class="show-for-medium-up" ng-if="produce2.plantCount"></span>
                 
                 <a class="fi fi-x gt-edit gt-delete has-tip" data-tooltip href="#" uib-tooltip="Delete this produce item" tooltip-placement="top" ng-click="gtEdit()"></a>
-                <a class="fi fi-widget gt-edit has-tip" data-tooltip href="#" uib-tooltip="Edit this produce item" tooltip-placement="top" ng-click="gtEdit()"></a>
+                <a class="fi fi-widget gt-edit has-tip" data-tooltip href="#" uib-tooltip="Edit this produce item" tooltip-placement="top" data-reveal-id="gt-modal-edit" ng-click="gtEdit({label : produce2.label, update : false})"></a>
                </div>
             </div>
         </div>
