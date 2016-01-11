@@ -57,7 +57,7 @@ green.thumb = (function(){
             url: 'js/model.js'
         }).then(function ($response) {
             //For eventual use down the road to add edit/save capability
-            //data.model = angular.copy($response.data[0]);
+            data.model = angular.copy($response.data[0]);
             //console.log(JSON.stringify(data.model))
             
             //Pass data to updateview for display
@@ -599,6 +599,10 @@ green.thumb = (function(){
             $scope.main_pos     = gtGetData.params.dates.main_pos;
             $scope.today_pos    = gtGetData.params.dates.today_pos;
         });
+        
+        $scope.gtEdit = function(){
+            console.log('Edit Me');
+        }
         
     }).directive('areas', function () {
         return {

@@ -1,5 +1,12 @@
 <div class="gt-area row" ng-repeat="area in data track by $index" ng-if="area.visible == true">
-    <h4 class="large-12 columns show-for-medium-up">{{area.label}}</h4>
+    <h4 class="large-12 columns show-for-medium-up">
+        {{area.label}}
+        
+        <a class="fi fi-widget gt-edit has-tip" data-tooltip href="#" uib-tooltip="Edit the name of this growing area" ng-click="gtEdit()"></a>
+        <a class="fi fi-plus gt-edit gt-plus has-tip" data-tooltip href="#" uib-tooltip="Add a new produce item" ng-click="gtEdit()"></a>
+        <a class="fi fi-x gt-edit gt-delete has-tip" data-tooltip href="#" uib-tooltip="Delete this growing area" tooltip-placement="left" ng-click="gtEdit()"></a>
+        
+    </h4>
     
     <div class="gt-area-item clearfix gt-season-{{produce2.dom.season}}" ng-repeat="produce2 in area.produce track by produce2.id" ng-if="produce2.visible == true">
         
@@ -10,6 +17,9 @@
                 <span class="show-for-medium-up">{{produce2.label}} </span>
                 <span class="show-for-large-up">{{produce2.label_parent}}</span>
                 <span class="show-for-medium-up" ng-if="produce2.plantCount"></span>
+                
+                <a class="fi fi-x gt-edit gt-delete has-tip" data-tooltip href="#" uib-tooltip="Delete this produce item" tooltip-placement="top" ng-click="gtEdit()"></a>
+                <a class="fi fi-widget gt-edit has-tip" data-tooltip href="#" uib-tooltip="Edit this produce item" tooltip-placement="top" ng-click="gtEdit()"></a>
                </div>
             </div>
         </div>

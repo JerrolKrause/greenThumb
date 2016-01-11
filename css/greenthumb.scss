@@ -38,7 +38,7 @@ $bg-color:          #f7f7f7;
  * Content
  */
 body{background-color:#fff;}
-h1, h2, h3, h4, h5{color:$green-dk;font-family: "BPreplay", sans-serif;}
+h1, h2, h3, h4, h5{color:$green-dk;font-family: "BPreplay", sans-serif;position:relative;}
 
 
 
@@ -50,6 +50,13 @@ a:hover{color:$link-color-hover;text-decoration:underline;}
 .button, .button:link, button{@include link-color-dk();height: 2.3125rem;margin: 0 0 1rem;padding: .5rem;font-size: 0.9rem;margin-bottom:0px;border-radius: 5px;}
 .button:hover, button:hover{background-color:$orange-dk;text-decoration:none;}
 .fi{margin-right: 10px;}
+
+.tooltip{
+    border-radius:5px;padding:5px 10px;display:inline!important;box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);background-color: #1e1f22!important;width:250px;
+    &.top{margin-top:-10px;}
+}
+
+
 
 
 .subtext{font-size:12px;float:right;margin-top: 15px;}    
@@ -160,8 +167,26 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
                 button span{background-color: none;}
         }
         
+        .gt-edit{
+            display:1none;font-size:75%;vertical-align: text-top;margin: 0px;margin-left:5px;border:0px;color:$link-color;
+            &:hover{text-decoration:none;border:0px;color:$link-color-hover;}
+            &.gt-delete{position:absolute;right:15px;padding-left:10px;}
+        }  
         
+        
+        
+        
+        
+        
+        h2:hover .gt-edit, h3:hover .gt-edit, h4:hover .gt-edit, .gt-produce:hover .gt-edit{display:inline-block;}
+            .gt-produce .gt-edit{vertical-align: initial;font-size:100%;float:right;position:initial;}
+        
+                
             
+                
+                
+        
+        
 /*
  * Media Queries
  */
