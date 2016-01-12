@@ -2,7 +2,10 @@
     "name": "My Backyard",
     "options" : {
         "plantOnSat"    : true,
-        "capHarvest"    : true
+        "capHarvest"    : true,
+        "zone"          : "10a",
+        "frost_spring"  : "5-4",
+        "frost_fall"    : "10-3"
     },
     "areas": [
         {

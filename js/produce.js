@@ -78,13 +78,23 @@ var gtProduce = {
         rowsPerBed: 2
     },
     melon: {
-        label: "Melon",
-        maturity: 85,
-        seedling: 3,
-        harvest: 8,
-        spacing: 9,
-        vertical: true,
-        rowsPerBed: 1
+        label           : "Melon",
+        startType       : 'Either',
+        hardiness       : 'Frost-Intolerant',
+        plantOutdoors   : '2-3 Weeks After',
+        spacing         : 9,
+        rowsPerBed      : 1,
+        seedDepth       : 0.25,
+        yield           : 246,
+        yieldType       : 'lbs',
+        numPlants       : 41,
+        plantHeight     : 84,
+        plantIndoors    : -1,
+        plantOutside    : 2,
+        maturity        : 85,
+        harvest         : 8,
+        vertical        : true,
+        seedling        : 3
     },
     melon_earlichamp: {
         label: "Earlichamp Cantalope",

@@ -30,7 +30,14 @@ $bg-color:          #f7f7f7;
 @mixin link-color-dk(){background-color:$orange-mid;color:#fff;}
 @mixin link-color-lt(){background-color:$orange-lt;color:$orange-dk;}
 
+@mixin sprite-vertical($position, $spacing){background-position:0px (-$position * $spacing) - 100 + px;}
+
 @font-face{font-family:'BPreplay';src:url(../fonts/BPreplay.otf);}
+
+
+
+
+
 
 
 /*
@@ -40,22 +47,25 @@ $bg-color:          #f7f7f7;
 /* Generic HTML */
 body{background-color:#fff;}
 h1, h2, h3, h4, h5{color:$green-dk;font-family: "BPreplay", sans-serif;position:relative;}
-
-
 a, a:link{color:$link-color;}
-    
 a:hover{color:$link-color-hover;text-decoration:underline;}
 *:focus {outline: none;}
-
 label{color:$link-color;cursor:pointer;margin-right:0px!important;}
     label:hover{color:$link-color-hover;text-decoration:underline;}
 input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
+
 
 /* Universal Styles */
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
-.button, .button:link, button, .reveal-modal .button.close-reveal-modal{@include link-color-dk();height: 2.3125rem;margin: 0 0 1rem;padding: .5rem 0.85rem;font-size: 0.9rem;margin-bottom:0px;border-radius: 5px;position:initial;font-weight:initial;line-height:initial;}
-.button:hover, button:hover, .button.close-reveal-modal:hover{color:#fff!important;background-color:$orange-dk;text-decoration:none!important;}
-   
+.button, .reveal-modal .button.close-reveal-modal{
+    @include link-color-dk();height: 2.3125rem;margin: 0 0 1rem;padding: .5rem 0.85rem;font-size: 0.9rem;margin-bottom:0px;border-radius: 5px;position:initial;font-weight:initial;line-height:initial;
+    &:hover, button:hover, &.close-reveal-modal:hover{color:#fff!important;background-color:$orange-dk;text-decoration:none!important;}
+    &.reverse{@include link-color-lt();border:1px solid $link-color-hover;}
+    &.reverse:hover{@include link-color-dk();}
+}
+
+
+
 
 
 .fi{margin-right: 10px;}
@@ -73,6 +83,47 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 
 
 #gt-new-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;display:inline-block;text-align:left;margin-left: 10px;margin-top: 5px;}
+
+
+#gtProduceSelect{
+    ul{list-style:none;margin:0px;margin-bottom: 1.25rem;}
+    li{margin-bottom:2px;}
+    table{width: 100%;}
+    td{padding:5px;font-size:12px;}
+    abbr{font-size:12px;}
+    td:first-child{width:120px;}
+    input{margin-bottom:0px;}
+    .gt-produce{display:inline-block;position: relative;top: 7px;}
+    .button.reverse{width:100%;text-align:left;}
+    
+}
+
+
+
+
+
+
+
+
+
+
+.gt-produce2{
+    display:inline-block;width:50px;height:50px;background: url('../img/thumbs/sprite-produce-med.png') no-repeat 0px 0px;border-radius:5px;border:1px solid #fff;
+    &:hover{background-color:$bg-color;border-color:$link-color-hover}
+    &.cucumber{         @include sprite-vertical(0,100)}
+    &.broccoli{         @include sprite-vertical(1,100)}
+    &.brussel_sprouts{  @include sprite-vertical(2,100)}
+    &.carrot{           @include sprite-vertical(3,100)}
+    &.lettuce{          @include sprite-vertical(4,100)}
+    &.melon{            @include sprite-vertical(5,100)}
+    &.potato{           @include sprite-vertical(6,100)}
+    &.pumpkin{          @include sprite-vertical(7,100)}
+    &.sweet_potato{     @include sprite-vertical(8,100)}
+    &.squash{           @include sprite-vertical(9,100)}
+    &.swiss_chard{      @include sprite-vertical(10,100)}
+    &.tomato{           @include sprite-vertical(11,100)}
+    &.bell_pepper{      @include sprite-vertical(12,100)} 
+}
 
 
 
@@ -93,7 +144,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 #gt-container{
     font-size:0.9em;
     .row {max-width: 100%;}
-    p, li{font-size:0.9em;}
 }
 
 .gt-col{
@@ -106,9 +156,10 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     border-top:1px solid $border-color;padding-top:20px;
     h3, .tabs{border-bottom:1px solid $border-color}
     #dp1{border-radius: 5px 0px 0px 5px;}
-    #dropcal{border-radius: 0px 5px 5px 0px;position:relative;left:-4px;padding:0px;padding-left: 10px;padding-right: 10px;height:auto;font-size:30px;top: 6px;}
 }
 
+#dropcal{border-radius: 0px 5px 5px 0px;position:relative;left:-4px;padding:0px;padding-left: 10px;padding-right: 10px;height:auto;font-size:30px;top: 6px;}
+    
 #gt-calendar{
     h2{border-top: 1px solid $border-color;padding-top: 5px;}
     #legend{
@@ -120,9 +171,7 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     }
 }
 
-.gt-produce2{
-    display:inline-block;width:50px;height:50px;background: url('../img/thumbs/sprite-produce-med.png') no-repeat 0px 0px;
-}
+
 
 
 
@@ -142,19 +191,19 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
         
         .gt-produce{
             background: url('../img/thumbs/sprite-produce.png') no-repeat 0px 0px;padding-left: 30px;line-height: 25px;    min-height: 25px;position:relative;
-            &.cucumber{background-position:0px -50px;}
-            &.broccoli{background-position:0px -100px;}
-            &.brussel_sprouts{background-position:0px -150px;}
-            &.carrot{background-position:0px -200px;}
-            &.lettuce{background-position:0px -250px;}
-            &.melon{background-position:0px -300px;}
-            &.potato{background-position:0px -350px;}
-            &.pumpkin{background-position:0px -400px;}
-            &.sweet_potato{background-position:0px -450px;}
-            &.squash{background-position:0px -500px;}
-            &.swiss_chard{background-position:0px -550px;}
-            &.tomato{background-position:0px -600px;}
-            &.bell_pepper{background-position:0px -650px;} 
+            &.cucumber{             background-position:0px -50px;}
+            &.broccoli{             background-position:0px -100px;}
+            &.brussel_sprouts{      background-position:0px -150px;}
+            &.carrot{               background-position:0px -200px;}
+            &.lettuce{              background-position:0px -250px;}
+            &.melon{                background-position:0px -300px;}
+            &.potato{               background-position:0px -350px;}
+            &.pumpkin{              background-position:0px -400px;}
+            &.sweet_potato{         background-position:0px -450px;}
+            &.squash{               background-position:0px -500px;}
+            &.swiss_chard{          background-position:0px -550px;}
+            &.tomato{               background-position:0px -600px;}
+            &.bell_pepper{          background-position:0px -650px;} 
             .inline {display:inline!important;}
         }
         
@@ -180,12 +229,10 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
         }
         
         .gt-edit{
-            display:1none;font-size:75%;vertical-align: text-top;margin: 0px;margin-left:5px;border:0px;color:$link-color;
+            display:none;font-size:75%;vertical-align: text-top;margin: 0px;margin-left:5px;border:0px;color:$link-color;
             &:hover{text-decoration:none;border:0px;color:$link-color-hover;}
             &.gt-delete{position:absolute;right:15px;padding-left:10px;}
         }  
-        
-        
         
         
         

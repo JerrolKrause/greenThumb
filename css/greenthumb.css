@@ -39,11 +39,11 @@ input[type="checkbox"] {
   cursor: pointer;
   border-color: #aa6c39; }
 
-/* Universal Styles */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
-.button, .button:link, button, .reveal-modal .button.close-reveal-modal {
+/* Universal Styles */
+.button, .reveal-modal .button.close-reveal-modal {
   background-color: #aa6c39;
   color: #fff;
   height: 2.3125rem;
@@ -55,11 +55,17 @@ input[type="checkbox"] {
   position: initial;
   font-weight: initial;
   line-height: initial; }
-
-.button:hover, button:hover, .button.close-reveal-modal:hover {
-  color: #fff !important;
-  background-color: #552700;
-  text-decoration: none !important; }
+  .button:hover, .button button:hover, .button.close-reveal-modal:hover, .reveal-modal .button.close-reveal-modal:hover, .reveal-modal .button.close-reveal-modal button:hover, .reveal-modal .button.close-reveal-modal.close-reveal-modal:hover {
+    color: #fff !important;
+    background-color: #552700;
+    text-decoration: none !important; }
+  .button.reverse, .reveal-modal .button.close-reveal-modal.reverse {
+    background-color: #fff7f1;
+    color: #552700;
+    border: 1px solid #552700; }
+  .button.reverse:hover, .reveal-modal .button.close-reveal-modal.reverse:hover {
+    background-color: #aa6c39;
+    color: #fff; }
 
 .fi {
   margin-right: 10px; }
@@ -96,6 +102,68 @@ input[type="checkbox"] {
   margin-left: 10px;
   margin-top: 5px; }
 
+#gtProduceSelect ul {
+  list-style: none;
+  margin: 0px;
+  margin-bottom: 1.25rem; }
+#gtProduceSelect li {
+  margin-bottom: 2px; }
+#gtProduceSelect table {
+  width: 100%; }
+#gtProduceSelect td {
+  padding: 5px;
+  font-size: 12px; }
+#gtProduceSelect abbr {
+  font-size: 12px; }
+#gtProduceSelect td:first-child {
+  width: 120px; }
+#gtProduceSelect input {
+  margin-bottom: 0px; }
+#gtProduceSelect .gt-produce {
+  display: inline-block;
+  position: relative;
+  top: 7px; }
+#gtProduceSelect .button.reverse {
+  width: 100%;
+  text-align: left; }
+
+.gt-produce2 {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background: url("../img/thumbs/sprite-produce-med.png") no-repeat 0px 0px;
+  border-radius: 5px;
+  border: 1px solid #fff; }
+  .gt-produce2:hover {
+    background-color: #f7f7f7;
+    border-color: #552700; }
+  .gt-produce2.cucumber {
+    background-position: 0px -100px; }
+  .gt-produce2.broccoli {
+    background-position: 0px -200px; }
+  .gt-produce2.brussel_sprouts {
+    background-position: 0px -300px; }
+  .gt-produce2.carrot {
+    background-position: 0px -400px; }
+  .gt-produce2.lettuce {
+    background-position: 0px -500px; }
+  .gt-produce2.melon {
+    background-position: 0px -600px; }
+  .gt-produce2.potato {
+    background-position: 0px -700px; }
+  .gt-produce2.pumpkin {
+    background-position: 0px -800px; }
+  .gt-produce2.sweet_potato {
+    background-position: 0px -900px; }
+  .gt-produce2.squash {
+    background-position: 0px -1000px; }
+  .gt-produce2.swiss_chard {
+    background-position: 0px -1100px; }
+  .gt-produce2.tomato {
+    background-position: 0px -1200px; }
+  .gt-produce2.bell_pepper {
+    background-position: 0px -1300px; }
+
 #today {
   position: relative;
   top: -2px; }
@@ -126,8 +194,6 @@ input[type="checkbox"] {
   font-size: 0.9em; }
   #gt-container .row {
     max-width: 100%; }
-  #gt-container p, #gt-container li {
-    font-size: 0.9em; }
 
 .gt-col {
   float: left;
@@ -147,16 +213,17 @@ input[type="checkbox"] {
     border-bottom: 1px solid #aa6c39; }
   #gt-schedule #dp1 {
     border-radius: 5px 0px 0px 5px; }
-  #gt-schedule #dropcal {
-    border-radius: 0px 5px 5px 0px;
-    position: relative;
-    left: -4px;
-    padding: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: auto;
-    font-size: 30px;
-    top: 6px; }
+
+#dropcal {
+  border-radius: 0px 5px 5px 0px;
+  position: relative;
+  left: -4px;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: auto;
+  font-size: 30px;
+  top: 6px; }
 
 #gt-calendar h2 {
   border-top: 1px solid #aa6c39;
@@ -173,12 +240,6 @@ input[type="checkbox"] {
     background-color: #037200; }
   #gt-calendar #legend .leg-harvest {
     background-color: #c79359; }
-
-.gt-produce2 {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background: url("../img/thumbs/sprite-produce-med.png") no-repeat 0px 0px; }
 
 #gt-areas {
   position: relative;
@@ -335,7 +396,7 @@ input[type="checkbox"] {
     background-color: none; }
 
 .gt-edit {
-  display: 1none;
+  display: none;
   font-size: 75%;
   vertical-align: text-top;
   margin: 0px;

@@ -10,6 +10,9 @@
        <![endif]-->
     </head>
 
+    <!--
+    Figure out frost dates: http://www.almanac.com/gardening/frostdates/zipcode/92618
+    -->
     <body>
         <div id="gt-container">
 
@@ -20,33 +23,6 @@
                 </div>
             </div>
 
-            
-            
-            
-            <div style="padding:20px;width:600px;">
-                <div class="row">
-                    <h2><span class="fi fi-plus" ></span><span ng-bind="edittitle"></span>Add Produce</h2>
-                    <div class="large-6 columns">
-                        <h3>Quick Search</h3>
-                        <input />
-                    </div>
-                    <div class="large-6 columns">
-                        <h3>Select</h3>
-                        <a href="" class="gt-produce2"></a><a href="" class="gt-produce2"></a><a href="" class="gt-produce2"></a><a href="" class="gt-produce2"></a><a href="" class="gt-produce2"></a><a href="" class="gt-produce2"></a>
-                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-6 columns">
-                          <a class="button close-reveal-modal" ng-click="gtUpdate()" ng-model="editupdate"aria-label="Close">Add</a>
-                    </div>
-                </div>
-
-
-                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-            </div>
-                
-            
             
 
             <!-- Tasks -->
@@ -70,9 +46,14 @@
                 <div class="large-4 columns" id="gt-schedule-prev" ng-controller="gtDisplay">
 
                     <h3><span class="fi fi-wrench"></span>Filtering Options:<a class="subtext" href="#" ng-click="filterSort('reset')">Reset All</a></h3>
-                    <p>Date : <input type="text" class="span2 form-control" uib-datepicker-popup="{{format}}" id="dp1" style="width:100px;" ng-value="datetoday" ng-model="date" ng-change="filterSort()" is-open="status.opened" datepicker-options="dateOptions" disabled="disabled"> 
+                    <p>Date : <input type="text" class="span2 form-control" uib-datepicker-popup="{{format}}" id="dp1" style="width:100px;" ng-value="datetoday" ng-model="date" ng-change="filterSort()" is-open="status.opened" datepicker-options="dateOptions"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open($event)"></a> 
                     </p>
+                    
+           
+                    
+                    
+                    
                     
                     <form action="#" id="gt-filter-season">
                         <div class="row">
@@ -108,6 +89,220 @@
 
             <!-- Calendar -->
             <div id="gt-calendar" ng-controller="gtCalendar">
+                
+                
+                
+                
+                
+                
+                
+
+
+                <div id="gtProduceSelect" style="padding:20px;width:700px;">
+                    
+                    <div class="row">
+                        <h2><span class="fi fi-plus" ></span>Add Produce</h2>
+                        <div class="large-6 columns">
+                            <h3>Quick Search</h3>
+                            <input />
+                        </div>
+                        <div class="large-6 columns">
+                            <h3>Select</h3>
+                            <a href="" class="gt-produce2 {{key}}" ng-repeat="(key,value) in produce" ng-if="!value.parent"></a>
+                        </div>
+                        <hr/>
+                    </div>
+                    
+                    
+                    <div class="row"><h3>Customize Options</h3></div>
+                    
+                    <div class="row">
+                           
+                                <div class="large-6 columns">
+                                     
+                           
+                                    <h4>Melon Varieties</h4>
+                                    <ul>
+                                        <li><a href="" class="button" style="width:100%;text-align:left">Melon (Default)</a></li>
+                                        <li><a href="" class="button reverse">Earlichamp Cantalope</a></li>
+                                        <li><a href="" class="button reverse">Diplomat Galia</a></li>
+                                        <li><a href="" class="button reverse">Serenade Butterscotch</a></li>
+                                        <li><a href="" class="button reverse">Sapomiel Piel Del Sapo</a></li>
+                                    </ul>
+                                </div>
+                                <div class="large-6 columns">
+                                    <h4>Melon Planting Details</h4>
+                                    <table>
+                                        <tr>
+                                            <td style="width:50%;">Days To Maturity</td>
+                                            <td>85</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Harvest Length</td>
+                                            <td>8 Weeks</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Hardiness</td>
+                                            <td><abbr title="Will Not Survive Frost">Frost-Intolerant</abbr></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Direct Sow / Seedlings</td>
+                                            <td>Either</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start Seedlings Indoors</td>
+                                            <td>1 Weeks Before <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Plant Outdoors</td>
+                                            <td>2 Weeks After <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Spacing</td>
+                                            <td>9 inches</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rows Per Bed</td>
+                                            <td>1</td>
+                                        </tr>
+                                        
+                                    </table>
+                                   
+                                    
+                                    <p><a href="" class="small">Customize</a></p>
+                                    
+                                    <table class="hide">
+                                        <tr>
+                                            <td style="width:110px;">Name<br/>
+                                            </td>
+                                            <td><input value="Melon" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Seedling or Seed<br/>
+                                                (most effective)
+                                            </td>
+                                            <td><input value="Either" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Hardiness<br/>
+                                            </td>
+                                            <td><input value="Frost-Intolerant" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Plant Outdoors<br/>
+                                                (weeks after <abbr title="Average Last Day Of Frost">ALDF</abbr>)
+                                            </td>
+                                            <td><input value="3" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rows Per Bed<br/>
+                                                (18" bed width)
+                                            </td>
+                                            <td><input value="1" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Seed Depth<br/>
+                                                (inches)
+                                            </td>
+                                            <td><input value="0.25" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Expected Yield<br/>
+                                                (lbs/18"x30' bed)
+                                            </td>
+                                            <td><input value="600" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Number Of Plants<br/>
+                                                (per 18"x30' bed)
+                                            </td>
+                                            <td><input value="41" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Plant Height<br/>
+                                                (inches)
+                                            </td>
+                                            <td><input value="84" placeholder=""/></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Start Indoors<br/>
+                                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
+                                            </td>
+                                            <td><input value="-1" placeholder=""/></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Plant Outside<br/>
+                                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
+                                            </td>
+                                            <td><input value="2" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Time To Maturity<br/>
+                                                (days)
+                                            </td>
+                                            <td><input value="85" placeholder=""/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Harvest Length<br/>
+                                                (weeks)
+                                            </td>
+                                            <td><input value="8" placeholder=""/></td>
+                                        </tr>
+                                        
+                                        
+                                    </table>
+                                </div>
+                          
+                            
+                            
+                       
+                       
+                    </div>
+                    
+                    <div class="row"><a href="" class="button">Add Produce</a></div>
+                     <hr/>
+                    
+                     <div class="row">
+                         <div class="columns large-6">
+                             <h3>Select Plant Date</h3>
+                             <p>Date : <input type="text" class="span2 form-control" id="dp3" style="width:100px;" ng-value="datetoday2" is-open="status2.opened" datepicker-options="dateOptions" disabled="disabled"> 
+                                 <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
+                             </p>
+                         </div>
+                         <div class="columns large-6">
+                             <table>
+                                 <tr>
+                                     <td>Your <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
+                                     <td>May 4th</td>
+                                 </tr>
+                             </table>
+                         </div>
+                         <hr/>
+                     </div>
+
+                   
+                </div>
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 <div class="columns">
                     <h2>
                         <span class="fi fi-map"></span>
@@ -155,7 +350,7 @@
                 
                 
                 <div class="row">
-                    <a id="gt-new-area" class="button" data-reveal-id="gt-modal-edit"  ng-click="gtEdit({update : false, 'type' : 'add-area'})"><span class="fi fi-plus"></span>Add a new growing area</a>
+                    <a id="gt-new-area" class="button" data-reveal-id="gt-modal-edit"  ng-click="gtEdit({update : false, 'type' : 'add-area'})"><span class="fi fi-plus"></span>Add Growing Area</a>
                 </div>
                 
                  

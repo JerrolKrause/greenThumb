@@ -605,6 +605,7 @@ green.thumb = (function(){
             $scope.params       = gtGetData.params;
             $scope.main_pos     = gtGetData.params.dates.main_pos;
             $scope.today_pos    = gtGetData.params.dates.today_pos;
+            $scope.produce      = gtGetData.produce;
         });
         
         
@@ -617,8 +618,6 @@ green.thumb = (function(){
             console.log(obj);
             $scope.editinput = '';
             $scope.editinput = obj.label;
-            
-            $('#gt-editinput').focus();
             
             
             if(obj.type === ('name' || 'area')){
@@ -664,11 +663,6 @@ green.thumb = (function(){
              
              
         };
-        
-        
-        
-        
-        
         
         
 
@@ -735,7 +729,6 @@ green.thumb = (function(){
         //Needed by calendar dropdown
         $scope.open = function ($event) {$scope.status.opened = true;};
         $scope.status = {opened: false};
-
 
         /**
          * Main filtering/sorting function
