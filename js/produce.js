@@ -87,7 +87,7 @@ var gtProduce = {
         seedDepth       : 0.25,
         yield           : 246,
         yieldType       : 'lbs',
-        numPlants       : 41,
+        //numPlants       : 41,
         plantHeight     : 84,
         plantIndoors    : -1,
         plantOutside    : 2,
