@@ -608,9 +608,8 @@ green.thumb = (function(){
             $scope.produce      = gtGetData.produce;
         });
         
+         $scope.updateObj ={};
         
-        
-        $scope.updateObj ={};
         
         
         //When the edit button is clicked
@@ -706,7 +705,6 @@ green.thumb = (function(){
             $scope.date = gtGetData.params.dates.main.format("MM/DD/YYYY");
         });
 
-
         //On application load, have the season filters match the query parameter options
         $scope.updateFilters = function () {
             if ($stateParams.filter_season_smart === 'true') {
@@ -726,9 +724,13 @@ green.thumb = (function(){
             }
         };
         
+        
+        
         //Needed by calendar dropdown
-        $scope.open = function ($event) {$scope.status.opened = true;};
+        $scope.open = function ($event) {console.log('Clicky');$scope.status.opened = true;};
         $scope.status = {opened: false};
+        
+
 
         /**
          * Main filtering/sorting function
@@ -783,7 +785,6 @@ green.thumb = (function(){
                 filtersObj.date = date.format('YYYY-MM-DD');
             }
             
-            //
           
             //Pass the data to the model and the UI routing
             gtGetData.update(params);
@@ -793,6 +794,73 @@ green.thumb = (function(){
     });//end gtDisplay
 
 
+    /**
+     * 
+     */
+    greenThumb.controller('gtInteractive', function ($scope, gtGetData) {
+        
+         //Needed by calendar dropdown
+        $scope.format = 'MMMM dd';
+        $scope.open2 = function ($event) {$scope.status2.opened = true;};
+        $scope.status2 = {opened: false};
+        
+        //Create an array for the produce search tool
+        var produce = [];
+        angular.forEach(gtGetData.produce, function(value,key){
+            var searchObj = {
+                id      :   key,
+                img     :   key,
+                label   :   value.label
+            };
+            
+            if(value.parent){
+                searchObj.img = value.parent;
+                searchObj.label = gtGetData.produce[value.parent].label + ', ' +  searchObj.label;
+            }
+            
+            produce.push(searchObj);
+        });
+        
+        $scope.produce = produce;
+        
+        //When the produce search tool is changed, either by user action or programatically
+        $scope.$watch('gtSearchTerm', function(){
+            //Make sure the var and property are not undefined
+           if(typeof $scope.gtSearchTerm !== 'undefined' && typeof $scope.gtSearchTerm.id !== 'undefined'){
+               //Pass to step 1
+               $scope.step1($scope.gtSearchTerm.id);
+           }
+        });
+        
+        /**
+         * 
+         * @param {type} id - The id of the produce item
+         * @returns {undefined}
+         */
+        $scope.step1 = function(id){
+            var searchProduce;
+            if (gtGetData.produce[id].parent) {
+                searchProduce = gtGetData.produce[gtGetData.produce[id].parent];
+                angular.merge(searchProduce, gtGetData.produce[id]);
+            } else {
+                searchProduce = gtGetData.produce[id];
+            }
+            $scope.selection = searchProduce;
+            console.log($scope.selection);
+        };
+        
+        
+        
+        
+        
+        
+       
+        
+        
+    });//end gtInteractive
+   
+   
+   
     /**
      * URL routing app. Manages the state of the app based on URL parameters
      * Lets the user bookmark application states

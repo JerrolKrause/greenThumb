@@ -46,7 +46,7 @@
                 <div class="large-4 columns" id="gt-schedule-prev" ng-controller="gtDisplay">
 
                     <h3><span class="fi fi-wrench"></span>Filtering Options:<a class="subtext" href="#" ng-click="filterSort('reset')">Reset All</a></h3>
-                    <p>Date : <input type="text" class="form-control" uib-datepicker-popup="{{format}}" id="dp1" style="width:150px;" ng-value="datetoday" ng-model="date" ng-change="filterSort()" is-open="status.opened" datepicker-options="dateOptions"> 
+                    <p>Date : <input type="text" class="form-control" uib-datepicker-popup="{{format}}" id="dp1" style="width:150px;" ng-value="datetoday" ng-model="date" ng-change="filterSort()" is-open="status.opened"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open($event)"></a> 
                     </p>
                     
@@ -88,220 +88,7 @@
 
 
             <!-- Calendar -->
-            <div id="gt-calendar" ng-controller="gtCalendar">
-                
-                
-                
-                
-                
-                
-                
-
-
-                <div id="gtProduceSelect" style="padding:20px;width:700px;display:none;">
-                    
-                    <div class="row">
-                        <h2><span class="fi fi-plus" ></span>Add Produce</h2>
-                        <div class="large-6 columns">
-                            <h3>Quick Search</h3>
-                            <input />
-                        </div>
-                        <div class="large-6 columns">
-                            <h3>Select</h3>
-                            <a href="" class="gt-produce2 {{key}}" ng-repeat="(key,value) in produce" ng-if="!value.parent"></a>
-                        </div>
-                        <hr/>
-                    </div>
-                    
-                    
-                    <div class="row"><h3>Customize Options</h3></div>
-                    
-                    <div class="row">
-                           
-                                <div class="large-6 columns">
-                                     
-                           
-                                    <h4>Melon Varieties</h4>
-                                    <ul>
-                                        <li><a href="" class="button" style="width:100%;text-align:left">Melon (Default)</a></li>
-                                        <li><a href="" class="button reverse">Earlichamp Cantalope</a></li>
-                                        <li><a href="" class="button reverse">Diplomat Galia</a></li>
-                                        <li><a href="" class="button reverse">Serenade Butterscotch</a></li>
-                                        <li><a href="" class="button reverse">Sapomiel Piel Del Sapo</a></li>
-                                    </ul>
-                                </div>
-                                <div class="large-6 columns">
-                                    <h4>Melon Planting Details</h4>
-                                    <table>
-                                        <tr>
-                                            <td style="width:50%;">Days To Maturity</td>
-                                            <td>85</td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Harvest Length</td>
-                                            <td>8 Weeks</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hardiness</td>
-                                            <td><abbr title="Will Not Survive Frost">Frost-Intolerant</abbr></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Direct Sow / Seedlings</td>
-                                            <td>Either</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Start Seedlings Indoors</td>
-                                            <td>1 Weeks Before <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Plant Outdoors</td>
-                                            <td>2 Weeks After <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Spacing</td>
-                                            <td>9 inches</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Rows Per Bed</td>
-                                            <td>1</td>
-                                        </tr>
-                                        
-                                    </table>
-                                   
-                                    
-                                    <p><a href="" class="small">Customize</a></p>
-                                    
-                                    <table class="hide">
-                                        <tr>
-                                            <td style="width:110px;">Name<br/>
-                                            </td>
-                                            <td><input value="Melon" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Seedling or Seed<br/>
-                                                (most effective)
-                                            </td>
-                                            <td><input value="Either" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hardiness<br/>
-                                            </td>
-                                            <td><input value="Frost-Intolerant" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Plant Outdoors<br/>
-                                                (weeks after <abbr title="Average Last Day Of Frost">ALDF</abbr>)
-                                            </td>
-                                            <td><input value="3" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Rows Per Bed<br/>
-                                                (18" bed width)
-                                            </td>
-                                            <td><input value="1" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Seed Depth<br/>
-                                                (inches)
-                                            </td>
-                                            <td><input value="0.25" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Expected Yield<br/>
-                                                (lbs/18"x30' bed)
-                                            </td>
-                                            <td><input value="600" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Number Of Plants<br/>
-                                                (per 18"x30' bed)
-                                            </td>
-                                            <td><input value="41" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Plant Height<br/>
-                                                (inches)
-                                            </td>
-                                            <td><input value="84" placeholder=""/></td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Start Indoors<br/>
-                                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
-                                            </td>
-                                            <td><input value="-1" placeholder=""/></td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Plant Outside<br/>
-                                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
-                                            </td>
-                                            <td><input value="2" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Time To Maturity<br/>
-                                                (days)
-                                            </td>
-                                            <td><input value="85" placeholder=""/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Harvest Length<br/>
-                                                (weeks)
-                                            </td>
-                                            <td><input value="8" placeholder=""/></td>
-                                        </tr>
-                                        
-                                        
-                                    </table>
-                                </div>
-                          
-                            
-                            
-                       
-                       
-                    </div>
-                    
-                    <div class="row"><a href="" class="button">Add Produce</a></div>
-                     <hr/>
-                    
-                     <div class="row">
-                         <div class="columns large-6">
-                             <h3>Select Plant Date</h3>
-                             <p>Date : <input type="text" class="span2 form-control" id="dp3" style="width:100px;" ng-value="datetoday2" is-open="status2.opened" datepicker-options="dateOptions" disabled="disabled"> 
-                                 <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
-                             </p>
-                         </div>
-                         <div class="columns large-6">
-                             <table>
-                                 <tr>
-                                     <td>Your <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
-                                     <td>May 4th</td>
-                                 </tr>
-                             </table>
-                         </div>
-                         <hr/>
-                     </div>
-
-                   
-                </div>
-
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+            <div id="gt-calendar" ng-controller="gtCalendar" class="hide">
                 
                 <div class="columns">
                     <h2>
@@ -367,6 +154,181 @@
 
             </div>
         </div>
+        
+        
+        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive">
+
+            <div class="row">
+                <h2><span class="fi fi-plus" ></span>Add Produce</h2>
+                <div class="large-6 columns">
+                    <script type="text/ng-template" id="customTemplate.html">
+                        <a class="gtSearchOption">
+                            <div class="gt-produce {{match.model.img}}"></div>
+                            <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                        </a>
+                    </script>
+                    <div id="gtProduceSearch">
+                        <input type="text" 
+                               ng-model="gtSearchTerm" 
+                               placeholder="Enter Search Term" 
+                               uib-typeahead="item as item.label for item in produce | filter:{label:$viewValue}" 
+                               typeahead-template-url="customTemplate.html" 
+                               class="form-control" 
+                               typeahead-show-hint="true" 
+                               typeahead-min-length="1"/>
+                    </div>
+                </div>
+                <div class="large-6 columns hide">
+                    <h3>Select</h3>
+                    <a href="" class="gt-produce2 {{key}}" ng-repeat="(key,value) in produce" ng-if="!value.parent"></a>
+                </div>
+                <hr/>
+            </div>
+
+
+            <div class="row">
+                <div class="columns large-6">
+                    <h3>Pick Outdoor Plant Date</h3>
+                    <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" id="dp2" style="width:150px;" ng-value="dateplant" ng-model="date2plant" ng-change="" is-open="status2.opened" datepicker-options="dateOptions"> 
+                        <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
+                    </p>
+                </div>
+                
+                <div class="large-6 columns">
+                    <h3>Plant Details <a href="" style="font-size:11px;">Edit/Customize</a></h3>
+                    <table>
+                        <tr ng-if="selection.label">
+                            <td style="width:50%;">Name / Variety</td>
+                            <td ng-bind="selection.label"></td>
+                        </tr>
+                        <tr ng-if="selection.maturity">
+                            <td style="width:50%;">Days To Maturity</td>
+                            <td ng-bind="selection.maturity"></td>
+                        </tr>
+                        <tr ng-if="selection.harvest">
+                            <td>Harvest Length</td>
+                            <td ng-bind="selection.harvest + ' Weeks'"></td>
+                        </tr>
+                        <tr ng-if="selection.hardiness">
+                            <td>Hardiness</td>
+                            <td><abbr title="Will Not Survive Frost" ng-bind="selection.hardiness"></abbr></td>
+                        </tr>
+                        <tr ng-if="selection.startType">
+                            <td>Direct Sow / Seedlings</td>
+                            <td ng-bind="selection.startType"></td>
+                        </tr>
+                        <tr ng-if="selection.plantInside">
+                            <td>Start Seedlings Indoors</td>
+                            <td><span ng-bind="selection.plantInside"></span> Week/s Before <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
+                        </tr>
+                        <tr ng-if="selection.plantOutside">
+                            <td>Plant Outdoors</td>
+                            <td><span ng-bind="selection.plantOutside"></span> Week/s After <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
+                        </tr>
+                        <tr ng-if="selection.spacing">
+                            <td>Spacing</td>
+                            <td  ng-bind="selection.spacing + ' Inches'"></td>
+                        </tr>
+                        <tr ng-if="selection.rowsPerBed">
+                            <td>Rows Per Bed</td>
+                            <td ng-bind="selection.rowsPerBed"></td>
+                        </tr>
+                        <tr ng-if="selection.vertical">
+                            <td>Grow Vertically / Trellis </td>
+                            <td ng-bind="selection.vertical ? 'Yes'  : 'No'"></td>
+                        </tr>
+                    </table>
+
+
+                    <table class="hide">
+                        <tr>
+                            <td style="width:110px;">Name<br/>
+                            </td>
+                            <td><input value="Melon" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Seedling or Seed<br/>
+                                (most effective)
+                            </td>
+                            <td><input value="Either" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Hardiness<br/>
+                            </td>
+                            <td><input value="Frost-Intolerant" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Plant Outdoors<br/>
+                                (weeks after <abbr title="Average Last Day Of Frost">ALDF</abbr>)
+                            </td>
+                            <td><input value="3" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Rows Per Bed<br/>
+                                (18" bed width)
+                            </td>
+                            <td><input value="1" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Seed Depth<br/>
+                                (inches)
+                            </td>
+                            <td><input value="0.25" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Expected Yield<br/>
+                                (lbs/18"x30' bed)
+                            </td>
+                            <td><input value="600" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Number Of Plants<br/>
+                                (per 18"x30' bed)
+                            </td>
+                            <td><input value="41" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Plant Height<br/>
+                                (inches)
+                            </td>
+                            <td><input value="84" placeholder=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td>Start Indoors<br/>
+                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
+                            </td>
+                            <td><input value="-1" placeholder=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td>Plant Outside<br/>
+                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
+                            </td>
+                            <td><input value="2" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Time To Maturity<br/>
+                                (days)
+                            </td>
+                            <td><input value="85" placeholder=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Harvest Length<br/>
+                                (weeks)
+                            </td>
+                            <td><input value="8" placeholder=""/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <hr/>
+<a href="" class="button">Add Produce</a>
+
+        </div>
+        
+        
         
         <hr/>
       

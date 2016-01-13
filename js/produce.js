@@ -78,10 +78,9 @@ var gtProduce = {
         rowsPerBed: 2
     },
     melon: {
-        label           : "Melon",
+        label           : 'Melon',
         startType       : 'Either',
         hardiness       : 'Frost-Intolerant',
-        plantOutdoors   : '2-3 Weeks After',
         spacing         : 9,
         rowsPerBed      : 1,
         seedDepth       : 0.25,
@@ -89,7 +88,7 @@ var gtProduce = {
         yieldType       : 'lbs',
         //numPlants       : 41,
         plantHeight     : 84,
-        plantIndoors    : -1,
+        plantInside     : 1,
         plantOutside    : 2,
         maturity        : 85,
         harvest         : 8,
@@ -98,22 +97,22 @@ var gtProduce = {
     },
     melon_earlichamp: {
         label: "Earlichamp Cantalope",
-        //maturity: 72,
+        maturity: 72,
         parent: "melon"
     },
     melon_diplomat: {
         label: "Diplomat Galia",
-        //maturity: 70,
+        maturity: 70,
         parent: "melon"
     },
     melon_serenade: {
         label: "Serenade Butterscotch",
-        //maturity: 80,
+        maturity: 80,
         parent: "melon"
     },
     melon_sapomiel: {
         label: "Sapomiel Piel Del Sapo",
-        //maturity: 80,
+        maturity: 80,
         parent: "melon"
     },
     potato: {
