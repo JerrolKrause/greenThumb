@@ -88,7 +88,7 @@
 
 
             <!-- Calendar -->
-            <div id="gt-calendar" ng-controller="gtCalendar" class="hide">
+            <div id="gt-calendar" ng-controller="gtCalendar">
                 
                 <div class="columns">
                     <h2>
@@ -156,7 +156,7 @@
         </div>
         
         
-        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive">
+        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="hide">
 
             <div class="row">
                 <h2><span class="fi fi-plus" ></span>Add Produce</h2>
@@ -189,7 +189,7 @@
             <div class="row">
                 <div class="columns large-6">
                     <h3>Pick Outdoor Plant Date</h3>
-                    <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" id="dp2" style="width:150px;" ng-value="dateplant" ng-model="date2plant" ng-change="" is-open="status2.opened" datepicker-options="dateOptions"> 
+                    <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" style="width:150px;" ng-value="dateplant" ng-model="date2plant" ng-change="dateChange()" is-open="status2.opened" datepicker-options="dateOptions"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
                     </p>
                 </div>
@@ -324,7 +324,7 @@
             </div>
 
             <hr/>
-<a href="" class="button">Add Produce</a>
+<a href="" class="button" ng-click="addProduce()">Add Produce</a>
 
         </div>
         

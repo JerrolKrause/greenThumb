@@ -832,13 +832,16 @@ green.thumb = (function(){
            }
         });
         
+        
+        var searchProduce, test, date;
         /**
          * 
          * @param {type} id - The id of the produce item
          * @returns {undefined}
          */
         $scope.step1 = function(id){
-            var searchProduce;
+            console.log(id);
+            test = id;
             if (gtGetData.produce[id].parent) {
                 searchProduce = gtGetData.produce[gtGetData.produce[id].parent];
                 angular.merge(searchProduce, gtGetData.produce[id]);
@@ -846,15 +849,29 @@ green.thumb = (function(){
                 searchProduce = gtGetData.produce[id];
             }
             $scope.selection = searchProduce;
-            console.log($scope.selection);
         };
         
         
+        $scope.dateChange = function(){
+            date = moment($scope.date2plant).add(1 ,'day');
+          
+        };
         
-        
-        
-        
-       
+       $scope.addProduce = function(){
+           console.log('addProduce');
+           var obj = {
+               slug : test,
+               dates : {
+                   month : date.format('M'),
+                   day : date.format('D')
+               }
+           };
+           
+           gtGetData.model.areas[0].produce.push(obj);
+           
+           gtGetData.params.initLoad = false;
+           gtGetData.model.view.update(gtGetData.model);
+       };
         
         
     });//end gtInteractive
