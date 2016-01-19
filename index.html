@@ -88,7 +88,7 @@
 
 
             <!-- Calendar -->
-            <div id="gt-calendar" ng-controller="gtCalendar">
+            <div id="gt-calendar" ng-controller="gtCalendar" class="1hide">
                 
                 <div class="columns">
                     <h2>
@@ -192,6 +192,17 @@
                     <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" style="width:150px;" ng-value="dateplant" ng-model="date2plant" ng-change="dateChange()" is-open="status2.opened" datepicker-options="dateOptions"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
                     </p>
+                    <h4>Customize</h4>
+                    <table>
+                        <tr>
+                            <td>Number Of Plants</td>
+                            <td><input value=""/></td>
+                        </tr>
+                        <tr>
+                            <td>Start Seedlings</td>
+                            <td><input value="3"/></td>
+                        </tr>
+                    </table>
                 </div>
                 
                 <div class="large-6 columns">
