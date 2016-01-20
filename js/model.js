@@ -4,8 +4,8 @@
         "plantOnSat"    : true,
         "capHarvest"    : true,
         "zone"          : "10a",
-        "frost_spring"  : "5-4",
-        "frost_fall"    : "10-3"
+        "frost_spring"  : {"month" : 4 , "day" : 4},
+        "frost_fall"    : {"month" : 9 , "day" : 3}
     },
     "areas": [
         {

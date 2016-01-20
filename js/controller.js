@@ -45,7 +45,9 @@ green.thumb = (function(){
             tasksPrev           : 30,                                           //Show upcoming tasks within this many days
             calcPlants          : false,                                        //Automatically calculate how many seedlings should be planted
             initLoad            : false,                                        //Flag to ensure certain only items fire on first load
-            filters             : {season : {}, tasks : {}, misc : {}}          //Holds filtering options.
+            filters             : {season : {}, tasks : {}, misc : {}},         //Holds filtering options.
+            frost_spring        : false,                                        //Holds the date of the average LAST day of frost in spring
+            frost_fall          : false                                         //Holds the date of the average FIRST day of frost in fall
         };
         
         //Override todays date for testing
@@ -82,6 +84,9 @@ green.thumb = (function(){
 
                     if (data.params.initLoad === false) {
                         model.state();
+                        //On initial load, create the date objects for the first and last frosts of the year in data.params
+                        data.params.frost_spring = moment().set('month', obj.options.frost_spring.month).set('date', obj.options.frost_spring.day);
+                        data.params.frost_fall = moment().set('month', obj.options.frost_fall.month).set('date', obj.options.frost_fall.day);
                     }
                     
                     //Default show all calendar items
@@ -795,7 +800,7 @@ green.thumb = (function(){
 
 
     /**
-     * 
+     * Manages the add/edit functionality used by the app
      */
     greenThumb.controller('gtInteractive', function ($scope, gtGetData) {
         
@@ -803,6 +808,8 @@ green.thumb = (function(){
         $scope.format = 'MMMM dd';
         $scope.open2 = function ($event) {$scope.status2.opened = true;};
         $scope.status2 = {opened: false};
+        $scope.customize = {};
+        
         
         //Create an array for the produce search tool
         var produce = [];
@@ -835,12 +842,11 @@ green.thumb = (function(){
         
         var searchProduce, test, date;
         /**
-         * 
+         * Create an object for the search tool to use
          * @param {type} id - The id of the produce item
          * @returns {undefined}
          */
         $scope.step1 = function(id){
-            console.log(id);
             test = id;
             if (gtGetData.produce[id].parent) {
                 searchProduce = gtGetData.produce[gtGetData.produce[id].parent];
@@ -848,30 +854,56 @@ green.thumb = (function(){
             } else {
                 searchProduce = gtGetData.produce[id];
             }
+            //Send the object to the search tool
             $scope.selection = searchProduce;
+            
+            //Check which start type this is and pre-select that option on the next step
+            if(searchProduce.startType === 'Direct Sow'){
+                $scope.customize.start = 'directsow';
+            } else {
+                $scope.customize.start = 'seedlings';
+            }
+            
+            //gtGetData.params.frost_spring
+            //gtGetData.params.frost_fall
+            $scope.daterange = {};
+            $scope.daterange.earliest = '';
+            $scope.daterange.latest = '';
+            
+            console.log(searchProduce);
         };
         
+        $scope.updateType = function(){
+            console.log($scope.customize);
+        };
         
+        /**
+         * When the date change component within the produce search tool is added
+         * @returns {undefined}
+         */
         $scope.dateChange = function(){
             date = moment($scope.date2plant).add(1 ,'day');
-          
         };
         
-       $scope.addProduce = function(){
-           console.log('addProduce');
-           var obj = {
-               slug : test,
-               dates : {
-                   month : date.format('M'),
-                   day : date.format('D')
-               }
-           };
-           
-           gtGetData.model.areas[0].produce.push(obj);
-           
-           gtGetData.params.initLoad = false;
-           gtGetData.model.view.update(gtGetData.model);
-       };
+        /**
+         * Adds the produce to the modal and updates the view
+         * @returns {undefined}
+         */
+        $scope.addProduce = function () {
+            console.log('addProduce');
+            var obj = {
+                slug: test,
+                dates: {
+                    month: date.format('M'),
+                    day: date.format('D')
+                }
+            };
+
+            gtGetData.model.areas[0].produce.push(obj);
+
+            gtGetData.params.initLoad = false;
+            gtGetData.model.view.update(gtGetData.model);
+        };
         
         
     });//end gtInteractive

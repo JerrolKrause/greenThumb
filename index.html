@@ -11,7 +11,7 @@
     </head>
 
     <!--
-    Figure out frost dates: http://www.almanac.com/gardening/frostdates/zipcode/92618
+    Figure out frost dates: http://www.almanac.com/gardening/frostdates/zipcode/80829
     -->
     <body>
         <div id="gt-container">
@@ -88,7 +88,7 @@
 
 
             <!-- Calendar -->
-            <div id="gt-calendar" ng-controller="gtCalendar" class="1hide">
+            <div id="gt-calendar" ng-controller="gtCalendar" class="hide">
                 
                 <div class="columns">
                     <h2>
@@ -156,7 +156,7 @@
         </div>
         
         
-        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="hide">
+        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="1hide">
 
             <div class="row">
                 <h2><span class="fi fi-plus" ></span>Add Produce</h2>
@@ -189,18 +189,46 @@
             <div class="row">
                 <div class="columns large-6">
                     <h3>Pick Outdoor Plant Date</h3>
-                    <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" style="width:150px;" ng-value="dateplant" ng-model="date2plant" ng-change="dateChange()" is-open="status2.opened" datepicker-options="dateOptions"> 
+                    <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" style="width:150px;" ng-value="dateplant" ng-model="gtCustomize.plantDate" ng-change="dateChange()" is-open="status2.opened" datepicker-options="dateOptions"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
                     </p>
+                    <table>
+                        <tr>
+                            <td>Earliest Plant Date:</td>
+                            <td><strong>May 4th</strong> - {{selection.plantOutside}}</td>
+                        </tr>
+                        <tr>
+                            <td>Latest Plant Date:</td>
+                            <td><strong>October 3rd</strong></td>
+                        </tr>
+                    </table>
                     <h4>Customize</h4>
                     <table>
                         <tr>
                             <td>Number Of Plants</td>
-                            <td><input value=""/></td>
+                            <td><input  ng-model="customize.numPlants" ng-change="updateType()"/></td>
                         </tr>
                         <tr>
-                            <td>Start Seedlings</td>
-                            <td><input value="3"/></td>
+                            <td>Start Plants As:</td>
+                            <td>
+                                <input type="radio" name="startType" value="seedlings" id="gtStartSeedlings" ng-model="customize.start" ng-change="updateType()" /> 
+                                <label for="gtStartSeedlings">Seedlings</label> <br/>
+                                <input type="radio" name="startType" value="directsow" id="gtStartSow" ng-model="customize.start" ng-change="updateType()" /> 
+                                <label for="gtStartSow">Direct Sow</label>
+                            </td>
+                        </tr>
+                        <tr ng-if="customize.start == 'seedlings'">
+                            <td>Start Seedlings<br/>(weeks)</td>
+                            <td><input name="startSeedlings" type="text" ng-model="customize.seedling" ng-change="updateType()" ng-value="selection.seedling"/>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>Days To Maturity</td>
+                            <td><input name="maturity" ng-model="customize.maturity" ng-change="updateType()" ng-value="selection.maturity"/></td>
+                        </tr>
+                         <tr>
+                             <td>Harvest Length<br/>(weeks)</td>
+                            <td><input name="harvest" ng-model="customize.harvest" ng-change="updateType()" ng-value="selection.harvest"/></td>
                         </tr>
                     </table>
                 </div>
@@ -250,87 +278,6 @@
                         </tr>
                     </table>
 
-
-                    <table class="hide">
-                        <tr>
-                            <td style="width:110px;">Name<br/>
-                            </td>
-                            <td><input value="Melon" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Seedling or Seed<br/>
-                                (most effective)
-                            </td>
-                            <td><input value="Either" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Hardiness<br/>
-                            </td>
-                            <td><input value="Frost-Intolerant" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Plant Outdoors<br/>
-                                (weeks after <abbr title="Average Last Day Of Frost">ALDF</abbr>)
-                            </td>
-                            <td><input value="3" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Rows Per Bed<br/>
-                                (18" bed width)
-                            </td>
-                            <td><input value="1" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Seed Depth<br/>
-                                (inches)
-                            </td>
-                            <td><input value="0.25" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Expected Yield<br/>
-                                (lbs/18"x30' bed)
-                            </td>
-                            <td><input value="600" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Number Of Plants<br/>
-                                (per 18"x30' bed)
-                            </td>
-                            <td><input value="41" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Plant Height<br/>
-                                (inches)
-                            </td>
-                            <td><input value="84" placeholder=""/></td>
-                        </tr>
-
-                        <tr>
-                            <td>Start Indoors<br/>
-                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
-                            </td>
-                            <td><input value="-1" placeholder=""/></td>
-                        </tr>
-
-                        <tr>
-                            <td>Plant Outside<br/>
-                                (weeks +/- <abbr title="Average Last Day Of Frost">ALDF</abbr>)
-                            </td>
-                            <td><input value="2" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Time To Maturity<br/>
-                                (days)
-                            </td>
-                            <td><input value="85" placeholder=""/></td>
-                        </tr>
-                        <tr>
-                            <td>Harvest Length<br/>
-                                (weeks)
-                            </td>
-                            <td><input value="8" placeholder=""/></td>
-                        </tr>
-                    </table>
                 </div>
             </div>
 

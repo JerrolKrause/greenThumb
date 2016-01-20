@@ -36,10 +36,6 @@ $bg-color:          #f7f7f7;
 
 
 
-
-
-
-
 /*
  * Content
  */
@@ -64,10 +60,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     &.reverse:hover{@include link-color-dk();}
 }
 
-
-
-
-
 .fi{margin-right: 10px;}
 .subtext{font-size:12px;float:right;margin-top: 15px;}    
 
@@ -80,10 +72,7 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
 .reveal-modal .close-reveal-modal{color:$link-color;}
     .reveal-modal:hover .close-reveal-modal:hover{color:$link-color-hover;text-decoration:underline;}
 
-
-
 #gt-new-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;display:inline-block;text-align:left;margin-left: 10px;margin-top: 5px;}
-
 
 #gtProduceSelect{
     ul{list-style:none;margin:0px;margin-bottom: 1.25rem;}
@@ -107,15 +96,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     }
 }
 
-
-
-
-
-
-
-
-
-
 .gt-produce2{
     display:inline-block;width:50px;height:50px;background: url('../img/thumbs/sprite-produce-med.png') no-repeat 0px 0px;border-radius:5px;border:1px solid #fff;
     &:hover{background-color:$bg-color;border-color:$link-color-hover}
@@ -134,12 +114,7 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     &.bell_pepper{      @include sprite-vertical(12,100)} 
 }
 
-
-
-
 #today{position:relative;top:-2px;}
-
-
 
 #gt-header{
     background-color:#1e1f22;
@@ -148,7 +123,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     h1 .white{color:#fff;}
     p{margin:0px;color:#fff;font-family: "BPreplay", sans-serif;position: relative;top: -12px;left: 25px;margin-bottom: -5px;display:inline;}
 }
-
 
 #gt-container{
     font-size:0.9em;
@@ -179,10 +153,6 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
         .leg-harvest{background-color:#c79359;}
     }
 }
-
-
-
-
 
 #gt-areas{position:relative;clear:both;}       
     #gt-today{position:absolute;left: 0px;right: 0px;top: 0px;bottom: 0px;}    
@@ -245,17 +215,9 @@ input.calendar{border-radius: 5px 0px 0px 5px;}
     &:hover{text-decoration:none;border:0px;color:$link-color-hover;}
     &.gt-delete{position:absolute;right:15px;padding-left:10px;}
 }  
-        
-        
-        
-        
+
         h2:hover .gt-edit, h3:hover .gt-edit, h4:hover .gt-edit, .gt-produce:hover .gt-edit{display:inline-block;}
             .gt-produce .gt-edit{vertical-align: initial;font-size:100%;float:right;position:initial;}
-        
-                
-            
-                
-                
         
         
 /*
@@ -281,7 +243,6 @@ input.calendar{border-radius: 5px 0px 0px 5px;}
 @media only screen and (min-width: 40.063em) and (max-width: 64em){ 
 
 }
-
 
 
 /* Large */
