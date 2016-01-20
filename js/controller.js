@@ -5,7 +5,7 @@
 var green = {};
 green.thumb = (function(){
     'use strict';
-    var greenThumb = angular.module('gtApp', ['ui.router','ui.bootstrap']);                    //Angular app
+    var greenThumb = angular.module('gtApp', ['ui.router','ui.bootstrap']);     //Angular app
 
     /**
      * Creates the model/data object for use by the rest of the application
@@ -46,14 +46,15 @@ green.thumb = (function(){
             calcPlants          : false,                                        //Automatically calculate how many seedlings should be planted
             initLoad            : false,                                        //Flag to ensure certain only items fire on first load
             filters             : {season : {}, tasks : {}, misc : {}},         //Holds filtering options.
-            frost_spring        : false,                                        //Holds the date of the average LAST day of frost in spring
-            frost_fall          : false                                         //Holds the date of the average FIRST day of frost in fall
+            frost_spring        : 'Not Specified',                              //Holds the date of the average LAST day of frost in spring. This is updated when the modal loads.
+            frost_fall          : 'Not Specified'                               //Holds the date of the average FIRST day of frost in fall. This is updated when the modal loads.
         };
-        
+
         //Override todays date for testing
         //data.params.dates.main = moment().set({year: 2015, month: 2, date: 1, hours: 0});
 
         //Fetch JSON object of garden to use
+        //This call will be replaced by a CMS when that component is ready
         $http({
             method: 'GET',
             url: 'js/model.js'
@@ -85,8 +86,14 @@ green.thumb = (function(){
                     if (data.params.initLoad === false) {
                         model.state();
                         //On initial load, create the date objects for the first and last frosts of the year in data.params
-                        data.params.frost_spring = moment().set('month', obj.options.frost_spring.month).set('date', obj.options.frost_spring.day);
-                        data.params.frost_fall = moment().set('month', obj.options.frost_fall.month).set('date', obj.options.frost_fall.day);
+                        if (angular.isObject(obj.options.frost_spring)) {
+                            data.params.frost_spring    = moment().set('month', obj.options.frost_spring.month).set('date', obj.options.frost_spring.day);
+                            data.params.frost_fall      = moment().set('month', obj.options.frost_fall.month).set('date', obj.options.frost_fall.day);
+                        } else if(obj.options.frost_spring === 'None'){
+                            data.params.frost_spring    = 'None';
+                            data.params.frost_fall      = 'None';
+                        }
+                       
                     }
                     
                     //Default show all calendar items
@@ -639,7 +646,6 @@ green.thumb = (function(){
         
         //When the update  button within the model is clicked
         $scope.gtUpdate = function () {
-            console.log($scope.updateObj);
             //Get the new label from the edit input box
             $scope.updateObj.label = $scope.editinput;
           
@@ -655,7 +661,6 @@ green.thumb = (function(){
                     gtGetData.garden.areas[$scope.updateObj.id].label = $scope.updateObj.label;
                     break;    
                 case 'add-area':
-                    console.log('Hello World');
                     var obj = {
                         label   :   $scope.updateObj.label,
                         produce :   [],
@@ -664,12 +669,8 @@ green.thumb = (function(){
                     gtGetData.garden.areas.push(obj);
                     break;        
             }
-             
-             
         };
         
-        
-
     }).directive('areas', function () {
         return {
             restrict: 'E',
@@ -864,14 +865,27 @@ green.thumb = (function(){
                 $scope.customize.start = 'seedlings';
             }
             
-            //gtGetData.params.frost_spring
-            //gtGetData.params.frost_fall
-            $scope.daterange = {};
-            $scope.daterange.earliest = '';
-            $scope.daterange.latest = '';
+            //If the frost dates in the params are a moment object
+            if (moment.isMoment(gtGetData.params.frost_spring)) {
+                //Generate the correct recommendations for when to plant based on the frost date and the plants maturity and frost resistance
+                $scope.daterange = {
+                    frost_spring    : gtGetData.params.frost_spring.format('MMMM Do'),
+                    frost_fall      : gtGetData.params.frost_fall.format('MMMM Do'),
+                    earliest        : angular.copy(gtGetData.params.frost_spring).add(searchProduce.plantOutside, 'weeks').format('MMMM Do'),
+                    latest          : angular.copy(gtGetData.params.frost_fall).subtract(searchProduce.maturity, 'day').format('MMMM Do'),
+                    growingseason   : gtGetData.params.frost_fall.format('DDD') - gtGetData.params.frost_spring.format('DDD')
+                };
+            //If the user doesn't get frost, set to none
+            } else if (gtGetData.params.frost_spring === 'None') {
+                $scope.daterange = 'None';
+            //Frost dates not specified    
+            } else {
+                $scope.daterange = 'Not Specified';
+            }
             
-            console.log(searchProduce);
+            
         };
+        
         
         $scope.updateType = function(){
             console.log($scope.customize);

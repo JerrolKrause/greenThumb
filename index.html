@@ -88,7 +88,7 @@
 
 
             <!-- Calendar -->
-            <div id="gt-calendar" ng-controller="gtCalendar" class="hide">
+            <div id="gt-calendar" ng-controller="gtCalendar" class="1hide">
                 
                 <div class="columns">
                     <h2>
@@ -156,7 +156,7 @@
         </div>
         
         
-        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="1hide">
+        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="hide">
 
             <div class="row">
                 <h2><span class="fi fi-plus" ></span>Add Produce</h2>
@@ -182,26 +182,45 @@
                     <h3>Select</h3>
                     <a href="" class="gt-produce2 {{key}}" ng-repeat="(key,value) in produce" ng-if="!value.parent"></a>
                 </div>
-                <hr/>
             </div>
+            <hr/>
 
 
-            <div class="row">
+            <div class="row" 2ng-if="selection">
                 <div class="columns large-6">
                     <h3>Pick Outdoor Plant Date</h3>
                     <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" style="width:150px;" ng-value="dateplant" ng-model="gtCustomize.plantDate" ng-change="dateChange()" is-open="status2.opened" datepicker-options="dateOptions"> 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
                     </p>
-                    <table>
-                        <tr>
-                            <td>Earliest Plant Date:</td>
-                            <td><strong>May 4th</strong> - {{selection.plantOutside}}</td>
-                        </tr>
-                        <tr>
-                            <td>Latest Plant Date:</td>
-                            <td><strong>October 3rd</strong></td>
-                        </tr>
-                    </table>
+                    
+                    <div ng-if="daterange != 'None' && daterange !='Not Specified' ">
+                        <p>To minimize risk of frost in your area, plant between <strong ng-bind="daterange.earliest"></strong> and <strong ng-bind="daterange.latest"></strong>.</p>
+                        <table>
+                            <tr>
+                                <td>Average Last Day Of Frost</td>
+                                <td><strong ng-bind="daterange.frost_spring"></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Average First Day Of Frost</td>
+                                <td><strong ng-bind="daterange.frost_fall"></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Growing Season</td>
+                                <td><strong ng-bind="daterange.growingseason + ' days'"></strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div ng-if="daterange == 'None' && daterange !='Not Specified' ">
+                        <p>No risk of frost. Lucky you.</p>
+                    </div>
+                    
+                    <div ng-if="daterange == 'Not Specified' ">
+                        <p>First/last frost dates not specified. Please add those in the options menu to get recommendations for planting dates.</p>
+                    </div>
+                    
+                    <hr/>
+                    
                     <h4>Customize</h4>
                     <table>
                         <tr>
@@ -246,11 +265,16 @@
                         </tr>
                         <tr ng-if="selection.harvest">
                             <td>Harvest Length</td>
-                            <td ng-bind="selection.harvest + ' Weeks'"></td>
+                            <td ng-bind="selection.harvest + ' Week/s'"></td>
                         </tr>
                         <tr ng-if="selection.hardiness">
                             <td>Hardiness</td>
-                            <td><abbr title="Will Not Survive Frost" ng-bind="selection.hardiness"></abbr></td>
+                            <td>
+                                <abbr title="Will Not Survive Frost" ng-if="selection.hardiness == 'Frost-Intolerant' ">Frost-Intolerant</abbr>
+                                <abbr title="Protect From Frost" ng-if="selection.hardiness == 'Frost-Sensitive' ">Frost-Sensitive</abbr>
+                                <abbr title="Handle A Little Frost" ng-if="selection.hardiness == 'Moderately-Hardy' ">Moderately-Hardy</abbr>
+                                <abbr title="Frost Tolerant" ng-if="selection.hardiness == 'Hardy' ">Hardy</abbr>
+                            </td>
                         </tr>
                         <tr ng-if="selection.startType">
                             <td>Direct Sow / Seedlings</td>
@@ -260,9 +284,12 @@
                             <td>Start Seedlings Indoors</td>
                             <td><span ng-bind="selection.plantInside"></span> Week/s Before <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
                         </tr>
-                        <tr ng-if="selection.plantOutside">
+                        <tr ng-if="selection.plantOutside || selection.plantOutside == 0">
                             <td>Plant Outdoors</td>
-                            <td><span ng-bind="selection.plantOutside"></span> Week/s After <abbr title="Average Last Day Of Frost">ALDF</abbr></td>
+                            <td>
+                                <div ng-if="selection.plantOutside"><span ng-bind="selection.plantOutside"></span> Week/s After <abbr title="Average Last Day Of Frost">ALDF</abbr></div>
+                                <div ng-if="selection.plantOutside == 0">On The <abbr title="Average Last Day Of Frost">ALDF</abbr></div>
+                            </td>
                         </tr>
                         <tr ng-if="selection.spacing">
                             <td>Spacing</td>
@@ -282,7 +309,7 @@
             </div>
 
             <hr/>
-<a href="" class="button" ng-click="addProduce()">Add Produce</a>
+            <a href="" class="button" ng-click="addProduce()">Add Produce</a>
 
         </div>
         

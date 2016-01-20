@@ -145,12 +145,21 @@ var gtProduce = {
     },
     sweet_potato: {
         label: "Sweet Potato",
-        maturity: 120,
-        seedling: 8,
-        harvest: 1,
-        spacing: 12,
-        vertical: false,
-        rowsPerBed: 2
+        startType       : 'Slip',
+        hardiness       : 'Frost-Intolerant',
+        spacing         : 12,
+        rowsPerBed      : 2,
+        seedDepth       : 3,
+        yield           : 600,
+        yieldType       : 'lbs',
+        //numPlants       : 41,
+        plantHeight     : 12,
+        plantInside     : 2,
+        plantOutside    : 6,
+        maturity        : 120,
+        harvest         : 1,
+        vertical        : false,
+        seedling        : 8
     },
     squash: {
         label: "Squash",
@@ -186,13 +195,22 @@ var gtProduce = {
         rowsPer: 2
     },
     tomato: {
-        label: "Tomato",
-        maturity: 90,
-        seedling: 8,
-        harvest: 16,
-        spacing: 9,
-        vertical: true,
-        rowsPer: 1
+        label           : "Tomato",
+        startType       : 'Either',
+        hardiness       : 'Frost-Sensitive',
+        spacing         : 9,
+        rowsPerBed      : 1,
+        seedDepth       : 0.25,
+        yield           : 615,
+        yieldType       : 'lbs',
+        //numPlants       : 41,
+        plantHeight     : 84,
+        plantInside     : 8,
+        plantOutside    : 0,
+        maturity        : 90,
+        harvest         : 16,
+        vertical        : true,
+        seedling        : 8
     },
     tomato_big_beef: {
         label: "Big Beef",

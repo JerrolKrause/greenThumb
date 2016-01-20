@@ -4,9 +4,10 @@
         "plantOnSat"    : true,
         "capHarvest"    : true,
         "zone"          : "10a",
-        "frost_spring"  : {"month" : 4 , "day" : 4},
-        "frost_fall"    : {"month" : 9 , "day" : 3}
+        "frost_spring"  : {"month" : 3 , "day" : 1},
+        "frost_fall"    : {"month" : 10 , "day" : 1} 
     },
+    
     "areas": [
         {
             "label": "East Wall - Bed 1 of 6",
