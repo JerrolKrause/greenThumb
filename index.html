@@ -104,7 +104,9 @@
                         <span class="leg-seedling rounded-5">Seedling</span>
                         <span class="leg-growing">Growing</span>
                         <span class="leg-harvest">Harvest</span>
+                        <span class="leg-frost">Frost</span>
                     </div>
+                    
                     <div class="large-9 medium-8 small-10 columns">
                         <div class="gt-col" data-days="31"><span class="show-for-small-only">J</span><span class="show-for-medium-only">Jan</span><span class="show-for-large-up">January</span></div>
                         <div class="gt-col" data-days="28"><span class="show-for-small-only">F</span><span class="show-for-medium-only">Feb</span><span class="show-for-large-up">February</span></div>
@@ -129,6 +131,8 @@
                         <div class="large-9 medium-8 small-10 columns"><div id="gt-today2">
                                 <div id="gt-main-line" class="" ng-style="{left: main_pos + '%'}"></div>
                                 <div id="gt-today-line" class="" ng-style="{left: today_pos + '%'}"></div>
+                                <div id="gt-frost-last" class="" ng-style="{width: frost_last + '%'}"></div>
+                                <div id="gt-frost-first" class="" ng-style="{width: frost_first + '%'}"></div>
                        </div></div>
                     </div>
                     
@@ -156,7 +160,7 @@
         </div>
         
         
-        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="1hide">
+        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="hide">
 
             <div class="row">
                 <h2><span class="fi fi-plus" ></span>Add Produce</h2>
@@ -168,14 +172,17 @@
                         </a>
                     </script>
                     <div id="gtProduceSearch">
-                        <input type="text" 
-                               ng-model="gtSearchTerm" 
-                               placeholder="Enter Search Term" 
-                               uib-typeahead="item as item.label for item in produce | filter:{label:$viewValue}" 
-                               typeahead-template-url="customTemplate.html" 
-                               class="form-control" 
-                               typeahead-show-hint="true" 
-                               typeahead-min-length="1"/>
+                        <p>
+                            <input type="text" 
+                                   ng-model="gtSearchTerm" 
+                                   placeholder="Enter Search Term" 
+                                   uib-typeahead="item as item.label for item in produce | filter:{label:$viewValue}" 
+                                   typeahead-template-url="customTemplate.html" 
+                                   class="form-control" 
+                                   typeahead-show-hint="true" 
+                                   typeahead-min-length="1"/>
+                        </p>
+                        <div class="error" ng-if="error.plant">Please select a plant</div>
                     </div>
                 </div>
                 <div class="large-6 columns hide">
@@ -186,11 +193,20 @@
             <hr/>
 
 
-            <div class="row" 2ng-if="selection">
+            <div class="row" ng-if="selection">
                 <div class="columns large-6">
                     <h3>Pick Outdoor Plant Date</h3>
-                    <p>Date : <input type="text" class="form-control calendar" uib-datepicker-popup="{{format}}" style="width:150px;" ng-value="dateplant" ng-model="gtCustomize.plantDate" ng-change="dateChange()" is-open="status2.opened" datepicker-options="dateOptions"> 
+                    <p>Date : <input type="text" 
+                                     class="form-control calendar" 
+                                     uib-datepicker-popup="{{format}}" 
+                                     ng-value="dateplant" 
+                                     ng-model="gtCustomize.plantDate" 
+                                     ng-change="dateChange()" 
+                                     is-open="status2.opened" 
+                                     datepicker-options="dateOptions" 
+                                     style="width:150px;" > 
                         <a type="submit" class="button fi-calendar large"  id="dropcal" value="Cal" ng-click="open2($event)"></a> 
+                        <div class="error" ng-if="error.date">Please select an outdoor plant date</div>
                     </p>
                     
                     <div ng-if="daterange != 'None' && daterange !='Not Specified' ">
@@ -205,7 +221,20 @@
                         <p>First/last frost dates not specified. Please add those in the options menu to get recommendations for planting dates.</p>
                     </div>
                     
-                    <hr/>
+                    <table>
+                        <tr>
+                            <td style="width: 160px;">Average Last Day Of Frost</td>
+                            <td><strong ng-bind="daterange.frost_spring"></strong></td>
+                        </tr>
+                        <tr>
+                            <td>Average First Day Of Frost</td>
+                            <td><strong ng-bind="daterange.frost_fall"></strong></td>
+                        </tr>
+                        <tr>
+                            <td>Growing Season</td>
+                            <td><strong ng-bind="daterange.growingseason + ' days'"></strong></td>
+                        </tr>
+                    </table>
                     
                     <h4 class="hide">Customize</h4>
                     <table class="hide">
@@ -243,25 +272,6 @@
                 </div>
                 
                 <div class="large-6 columns">
-                    
-
-                    <h3>Frost Considerations</h3>
-                    <table>
-                        <tr>
-                            <td style="width: 160px;">Average Last Day Of Frost</td>
-                            <td><strong ng-bind="daterange.frost_spring"></strong></td>
-                        </tr>
-                        <tr>
-                            <td>Average First Day Of Frost</td>
-                            <td><strong ng-bind="daterange.frost_fall"></strong></td>
-                        </tr>
-                        <tr>
-                            <td>Growing Season</td>
-                            <td><strong ng-bind="daterange.growingseason + ' days'"></strong></td>
-                        </tr>
-                    </table>
-                    
-                    
                     
                     <h3>Plant Details <a href="" style="font-size:11px;">Edit/Customize</a></h3>
                     <table>

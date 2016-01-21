@@ -59,9 +59,10 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
     &.reverse{@include link-color-lt();border:1px solid $link-color-hover;}
     &.reverse:hover{@include link-color-dk();}
 }
-
+.error{color:#f00;font-size:12px;}
 .fi{margin-right: 10px;}
 .subtext{font-size:12px;float:right;margin-top: 15px;}    
+
 
 .tooltip{
     border-radius:5px;padding:5px 10px;display:inline!important;box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);background-color: #1e1f22!important;width:250px;
@@ -151,6 +152,7 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
         .leg-seedling{background-color:#00a627;}
         .leg-growing{background-color:#037200;}
         .leg-harvest{background-color:#c79359;}
+        .leg-frost{background-color:#00aeef;}
     }
 }
 
@@ -160,7 +162,10 @@ input[type="checkbox"]{cursor:pointer;border-color:$link-color;}
       #gt-today2{height:100%;position: relative;}
         #gt-main-line{background-color:#f00;position: absolute;width: 1px;height: 100%;}
         #gt-today-line{background-color:#007ba4;position: absolute;width: 1px;height: 100%;}
-
+        #gt-frost-last{position: absolute;left:0px;height: 100%;background-color:#00aeef;opacity:0.1;}
+        #gt-frost-first{position: absolute;right:0px;height: 100%;background-color:#00aeef;opacity:0.1;}
+        
+        
 .gt-area{padding-bottom: 10px;padding-top: 10px;margin-bottom: 5px;background-color: $bg-color;}
     .gt-area-row{position:relative;height: 25px;overflow:hidden;}
         .gt-seedlings{position:absolute;z-index:11;top:0px;background-color:#00a627;height: 25px;border-radius: 5px 0px 0px 5px;}

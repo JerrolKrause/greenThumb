@@ -636,15 +636,21 @@ green.thumb = (function(){
             $scope.main_pos     = gtGetData.params.dates.main_pos;
             $scope.today_pos    = gtGetData.params.dates.today_pos;
             $scope.produce      = gtGetData.produce;
+            
+            //If a spring frost is set, generate a width to use for the calendar area
+            if (angular.isObject(gtGetData.params.frost_spring)) {
+                $scope.frost_last   = Math.floor(gtGetData.params.frost_spring.format('DDD') * 100 / 365 * 10) / 10;
+            }
+            //If a fall frost is set, generate a width to use for the calendar area
+            if (angular.isObject(gtGetData.params.frost_fall)) {
+                $scope.frost_first  = Math.floor((365 - gtGetData.params.frost_fall.format('DDD')) * 100 / 365 * 10) / 10;
+            }
         });
         
          $scope.updateObj ={};
         
-        
-        
         //When the edit button is clicked
         $scope.gtEdit = function (obj) {
-            console.log(obj);
             $scope.editinput = '';
             $scope.editinput = obj.label;
             
@@ -748,13 +754,10 @@ green.thumb = (function(){
             }
         };
         
-        
-        
         //Needed by calendar dropdown
-        $scope.open = function ($event) {console.log('Clicky');$scope.status.opened = true;};
+        $scope.open = function ($event) {$scope.status.opened = true;};
         $scope.status = {opened: false};
         
-
 
         /**
          * Main filtering/sorting function
@@ -822,13 +825,16 @@ green.thumb = (function(){
      * Manages the add/edit functionality used by the app
      */
     greenThumb.controller('gtInteractive', function ($scope, gtGetData) {
+        //Variables needed by this controller
+        var searchProduce, slug;
+        var date = '';
+        $scope.error = {};
         
          //Needed by calendar dropdown
         $scope.format = 'MMMM dd';
         $scope.open2 = function ($event) {$scope.status2.opened = true;};
         $scope.status2 = {opened: false};
         $scope.customize = {};
-        
         
         //Create an array for the produce search tool
         var produce = [];
@@ -853,13 +859,14 @@ green.thumb = (function(){
         $scope.$watch('gtSearchTerm', function(){
             //Make sure the var and property are not undefined
            if(typeof $scope.gtSearchTerm !== 'undefined' && typeof $scope.gtSearchTerm.id !== 'undefined'){
+               $scope.error.plant = false;
                //Pass to step 1
                $scope.step1($scope.gtSearchTerm.id);
            }
         });
         
         
-        var searchProduce, slug, date;
+        
         /**
          * Create an object for the search tool to use
          * @param {type} id - The id of the produce item
@@ -876,7 +883,6 @@ green.thumb = (function(){
             //Send the object to the search tool
             $scope.selection = searchProduce;
             
-            console.log(searchProduce)
             //Check which start type this is and pre-select that option on the next step
             if(searchProduce.startType === 'Direct Sow'){
                 $scope.customize.start = 'directsow';
@@ -916,6 +922,7 @@ green.thumb = (function(){
          */
         $scope.dateChange = function(){
             date = moment($scope.gtCustomize.plantDate);
+            $scope.error.date = false;
         };
         
         /**
@@ -923,6 +930,20 @@ green.thumb = (function(){
          * @returns {undefined}
          */
         $scope.addProduce = function () {
+            
+            //If produce search term is not found, show error message and stop this function from happening
+            if(angular.isUndefined($scope.gtSearchTerm)){
+                $scope.error.plant = true;
+                return false;
+            }
+            
+            //If a date is not selected, show error message and stop this function from happening
+            if(date === ''){    
+                $scope.error.date = true;
+                return false;
+            } 
+            
+            /*
             var produce = {
                 slug: slug,
                 dates: {
@@ -932,9 +953,12 @@ green.thumb = (function(){
 
                 }
             };
-            console.log(produce.dates.plant);
+            */
             //Need to update this to the area ID
-            gtGetData.addProduce(0, produce);
+            //gtGetData.addProduce(0, produce);
+            
+            //Reset all values
+            //date =  '';
         };
         
         

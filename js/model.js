@@ -5,7 +5,7 @@
         "capHarvest"    : true,
         "zone"          : "10a",
         "frost_spring"  : {"month" : 3 , "day" : 1},
-        "frost_fall"    : {"month" : 10 , "day" : 1} 
+        "frost_fall"    : {"month" : 9 , "day" : 1} 
     },
     
     "areas": [

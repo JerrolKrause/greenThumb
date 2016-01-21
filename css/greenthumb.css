@@ -67,6 +67,10 @@ input[type="checkbox"] {
     background-color: #aa6c39;
     color: #fff; }
 
+.error {
+  color: #f00;
+  font-size: 12px; }
+
 .fi {
   margin-right: 10px; }
 
@@ -242,6 +246,8 @@ input[type="checkbox"] {
     background-color: #037200; }
   #gt-calendar #legend .leg-harvest {
     background-color: #c79359; }
+  #gt-calendar #legend .leg-frost {
+    background-color: #00aeef; }
 
 #gt-areas {
   position: relative;
@@ -272,6 +278,20 @@ input[type="checkbox"] {
   position: absolute;
   width: 1px;
   height: 100%; }
+
+#gt-frost-last {
+  position: absolute;
+  left: 0px;
+  height: 100%;
+  background-color: #00aeef;
+  opacity: 0.1; }
+
+#gt-frost-first {
+  position: absolute;
+  right: 0px;
+  height: 100%;
+  background-color: #00aeef;
+  opacity: 0.1; }
 
 .gt-area {
   padding-bottom: 10px;
