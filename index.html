@@ -156,7 +156,7 @@
         </div>
         
         
-        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="hide">
+        <div id="gtProduceSelect" style="padding:20px;width:700px;" ng-controller="gtInteractive" class="1hide">
 
             <div class="row">
                 <h2><span class="fi fi-plus" ></span>Add Produce</h2>
@@ -194,21 +194,7 @@
                     </p>
                     
                     <div ng-if="daterange != 'None' && daterange !='Not Specified' ">
-                        <p>To minimize risk of frost in your area, plant between <strong ng-bind="daterange.earliest"></strong> and <strong ng-bind="daterange.latest"></strong>.</p>
-                        <table>
-                            <tr>
-                                <td>Average Last Day Of Frost</td>
-                                <td><strong ng-bind="daterange.frost_spring"></strong></td>
-                            </tr>
-                            <tr>
-                                <td>Average First Day Of Frost</td>
-                                <td><strong ng-bind="daterange.frost_fall"></strong></td>
-                            </tr>
-                            <tr>
-                                <td>Growing Season</td>
-                                <td><strong ng-bind="daterange.growingseason + ' days'"></strong></td>
-                            </tr>
-                        </table>
+                        <p>To minimize risk of frost damage to this plant, consider planting between <strong ng-bind="daterange.earliest"></strong> and <strong ng-bind="daterange.latest"></strong>.</p>
                     </div>
                     
                     <div ng-if="daterange == 'None' && daterange !='Not Specified' ">
@@ -221,8 +207,12 @@
                     
                     <hr/>
                     
-                    <h4>Customize</h4>
-                    <table>
+                    <h4 class="hide">Customize</h4>
+                    <table class="hide">
+                        <tr>
+                            <td>Name / Variety</td>
+                            <td><input  ng-model="customize.label" ng-value="selection.label" ng-change="updateType()"/></td>
+                        </tr>
                         <tr>
                             <td>Number Of Plants</td>
                             <td><input  ng-model="customize.numPlants" ng-change="updateType()"/></td>
@@ -237,7 +227,7 @@
                             </td>
                         </tr>
                         <tr ng-if="customize.start == 'seedlings'">
-                            <td>Start Seedlings<br/>(weeks)</td>
+                            <td>Start Seedlings Indoors<br/>(Week/s)</td>
                             <td><input name="startSeedlings" type="text" ng-model="customize.seedling" ng-change="updateType()" ng-value="selection.seedling"/>
                             </td>
                         </tr>
@@ -246,13 +236,33 @@
                             <td><input name="maturity" ng-model="customize.maturity" ng-change="updateType()" ng-value="selection.maturity"/></td>
                         </tr>
                          <tr>
-                             <td>Harvest Length<br/>(weeks)</td>
+                             <td>Harvest Length<br/>(Week/s)</td>
                             <td><input name="harvest" ng-model="customize.harvest" ng-change="updateType()" ng-value="selection.harvest"/></td>
                         </tr>
                     </table>
                 </div>
                 
                 <div class="large-6 columns">
+                    
+
+                    <h3>Frost Considerations</h3>
+                    <table>
+                        <tr>
+                            <td style="width: 160px;">Average Last Day Of Frost</td>
+                            <td><strong ng-bind="daterange.frost_spring"></strong></td>
+                        </tr>
+                        <tr>
+                            <td>Average First Day Of Frost</td>
+                            <td><strong ng-bind="daterange.frost_fall"></strong></td>
+                        </tr>
+                        <tr>
+                            <td>Growing Season</td>
+                            <td><strong ng-bind="daterange.growingseason + ' days'"></strong></td>
+                        </tr>
+                    </table>
+                    
+                    
+                    
                     <h3>Plant Details <a href="" style="font-size:11px;">Edit/Customize</a></h3>
                     <table>
                         <tr ng-if="selection.label">

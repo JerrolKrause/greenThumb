@@ -12,14 +12,15 @@ green.thumb = (function(){
      * @param {type} $http 
      * @param {type} $rootScope
      * @param {type} $stateParams
-     * @param {type} $state
+     * @param {type} $state 
      */
     greenThumb.factory("gtGetData", function ($http, $rootScope, $stateParams, $state) {
 
         //Main data object
         var data = {
-            produce             : window.gtProduce,
-            dates               : {},
+            produce             : window.gtProduce,                             //Holds all the produce and their parameters
+            dates               : {},                                           //Holds all the dates for use in task generation
+            model               : {},                                           //Holds the user generated JSON that creates the garden
             //Takes input object and updates the data.params filtering/sorting options 
             update: function (obj) {
                 //Overwrite any parameters supplied by the input object
@@ -30,6 +31,25 @@ green.thumb = (function(){
             //Allows a method outside the factory to get the current season
             getSeason : function(date){
                 return model.initialize.getSeason(date);
+            },
+            //Adds new produce to the model then runs the appropriate update script
+            addProduce: function (areaID, produce) {
+                console.log('Adding Produce');
+
+                /*
+                 * @param {type} value1 - area obj
+                 * @param {type} key1 - area key
+                 * @param {type} value2 - produce obj
+                 * @param {type} key2 -  produce key
+                 */
+                var key1 = areaID;
+                var value1 = data.garden.areas[key1];
+                var key2 = data.garden.areas[key1].produce.length;
+                var value2 = produce;
+                
+                data.garden.areas[key1].produce.push(produce);
+                model.initialize.build(value1, key1, value2, key2);
+                model.view.update(data.garden);
             }
         };
 
@@ -61,10 +81,8 @@ green.thumb = (function(){
         }).then(function ($response) {
             //For eventual use down the road to add edit/save capability
             data.model = angular.copy($response.data[0]);
-            //console.log(JSON.stringify(data.model))
-            
             //Pass data to updateview for display
-            model.view.update($response.data[0]);
+            model.view.update(data.model);
         });
 
 
@@ -841,14 +859,14 @@ green.thumb = (function(){
         });
         
         
-        var searchProduce, test, date;
+        var searchProduce, slug, date;
         /**
          * Create an object for the search tool to use
          * @param {type} id - The id of the produce item
          * @returns {undefined}
          */
         $scope.step1 = function(id){
-            test = id;
+            slug = id;
             if (gtGetData.produce[id].parent) {
                 searchProduce = gtGetData.produce[gtGetData.produce[id].parent];
                 angular.merge(searchProduce, gtGetData.produce[id]);
@@ -858,6 +876,7 @@ green.thumb = (function(){
             //Send the object to the search tool
             $scope.selection = searchProduce;
             
+            console.log(searchProduce)
             //Check which start type this is and pre-select that option on the next step
             if(searchProduce.startType === 'Direct Sow'){
                 $scope.customize.start = 'directsow';
@@ -896,7 +915,7 @@ green.thumb = (function(){
          * @returns {undefined}
          */
         $scope.dateChange = function(){
-            date = moment($scope.date2plant).add(1 ,'day');
+            date = moment($scope.gtCustomize.plantDate);
         };
         
         /**
@@ -904,19 +923,18 @@ green.thumb = (function(){
          * @returns {undefined}
          */
         $scope.addProduce = function () {
-            console.log('addProduce');
-            var obj = {
-                slug: test,
+            var produce = {
+                slug: slug,
                 dates: {
-                    month: date.format('M'),
-                    day: date.format('D')
+                    plant: {
+                        month   : date.clone().format('M'),
+                        day     : date.clone().format('D')}
+
                 }
             };
-
-            gtGetData.model.areas[0].produce.push(obj);
-
-            gtGetData.params.initLoad = false;
-            gtGetData.model.view.update(gtGetData.model);
+            console.log(produce.dates.plant);
+            //Need to update this to the area ID
+            gtGetData.addProduce(0, produce);
         };
         
         
